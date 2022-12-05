@@ -44,8 +44,6 @@ app.listen(config.port, (err) => {
   console.log(`Server started on port: ${config.port}`);
 });
 
-console.log(config.port);
-
 connect(config.mongo)
   .then(() => console.log("MongoDB successfully connected..."))
   .catch((err) => console.log(err));
