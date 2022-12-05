@@ -1,0 +1,31 @@
+.ingredients-list {
+  padding: 10px 10px 10px;
+}
+
+.list-item {
+  display: flex;
+  margin: 10px 3px;
+}
+
+.checkbox-input,
+.radio-input {
+  margin: 4px 5px;
+}
+
+.no-gluten-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 3px;
+}
+
+.list-item-left-side-container {
+  display: flex;
+  flex-grow: 1;
+}
+
+.add-to-cart-btn-wrapper {
+  border-top: 1px solid black;
+  padding: 15px 10px;
+  display: flex;
+  justify-content: flex-end;
+}

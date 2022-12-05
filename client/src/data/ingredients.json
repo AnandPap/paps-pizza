@@ -1,0 +1,92 @@
+{
+  "cheese": 
+    [{
+      "gluten_free": true,
+      "name": "Mozzarella cheese",
+      "price": 1,
+      "type": "cheese"
+    }, 
+    {
+      "gluten_free": true,
+      "name": "Parmesan cheese",
+      "price": 1,
+      "type": "cheese"
+    },
+    {
+      "gluten_free": true,
+      "name": "Cheddar cheese",
+      "price": 2,
+      "type": "cheese"
+    }, 
+    {
+      "gluten_free": true,
+      "name": "Feta cheese",
+      "price": 1,
+      "type": "cheese"
+    },
+    {
+      "gluten_free": false,
+      "name": "Parmesan cheese",
+      "price": 2,
+      "type": "cheese"
+    }
+  ],
+  "olives": [
+    {
+      "gluten_free": true,
+      "name": "Sliced black olives",
+      "price": 1.5,
+      "type": "olives"
+    },    
+    {
+      "gluten_free": true,
+      "name": "Sliced green olives",
+      "price": 1,
+      "type": "olives"
+    }
+  ],
+  "other": [
+    {
+      "gluten_free": true,
+      "name": "Hot sauce",
+      "price": 2,
+      "type": "other"
+    },
+    {
+      "gluten_free": false,
+      "name": "Romaine lettuce",
+      "price": 0.5,
+      "type": "other"
+    }, 
+    {
+      "gluten_free": true,
+      "name": "Chopped artichoke hearts",
+      "price": 1.5,
+      "type": "other"
+    },
+    {
+      "gluten_free": true,
+      "name": "Chopped tomato",
+      "price": 1,
+      "type": "other"
+    }, 
+    {
+      "gluten_free": true,
+      "name": "Sliced green onion",
+      "price": 1,
+      "type": "other"
+    },
+    {
+      "gluten_free": true,
+      "name": "Mushrooms",
+      "price": 1,
+      "type": "other"
+    }, 
+    {
+      "gluten_free": false,
+      "name": "Sprinkle of dry oregano",
+      "price": 0.5,
+      "type": "other"
+    }
+  ]
+}

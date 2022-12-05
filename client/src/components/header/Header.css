@@ -1,0 +1,139 @@
+.header {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid black;
+}
+
+.logo-and-title-container {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+.logo-and-title-wrapper {
+  align-items: center;
+  width: fit-content;
+  display: flex;
+  cursor: pointer;
+  padding-right: 10px;
+}
+
+.logo {
+  margin-left: 10px;
+  width: 3em;
+}
+
+.title {
+  text-align: center;
+  font-size: 1.75em;
+  font-weight: 500;
+  margin-left: 10px;
+}
+
+.cart-icon,
+.avatar {
+  font-size: 2em;
+  margin-right: 10px;
+}
+
+.cart-icon:hover {
+  cursor: pointer;
+  background-color: rgb(235, 235, 235);
+  border-radius: 50%;
+}
+
+.avatar:hover {
+  cursor: pointer;
+  transform: scale(1.03);
+}
+
+.signin-button {
+  padding: 10px;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  right: 0;
+}
+
+.dropdown-content p {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content p:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: 200px;
+}
+
+.input {
+  margin: 5px;
+  font-size: 15px;
+  padding: 5px;
+}
+
+.dont-have-account-wrapper {
+  display: flex;
+}
+
+.dont-have-account,
+.already-have-account {
+  display: flex;
+  margin-top: 5px;
+}
+
+.dont-have-account p,
+.already-have-account p {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.login-form,
+.signup-form {
+  margin: 5px;
+}
+
+.error-message {
+  font-size: 1rem;
+  color: red;
+  margin: 5px auto;
+}
+
+.login-button-wrapper,
+.signup-button-wrapper {
+  margin: 5px auto;
+}
+
+@media only screen and (min-width: 720px) {
+  .logo-and-title-container {
+    font-size: 1.25rem;
+  }
+  .cart-icon,
+  .avatar {
+    font-size: 2.5rem;
+  }
+  .signin-button {
+    font-size: 1rem;
+  }
+}
