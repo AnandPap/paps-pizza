@@ -1,9 +1,8 @@
 import axios from "axios";
-const PORT = "http://localhost:5000";
 
 export const register = async (user) => {
   return await axios
-    .post(`${PORT}/api/register`, user)
+    .post(`/api/register`, user)
     .then((res) => {
       console.log(res);
       return res.data;
@@ -16,7 +15,7 @@ export const register = async (user) => {
 
 export const login = async (user) => {
   return await axios
-    .post(`${PORT}/api/login`, user, {
+    .post(`/api/login`, user, {
       withCredentials: true,
     })
     .then((res) => {
@@ -31,14 +30,14 @@ export const login = async (user) => {
 
 export const signout = async () => {
   return await axios
-    .get(`${PORT}/api/signout`)
+    .get(`/api/signout`)
     .then((res) => console.log(res))
     .catch((err) => console.log(err));
 };
 
 export const fetchOrderHistory = async () => {
   return await axios
-    .get(`${PORT}/api/orderHistory`)
+    .get(`/api/orderHistory`)
     .then((res) => {
       console.log(res);
       return res.data;
