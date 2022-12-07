@@ -24,6 +24,7 @@ export const login = async (user) => {
     })
     .catch((err) => {
       console.log(err);
+      console.log(5);
       return err.response.data;
     });
 };
