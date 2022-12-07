@@ -10,8 +10,8 @@ const cookieParser = require("cookie-parser");
 
 const app = express();
 
-app.use(json()); //activated body parse in our code
-app.use(urlencoded({ extended: true }));
+app.use(express.json()); //activated body parse in our code
+app.use(express.urlencoded({ extended: true }));
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(compress());
 app.use(
@@ -44,16 +44,6 @@ app.get("/*", (req, res) => {
 });
 
 mongoose
-  .connect(config.mongo, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
-
-    // remove poolSize or set according to your need
-    // read docs before setting poolSize
-    // default to 5
-    poolSize: 1,
-  })
+  .connect(config.mongo)
   .then(() => console.log("MongoDB successfully connected..."))
   .catch((err) => console.log(err));
