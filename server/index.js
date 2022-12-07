@@ -1,18 +1,12 @@
-import express, { json, urlencoded, static as staticServe } from "express";
-import pkg from "mongoose";
-const { connect } = pkg;
-import cors from "cors";
-import compress from "compression";
-import helmet from "helmet";
-import config from "./src/config/config.js";
-import userRoutes from "./src/routes/user.routes.js";
-import cookieParser from "cookie-parser";
-import { join } from "path";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-//asd
+const express = require("express");
+const path = require("path");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const compress = require("compression");
+const helmet = require("helmet");
+const config = require("./src/config/config");
+const userRoutes = require("./src/routes/user.routes");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 
@@ -44,11 +38,22 @@ app.listen(config.port, (err) => {
   console.log(`Server started on port: ${config.port}`);
 });
 
-connect(config.mongo)
+app.use(express.static(path.join(__dirname, "../client", "dist")));
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client", "dist", "index.html"));
+});
+
+mongoose
+  .connect(config.mongo, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+
+    // remove poolSize or set according to your need
+    // read docs before setting poolSize
+    // default to 5
+    poolSize: 1,
+  })
   .then(() => console.log("MongoDB successfully connected..."))
   .catch((err) => console.log(err));
-
-app.use(staticServe(join(__dirname, "client", "dist", "assets")));
-app.get("*", (req, res) => {
-  res.sendFile(join(__dirname, "../client/dist/index.html"));
-});
