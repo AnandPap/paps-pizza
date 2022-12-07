@@ -15,7 +15,7 @@ export const register = async (user) => {
 
 export const login = async (user) => {
   return await axios
-    .post(`/api/login`, user, {
+    .post(`/api/loginnnn`, user, {
       withCredentials: true,
     })
     .then((res) => {
