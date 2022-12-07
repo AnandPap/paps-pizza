@@ -32,7 +32,7 @@ const LogInModal = () => {
     login(user)
       .then((data) => {
         console.log(data);
-        if (data.error) setValues({ ...values, error: data.error });
+        if (data.error) setValues({ ...values, error: '5' });
         else if (data.token) {
           authenticate(data, () => history("/"));
           dispatch(setShowLogInModal(false));
