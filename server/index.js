@@ -12,7 +12,7 @@ const app = express();
 
 app.use(express.json()); //activated body parse in our code
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({ origin: "false", credentials: true }));
+app.use(cors({ origin: false, credentials: true }));
 app.use(compress());
 app.use(
   helmet({
