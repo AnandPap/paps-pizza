@@ -42,6 +42,7 @@ app.listen(config.port, (err) => {
 
 app.use(express.static(path.join(__dirname, "../client", "dist")));
 app.get("/*", (req, res) => {
+  res.send(5);
   res.sendFile(path.join(__dirname, "../client", "dist", "index.html"));
 });
 
