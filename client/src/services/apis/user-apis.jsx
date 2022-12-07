@@ -1,4 +1,5 @@
 import axios from "axios";
+const PORT = "https://paps-pizza-server.onrender.com";
 
 export const register = async (user) => {
   return await axios
@@ -15,7 +16,7 @@ export const register = async (user) => {
 
 export const login = async (user) => {
   return await axios
-    .post(`/api/login`, user, {
+    .post(`${PORT}/api/login`, user, {
       withCredentials: true,
     })
     .then((res) => {
