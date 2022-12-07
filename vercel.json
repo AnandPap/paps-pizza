@@ -9,8 +9,5 @@
         "src": "./client/dist",
         "use": "@vercel/static"
       }
-    ],
-    "routes": [
-      { "src": "/(.*)", "dest": "/index.js" }
     ]
 }
