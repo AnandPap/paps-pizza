@@ -1,9 +1,19 @@
 {
-    "version": 2,
-    "builds": [
+  "version": 2,
+  "builds": [
+    {
+      "src": "./server/index.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "./client/dist",
+      "use": "@vercel/static"
+    }
+  ],
+  "rewrites": [
       {
-        "src": "./client/dist",
-        "use": "@vercel/"
+        "source": "/(.*)",
+        "destination": "/server/index.js"
       }
     ]
 }
