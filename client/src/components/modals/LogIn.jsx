@@ -46,6 +46,7 @@ const LogInModal = () => {
       })
       .catch((err) => {
         console.log(err);
+        console.log(5);
       });
   }
 
