@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const compress = require("compression");
 const helmet = require("helmet");
 const config = require("./src/config/config");
@@ -11,6 +12,7 @@ const app = express();
 
 app.use(express.json()); //activated body parse in our code
 app.use(express.urlencoded({ extended: true }));
+app.use(cors({ origin: "false", credentials: true }));
 app.use(compress());
 app.use(
   helmet({
