@@ -3,7 +3,7 @@ const PORT = "https://paps-pizza-server.onrender.com";
 
 export const register = async (user) => {
   return await axios
-    .post(`/api/register`, user)
+    .post(`${PORT}/api/register`, user)
     .then((res) => {
       console.log(res);
       return res.data;
@@ -31,14 +31,14 @@ export const login = async (user) => {
 
 export const signout = async () => {
   return await axios
-    .get(`/api/signout`)
+    .get(`${PORT}/api/signout`)
     .then((res) => console.log(res))
     .catch((err) => console.log(err));
 };
 
 export const fetchOrderHistory = async () => {
   return await axios
-    .get(`/api/orderHistory`)
+    .get(`${PORT}/api/orderHistory`)
     .then((res) => {
       console.log(res);
       return res.data;
