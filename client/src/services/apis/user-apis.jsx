@@ -19,12 +19,8 @@ export const login = async (user) => {
       withCredentials: true,
     })
     .then((res) => {
-      console.log(res);
-      return res.data;
     })
     .catch((err) => {
-      console.log(err);
-      return err.response.data;
     });
 };
 
