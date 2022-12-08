@@ -1,8 +1,7 @@
-import User from "../models/user.model.js";
-import errorHandler from "../helpers/errorHandler.js";
-import config from "../config/config.js";
-import pkg from "jsonwebtoken";
-const { sign } = pkg;
+const User = require("../models/user.model");
+const errorHandler = require("../helpers/errorHandler");
+const config = require("../config/config");
+const jwt = require("jsonwebtoken");
 
 const register = (req, res, next) => {
   if (req.body.password !== req.body.confirmPassword)
@@ -30,7 +29,7 @@ const login = (req, res, next) => {
       return res
         .status(400)
         .json({ error: "Email and password do not match." });
-    const token = sign({ id: user._id }, config.secret);
+    const token = jwt.sign({ id: user._id }, config.secret);
     res.cookie("token", token, {
       expires: new Date(Date.now() + 20 * 60 * 1000),
     });
@@ -52,4 +51,4 @@ const signout = (req, res) => {
 
 const fetchOrderHistory = (req, res) => {};
 
-export { register, login, signout, fetchOrderHistory };
+module.exports = { register, login, signout, fetchOrderHistory };
