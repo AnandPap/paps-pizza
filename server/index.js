@@ -22,10 +22,7 @@ app.use(
       //blocks my login and register attempts if I don't use it
       useDefaults: true,
       directives: {
-        "connect-src": [
-          "'self'",
-          "https://paps-pizza-server.onrender.com/api/login",
-        ],
+        "connect-src": ["'self'", "https://paps-pizza-server.onrender.com/api"],
         "style-src": [
           "'self'",
           "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css",
