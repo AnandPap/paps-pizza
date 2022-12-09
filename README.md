@@ -1,13 +1,9 @@
 # Pap's Pizza
 
-## To get a local copy up and running follow these steps:
+## "Master" branch deployed live version: https://vercel-paps-pizza-anandpap.vercel.app/
 
-### 1. Clone the repository
+### This version is example of full MERN app deployed on Vercel.
 
-`git clone https://github.com/AnandPap/paps-pizza`
+## "Vercel" branch deployed live version: https://paps-pizza-anandpap.vercel.app/
 
-### 2. Open client folder in your terminal which is located inside paps-pizza folder, run `npm i` to install NPM packages and run `npm run dev` to start frontend of the application.
-
-### 3. Next, open server folder in another terminal and run `npm i` to install NPM packages then run `npm start` while still inside server folder to start the backend side of project.
-
-### 4. Open http://localhost:5173 to view it inside your browser.
+### While this one on the other hand contains just frontend while server is deployed on render.com site
