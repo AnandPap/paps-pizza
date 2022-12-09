@@ -6,4 +6,4 @@
 
 ### While this one on the other hand contains just frontend while server is deployed on render.com site:
 
-#### "Vercel" branch deployed live version: https://paps-pizza-anandpap.vercel.app/
+#### "Vercel" branch deployed live version: https://paps-pizza-anandpap.vercel.app/ (ctrl + click to open in new tab)
