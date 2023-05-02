@@ -16,5 +16,5 @@
       "destination": "/server/index.js"
     }
   ],
-  "routes": [{ "src": "/[^.]+", "dest": "/", "status": 200 }]
+  "routes": [{ "src": "/client/[^.]+", "dest": "/client", "status": 200 }]
 }
