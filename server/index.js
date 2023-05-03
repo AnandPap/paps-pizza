@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const compress = require("compression");
 const helmet = require("helmet");
+const compress = require("compression");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const path = require("path");
@@ -12,8 +12,8 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(compress());
 app.use(helmet());
+app.use(compress());
 app.use(cookieParser());
 app.use(cors({ credentials: true }));
 
