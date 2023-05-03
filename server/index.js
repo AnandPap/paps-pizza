@@ -15,12 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(compress());
 app.use(helmet());
 app.use(cookieParser());
-app.use(
-  cors({
-    origin: "https://paps-pizza-vercel-full.vercel.app/",
-    credentials: true,
-  })
-);
+app.use(cors({ credentials: true }));
 
 app.use(userRoutes);
 
