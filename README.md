@@ -4,19 +4,19 @@
 
 #### "master" branch deployed live version: https://paps-pizza-vercel-full.vercel.app/ (ctrl + click to open in new tab)
 
-### While this one, on the other hand, contains just frontend while server is deployed on render.com:
+### Whereas this one, on the other hand, has frontend deployed on vercel.com while the server is deployed on render.com:
 
 #### "render.com" branch deployed live version: https://paps-pizza-render.vercel.app/ (ctrl + click to open in new tab)
 
-## To get a local copy up and running follow these steps:
+## To get a local copy up and running, follow these steps:
 
 #### 1. Clone the repository: `git clone https://github.com/AnandPap/paps-pizza.git`
 
-#### 2. Open client folder in your terminal which is located inside paps-pizza folder and run `npm install` to install NPM packages then run `npm run dev` while still inside client folder to start the frontend side of the project.
+#### 2. Open client folder in your terminal, located inside paps-pizza folder, and run `npm install` to install NPM packages. Then, run `npm run dev` to start the frontend side of the project.
 
-#### 3. Next, open server folder and create `.env` file inside of it with following variable: `MONGO = "connection_string"` where connection_string is MongoDB URI that you get when you create and connect to your own Mongo cluster. If the aformentioned variable isn't provided, fallback value will be used, found in config.js file.
+#### 3. Next, open server folder and create `.env` file inside of it with the following variable: `MONGO = "connection_string"` where connection_string is MongoDB URI that you get when you create and connect to your own Mongo cluster. If the aforementioned variable isn't provided, the fallback value found in the config.js file will be used.
 
-#### 4. After that run `npm install` while still inside server folder to install NPM packages and then run `npm run dev` to start the backend side of the project.
+#### 4. After that, run `npm install` while still inside the server folder to install NPM packages and then run `npm run dev` to start the backend side of the project.
 
 #### 5. Open http://localhost:5173 to view it in the browser.
 
