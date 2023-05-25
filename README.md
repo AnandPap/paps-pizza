@@ -2,7 +2,7 @@
 
 ### This version is an example of full MERN app deployed on vercel.com:
 
-#### "master" branch deployed live version: https://paps-pizza-vercel-full.vercel.app/ (ctrl + click to open in new tab)
+#### "master" branch deployed live version: https://paps-pizza-vercel-full-anandpap.vercel.app/ (ctrl + click to open in new tab)
 
 ### Whereas this one, on the other hand, has frontend deployed on vercel.com while the server is deployed on render.com:
 
