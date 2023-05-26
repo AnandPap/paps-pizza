@@ -1,11 +1,11 @@
 import Cart from "./Cart";
-import Pizza from "../create-pizza/Pizza";
+import CreatePizza from "../create-pizza/CreatePizza";
 import { Outlet } from "react-router";
 
 const Home = () => {
   return (
     <div className="home">
-      <Pizza />
+      <CreatePizza />
       <Cart />
       <Outlet />
     </div>

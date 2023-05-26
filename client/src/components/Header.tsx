@@ -1,7 +1,7 @@
 import Button from "../reusable/Button";
 import pizza from "../assets/images/pizza2.png";
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
-import { setShowLogInModal, setIsLoggedIn, resetPizzas } from "../redux/pizza";
+import { openModal, setIsLoggedIn, resetPizzas } from "../redux/pizza";
 import { useNavigate } from "react-router-dom";
 import { clearJWT } from "../services/auth-helpers";
 
@@ -49,7 +49,7 @@ const Header = () => {
           text="Log In"
           className="signin-button"
           onClick={() => {
-            dispatch(setShowLogInModal(true));
+            dispatch(openModal("login"));
             history("/login");
           }}
         />

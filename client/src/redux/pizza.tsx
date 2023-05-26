@@ -4,8 +4,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 interface InitialState {
   totalPrice: number;
   pizzasPicked: PizzaPicked[];
-  showLogInModal: boolean;
-  showSignUpModal: boolean;
+  modal: Modal;
   isLoggedIn: boolean;
 }
 export interface PizzaPicked {
@@ -14,6 +13,12 @@ export interface PizzaPicked {
   pizzaPrice: number;
   numberOfOrders: number;
 }
+interface Modal {
+  type: ModalType;
+  display: boolean;
+}
+type ModalType = "login" | "signup" | "ingredients" | "";
+
 // interface PizzaIngredients {
 //   cheese: string;
 //   olives: string;
@@ -23,8 +28,7 @@ export interface PizzaPicked {
 const initialState: InitialState = {
   totalPrice: 0,
   pizzasPicked: [],
-  showLogInModal: false,
-  showSignUpModal: false,
+  modal: { type: "", display: false },
   isLoggedIn: false,
 };
 
@@ -35,11 +39,11 @@ export const pizzaSlice = createSlice({
     setIsLoggedIn: (state, action: PayloadAction<boolean>) => {
       state.isLoggedIn = action.payload;
     },
-    setShowLogInModal: (state, action: PayloadAction<boolean>) => {
-      state.showLogInModal = action.payload;
+    openModal: (state, action: PayloadAction<ModalType>) => {
+      state.modal = { type: action.payload, display: true };
     },
-    setShowSignUpModal: (state, action: PayloadAction<boolean>) => {
-      state.showSignUpModal = action.payload;
+    closeModal: (state) => {
+      state.modal = { type: "", display: false };
     },
     setAmount: (state, action: PayloadAction<number>) => {
       state.totalPrice = action.payload;
@@ -83,8 +87,8 @@ export const {
   resetPizzas,
   increaseNumberOfOrders,
   decreaseNumberOfOrders,
-  setShowLogInModal,
-  setShowSignUpModal,
+  openModal,
+  closeModal,
   setIsLoggedIn,
 } = pizzaSlice.actions;
 

@@ -118,6 +118,13 @@
   margin: auto;
   width: fit-content;
 }
+.order-button {
+  padding: 10px 40px;
+}
+.order-more-btn {
+  margin-top: 2rem;
+  padding: 15px 30px;
+}
 
 .goodbye-message {
   font-size: 2rem;

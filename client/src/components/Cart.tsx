@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
-import { setAmount, setShowLogInModal } from "../redux/pizza";
+import { openModal, setAmount } from "../redux/pizza";
 import { useNavigate } from "react-router-dom";
 import Button from "../reusable/Button";
 import CartItem from "./CartItem";
@@ -25,44 +25,42 @@ const Cart = () => {
   return (
     <div className="cart">
       {pizzasPicked.length === 0 ? (
-        <div className="cart-placeholder-wrapper">
-          <i className="bi bi-cart4 cart-placeholder"></i>
+        <div className="cart-placeholder">
+          <i className="bi bi-cart4"></i>
         </div>
       ) : (
         <div className="cart-list">
-          <div className="order-title-container">
-            <h1 className="order-title">Order</h1>
-          </div>
-          <div className="order-item-container">
+          <h2>Cart</h2>
+          <div className="order-items-container">
             {pizzasPicked.map((pizza, i) => (
               <CartItem key={i} i={i} pizza={pizza} />
             ))}
           </div>
-          <div className="cart-total">
+          <div className="cart-total-price">
             <div className="delivery">
-              <p className="delivery-text">Delivery</p>
-              <p className="delivery-price">{deliveryPrice}$</p>
+              <p>Delivery</p>
+              <span>{deliveryPrice}$</span>
             </div>
-            <div className="total">
-              <p className="total-text">TOTAL</p>
-              <p className="total-price">{totalPrice + deliveryPrice}$</p>
+            <div className="cart-total">
+              <p>TOTAL</p>
+              <span>{totalPrice + deliveryPrice}$</span>
+              <Button
+                text="BUY"
+                className="buy-button"
+                onClick={() => {
+                  if (isLoggedIn) {
+                    history("/order");
+                    sessionStorage.setItem(
+                      "pizzasPicked",
+                      JSON.stringify(pizzasPicked)
+                    );
+                  } else {
+                    dispatch(openModal("login"));
+                    history("/login");
+                  }
+                }}
+              />
             </div>
-            <Button
-              text="BUY"
-              className="buy-button"
-              onClick={() => {
-                if (isLoggedIn) {
-                  history("/order");
-                  sessionStorage.setItem(
-                    "pizzasPicked",
-                    JSON.stringify(pizzasPicked)
-                  );
-                } else {
-                  dispatch(setShowLogInModal(true));
-                  history("/login");
-                }
-              }}
-            />
           </div>
         </div>
       )}

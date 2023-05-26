@@ -2,11 +2,7 @@ import { useState } from "react";
 import Button from "../reusable/Button";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
-import {
-  setShowLogInModal,
-  setShowSignUpModal,
-  setIsLoggedIn,
-} from "../redux/pizza";
+import { closeModal, openModal, setIsLoggedIn } from "../redux/pizza";
 import { login } from "../services/user-apis";
 import { authenticate } from "../services/auth-helpers";
 
@@ -16,10 +12,8 @@ const LogInModal = () => {
     password: "",
     error: "",
   });
-
-  const { showLogInModal } = useAppSelector((s) => s.pizza);
-
-  const history = useNavigate();
+  const modal = useAppSelector((s) => s.pizza.modal);
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -33,8 +27,8 @@ const LogInModal = () => {
         console.log(data);
         if (data.error) setValues({ ...values, error: data.error });
         else if (data.token) {
-          authenticate(data, () => history("/"));
-          dispatch(setShowLogInModal(false));
+          authenticate(data, () => navigate("/"));
+          dispatch(dispatch(closeModal()));
           dispatch(setIsLoggedIn(true));
           setValues({
             email: "",
@@ -58,21 +52,18 @@ const LogInModal = () => {
       password: "",
       error: "",
     });
-    dispatch(setShowLogInModal(false));
-    history("/");
+    dispatch(dispatch(closeModal()));
+    navigate("/");
   };
 
   let className = "modal";
-  if (showLogInModal) className += " display-modal";
 
   return (
     <div className={className} onClick={closeLogInModal}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <div className="modal-title-and-close-button-wrapper">
-          <h1 className="modal-title">Log In</h1>
-          <span className="modal-close-button" onClick={closeLogInModal}>
-            &times;
-          </span>
+      <div onClick={(e) => e.stopPropagation()}>
+        <div className="modal-header">
+          <h2>Log In</h2>
+          <span onClick={closeLogInModal}>&times;</span>
         </div>
         <form className="login-form" onSubmit={(e) => handleSubmit(e)}>
           <div className="input-wrapper">
@@ -102,9 +93,9 @@ const LogInModal = () => {
           <div className="dont-have-account-wrapper">
             <div
               onClick={() => {
-                dispatch(setShowSignUpModal(true));
+                dispatch(dispatch(openModal("signup")));
                 closeLogInModal();
-                history("/signup");
+                navigate("/signup");
               }}
               className="dont-have-account"
             >

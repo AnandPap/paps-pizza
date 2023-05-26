@@ -1,4 +1,6 @@
 import { FC } from "react";
+import { useAppDispatch } from "../redux/hooks";
+import { openModal } from "../redux/pizza";
 import Button from "../reusable/Button";
 
 interface DoughRowProps {
@@ -19,26 +21,29 @@ const DoughRow: FC<DoughRowProps> = ({
   doughDesciption,
   setDoughSelected,
 }) => {
+  const dispatch = useAppDispatch();
+
   return (
     <div className="dough-row">
-      <div className="dough-name-and-price-container">
-        <div className="dough-name">{doughName}</div>
-        <div className="dough-price-container">
-          <div className="dough-price">{doughPrice}$</div>
-          <Button
-            className="add-ingredients-button"
-            onClick={() => {
-              setDoughSelected({
-                doughName: doughName,
-                doughPrice: doughPrice,
-              });
-            }}
-            title="Add ingredients"
-            text="+ADD"
-          />
-        </div>
+      <div>
+        <h3>{doughName}</h3>
+        <p>{doughDesciption}</p>
       </div>
-      <div className="dough-description">{doughDesciption}</div>
+      <div>
+        <div className="dough-price">{doughPrice}$</div>
+        <Button
+          className="add-ingredients-button"
+          onClick={() => {
+            setDoughSelected({
+              doughName: doughName,
+              doughPrice: doughPrice,
+            });
+            dispatch(openModal("ingredients"));
+          }}
+          title="Add ingredients"
+          text="+ADD"
+        />
+      </div>
     </div>
   );
 };
