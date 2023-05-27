@@ -12,7 +12,7 @@ const Cart = () => {
   const dispatch = useAppDispatch();
 
   const deliveryPrice = 5;
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     let price = 0;
@@ -46,17 +46,17 @@ const Cart = () => {
               <span>{totalPrice + deliveryPrice}$</span>
               <Button
                 text="BUY"
-                className="buy-button"
+                className="buy-btn"
                 onClick={() => {
                   if (isLoggedIn) {
-                    history("/order");
+                    navigate("/order");
                     sessionStorage.setItem(
                       "pizzasPicked",
                       JSON.stringify(pizzasPicked)
                     );
                   } else {
                     dispatch(openModal("login"));
-                    history("/login");
+                    navigate("/login");
                   }
                 }}
               />

@@ -13,7 +13,7 @@
   background-color: rgb(250, 250, 250);
 }
 
-.modal {
+.modal-cover {
   display: flex;
   justify-content: center;
   position: fixed;

@@ -19,12 +19,6 @@ interface Modal {
 }
 type ModalType = "login" | "signup" | "ingredients" | "";
 
-// interface PizzaIngredients {
-//   cheese: string;
-//   olives: string;
-//   other: string[];
-// }
-
 const initialState: InitialState = {
   totalPrice: 0,
   pizzasPicked: [],

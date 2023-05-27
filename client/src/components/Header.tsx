@@ -8,35 +8,30 @@ import { clearJWT } from "../services/auth-helpers";
 const Header = () => {
   const { pizzasPicked, isLoggedIn } = useAppSelector((s) => s.pizza);
 
-  const history = useNavigate();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   return (
-    <header className="header">
-      <div className="logo-and-title-container">
-        <div
-          onClick={() => history("/", { replace: true })}
-          className="logo-and-title-wrapper"
-        >
-          <img className="logo" src={pizza} alt="" />
-          <h2 className="title">Pap's Pizza</h2>
-        </div>
+    <header>
+      <div onClick={() => navigate("/", { replace: true })}>
+        <img src={pizza} alt="" />
+        <h1>Pap's Pizza</h1>
       </div>
       {pizzasPicked.length > 0 ? (
-        <i className="bi bi-cart-fill cart-icon"></i>
+        <i className="bi bi-cart-fill cart-icon" title="Cart full"></i>
       ) : (
-        <i className="bi bi-cart4 cart-icon"></i>
+        <i className="bi bi-cart4 cart-icon" title="Cart empty"></i>
       )}
       {isLoggedIn ? (
         <div className="dropdown">
           <i className="bi bi-person-circle avatar"></i>
           <div className="dropdown-content">
-            {/* <p onClick={() => history("/orderhistory")}>Order History</p> */}
+            {/* <p onClick={() => navigate("/orderhistory")}>Order History</p> */}
             <p
               onClick={() => {
                 clearJWT();
                 dispatch(setIsLoggedIn(false));
-                history("/");
+                navigate("/");
                 dispatch(resetPizzas());
               }}
             >
@@ -47,10 +42,10 @@ const Header = () => {
       ) : (
         <Button
           text="Log In"
-          className="signin-button"
+          className="login-button"
           onClick={() => {
             dispatch(openModal("login"));
-            history("/login");
+            navigate("/login");
           }}
         />
       )}

@@ -24,11 +24,7 @@ const AddIngredients: FC<AddIngredientsProps> = ({ doughSelected }) => {
   const dispatch = useAppDispatch();
 
   return modal.type === "ingredients" ? (
-    <div className="add-ingredients" onClick={(e) => e.stopPropagation()}>
-      <div className="modal-header">
-        <h2>Ingredients</h2>
-        <span onClick={() => dispatch(closeModal())}>&times;</span>
-      </div>
+    <>
       <div className="ingredients-list">
         <form>
           <h3>Cheese:</h3>
@@ -97,7 +93,7 @@ const AddIngredients: FC<AddIngredientsProps> = ({ doughSelected }) => {
           }}
         />
       </div>
-    </div>
+    </>
   ) : null;
 };
 

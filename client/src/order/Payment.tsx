@@ -2,7 +2,7 @@ import { useState, useEffect, FC } from "react";
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import { resetPizzas } from "../redux/pizza";
 import { useNavigate } from "react-router-dom";
-import CartItem from "../components/CartItem";
+import CartItem from "../home/CartItem";
 import Button from "../reusable/Button";
 import { Address } from "./DeliveryAddress";
 

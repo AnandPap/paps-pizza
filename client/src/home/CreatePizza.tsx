@@ -24,9 +24,11 @@ const CreatePizza = () => {
           />
         ))}
       </div>
-      <Modal>
-        <AddIngredients doughSelected={doughSelected} />
-      </Modal>
+      {location.pathname === "/" && (
+        <Modal headerTitle="Ingredients">
+          <AddIngredients doughSelected={doughSelected} />
+        </Modal>
+      )}
     </div>
   );
 };

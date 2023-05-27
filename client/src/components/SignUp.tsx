@@ -1,11 +1,10 @@
 import { useState } from "react";
 import Button from "../reusable/Button";
 import { useNavigate } from "react-router-dom";
-import { useAppSelector, useAppDispatch } from "../redux/hooks";
+import { useAppSelector } from "../redux/hooks";
 import { register } from "../services/user-apis";
-import { closeModal, openModal } from "../redux/pizza";
 
-const SignUpModal = () => {
+const SignUp = () => {
   const [values, setValues] = useState({
     username: "",
     email: "",
@@ -14,8 +13,7 @@ const SignUpModal = () => {
     error: "",
   });
   const modal = useAppSelector((s) => s.pizza.modal);
-  const history = useNavigate();
-  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   function capitalizeFirstLetter(string: string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -36,8 +34,7 @@ const SignUpModal = () => {
           setValues({ ...values, error: capitalizeFirstLetter(data.error) });
         else if (data.message) {
           setValues({ ...values, error: "" });
-          history("/login");
-          dispatch(openModal("login"));
+          navigate("/login");
           setValues({
             username: "",
             email: "",
@@ -56,89 +53,55 @@ const SignUpModal = () => {
     setValues({ ...values, [key]: value });
   };
 
-  const closeSignUpModal = () => {
-    setValues({
-      username: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      error: "",
-    });
-    dispatch(closeModal());
-    history("/");
-  };
-
-  let className = "modal";
-
-  return (
-    <div className={className} onClick={closeSignUpModal}>
-      <div onClick={(e) => e.stopPropagation()}>
-        <div className="modal-header">
-          <h2>Sign Up</h2>
-          <span onClick={closeSignUpModal}>&times;</span>
-        </div>
-        <form className="signup-form" onSubmit={(e) => handleSubmit(e)}>
-          <div className="input-wrapper">
-            <input
-              type="text"
-              placeholder="Name"
-              className="input"
-              value={values.username}
-              onChange={(e) => handleChange("username", e.target.value)}
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              className="input"
-              value={values.email}
-              onChange={(e) => handleChange("email", e.target.value)}
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              className="input"
-              value={values.password}
-              onChange={(e) => handleChange("password", e.target.value)}
-            />
-            <input
-              type="password"
-              placeholder="Confirm password"
-              className="input"
-              value={values.confirmPassword}
-              onChange={(e) => handleChange("confirmPassword", e.target.value)}
-            />
-          </div>
-          <hr className="hr" />
-          {values.error && <div className="error-message">{values.error}</div>}
-          <div className="signup-button-wrapper">
-            <Button
-              text="Sign Up"
-              className="signup-button"
-              type="submit"
-            ></Button>
-          </div>
-          <div
-            onClick={() => {
-              setValues({
-                username: "",
-                email: "",
-                password: "",
-                confirmPassword: "",
-                error: "",
-              });
-              dispatch(openModal("login"));
-              dispatch(closeModal());
-              history("/login");
-            }}
-            className="already-have-account"
-          >
-            Already have an account?
-            <p>Log in</p>
-          </div>
-        </form>
+  return modal.type === "signup" ? (
+    <form className="signup-form" onSubmit={(e) => handleSubmit(e)}>
+      <div className="input-wrapper">
+        <input
+          type="text"
+          placeholder="Name"
+          className="input"
+          value={values.username}
+          onChange={(e) => handleChange("username", e.target.value)}
+        />
+        <input
+          type="email"
+          placeholder="Email"
+          className="input"
+          value={values.email}
+          onChange={(e) => handleChange("email", e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          className="input"
+          value={values.password}
+          onChange={(e) => handleChange("password", e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Confirm password"
+          className="input"
+          value={values.confirmPassword}
+          onChange={(e) => handleChange("confirmPassword", e.target.value)}
+        />
       </div>
-    </div>
-  );
+      <hr className="hr" />
+      {values.error && <div className="error-message">{values.error}</div>}
+      <div className="signup-button-wrapper">
+        <Button text="Sign Up" className="signup-button" type="submit"></Button>
+      </div>
+      <div className="already-have-account">
+        Already have an account?
+        <p
+          onClick={() => {
+            navigate("/login");
+          }}
+        >
+          Log in
+        </p>
+      </div>
+    </form>
+  ) : null;
 };
 
-export default SignUpModal;
+export default SignUp;

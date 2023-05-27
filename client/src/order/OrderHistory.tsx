@@ -3,7 +3,7 @@ import pizza from "../assets/images/kawaii-pizza.png";
 import Button from "../reusable/Button";
 
 const OrderHistory = () => {
-  const history = useNavigate();
+  const navigate = useNavigate();
   return (
     <div className="goodbye-message">
       <div>
@@ -13,7 +13,7 @@ const OrderHistory = () => {
       <img className="rotating-pizza" src={pizza} alt="" />
       <div>
         <Button
-          onClick={() => history("/", { replace: true })}
+          onClick={() => navigate("/", { replace: true })}
           text="Order some more!"
           className="order-more-btn"
         ></Button>
