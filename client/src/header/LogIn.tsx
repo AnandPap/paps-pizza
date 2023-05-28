@@ -5,6 +5,7 @@ import { setIsLoggedIn } from "../redux/pizza";
 import { login } from "../helpers/fetch-functions";
 import Button from "../reusable/Button";
 import ErrorMessage from "../reusable/ErrorMessage";
+import { errorHandler } from "../helpers/error-functions";
 
 export interface LogInValues {
   [key: string]: string | undefined;
@@ -32,7 +33,7 @@ const LogIn = () => {
     login(user)
       .then((data) => {
         console.log(data);
-        if (data.error) setError(data.error);
+        if ("code" in data) setError(errorHandler(data));
         else if (data.token) {
           if (typeof window !== "undefined")
             sessionStorage.setItem("token", JSON.stringify(data.token));
@@ -58,8 +59,9 @@ const LogIn = () => {
       {valuesKeys.map((key, i) => (
         <input
           key={i}
+          type={key.toLowerCase()}
           className="input"
-          placeholder={key.toLowerCase()}
+          placeholder={key}
           value={values[key]}
           onChange={(e) => handleChange(key.toLowerCase(), e.target.value)}
         />
@@ -70,7 +72,7 @@ const LogIn = () => {
         text="Log In"
         className="login-button modal-button"
         type="submit"
-      ></Button>
+      />
       <p className="dont-have-account">
         Don't have an account?
         <span

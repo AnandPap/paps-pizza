@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 
 const register = (req, res) => {
   if (req.body.password !== req.body.confirmPassword)
-    return res.status(400).json({ error: "Passwords do not match" });
+    return res.status(400).json("Passwords do not match");
   const user = new User(req.body);
   user.save((err, result) => {
     let message = "";
@@ -14,26 +14,19 @@ const register = (req, res) => {
       }
     }
     if (err) {
-      return res.status(400).json({ error: message });
+      return res.status(400).json(message);
     }
-    res.status(200).json({ message: "Successfully created a new user." });
+    res.status(200).json("Successfully created a new user.");
   });
 };
 
 const login = (req, res) => {
   User.findOne({ email: req.body.email }, async (err, user) => {
     if (!req.body.email || !req.body.password)
-      return res
-        .status(400)
-        .json({ error: "Please enter email and password." });
-    if (!user)
-      return res
-        .status(400)
-        .json({ error: "Email and password do not match." });
+      return res.status(400).json("Please enter email and password.");
+    if (!user) return res.status(400).json("Email and password do not match.");
     if (!(await user.checkPassword(req.body.password)))
-      return res
-        .status(400)
-        .json({ error: "Email and password do not match." });
+      return res.status(400).json("Email and password do not match.");
     const token = jwt.sign({ id: user._id }, config.secret);
     res.cookie("token", token, {
       expires: new Date(Date.now() + 20 * 60 * 1000),
@@ -51,9 +44,9 @@ const login = (req, res) => {
 
 const signout = (req, res) => {
   res.clearCookie("token");
-  res.status(200).json({ message: "User signed out." });
+  res.status(200).json("User signed out.");
 };
 
-const fetchOrderHistory = (req, res) => {};
+const getOrderHistory = (req, res) => {};
 
-module.exports = { register, login, signout, fetchOrderHistory };
+module.exports = { register, login, signout, getOrderHistory };

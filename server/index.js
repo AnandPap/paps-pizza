@@ -5,8 +5,8 @@ const compress = require("compression");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const path = require("path");
-const config = require("./src/config/config");
-const userRoutes = require("./src/routes/user.routes");
+const config = require("./src/config");
+const userRoutes = require("./src/routes");
 
 const app = express();
 

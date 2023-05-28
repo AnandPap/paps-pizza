@@ -25,7 +25,7 @@ export const login = async (user: LogInValues) => {
     })
     .catch((err) => {
       console.log(err);
-      return err.response.data;
+      return getAxiosErrorObject(err);
     });
 };
 
@@ -33,10 +33,13 @@ export const signout = async () => {
   return await axios
     .get(`/api/signout`)
     .then((res) => console.log(res))
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log(err);
+      return getAxiosErrorObject(err);
+    });
 };
 
-export const fetchOrderHistory = async () => {
+export const getOrderHistory = async () => {
   return await axios
     .get(`/api/order-history`)
     .then((res) => {
@@ -45,6 +48,6 @@ export const fetchOrderHistory = async () => {
     })
     .catch((err) => {
       console.log(err);
-      return err.response.data;
+      return getAxiosErrorObject(err);
     });
 };
