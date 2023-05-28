@@ -1,17 +1,25 @@
 import { useState } from "react";
-import Button from "../reusable/Button";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import { setIsLoggedIn } from "../redux/pizza";
 import { login } from "../services/user-apis";
 import { authenticate } from "../services/auth-helpers";
+import Button from "../reusable/Button";
+import ErrorMessage from "../reusable/ErrorMessage";
+
+interface LogInValues {
+  [key: string]: string;
+  email: string;
+  password: string;
+}
 
 const LogIn = () => {
-  const [values, setValues] = useState({
+  const [values, setValues] = useState<LogInValues>({
     email: "",
     password: "",
-    error: "",
   });
+  const [error, setError] = useState("");
+  const valuesKeys = ["Email", "Password"];
   const modal = useAppSelector((s) => s.pizza.modal);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -25,14 +33,13 @@ const LogIn = () => {
     login(user)
       .then((data) => {
         console.log(data);
-        if (data.error) setValues({ ...values, error: data.error });
+        if (data.error) setError(data.error);
         else if (data.token) {
           authenticate(data, () => navigate("/"));
           dispatch(setIsLoggedIn(true));
           setValues({
             email: "",
             password: "",
-            error: "",
           });
         }
       })
@@ -46,39 +53,29 @@ const LogIn = () => {
   };
 
   return modal.type === "login" ? (
-    <form className="login-form" onSubmit={(e) => handleSubmit(e)}>
-      <div className="input-wrapper">
+    <form className="login" onSubmit={(e) => handleSubmit(e)}>
+      {valuesKeys.map((key, i) => (
         <input
+          key={i}
           className="input"
-          placeholder="Email"
-          value={values.email}
-          onChange={(e) => handleChange("email", e.target.value)}
+          placeholder={key.toLowerCase()}
+          value={values[key]}
+          onChange={(e) => handleChange(key.toLowerCase(), e.target.value)}
         />
-        <input
-          type="password"
-          className="input"
-          placeholder="Password"
-          value={values.password}
-          onChange={(e) => handleChange("password", e.target.value)}
-        />
-      </div>
+      ))}
       <hr className="hr" />
-      {values.error && <div className="error-message">{values.error}</div>}
-      <div className="login-button-wrapper">
-        <Button text="Log In" className="login-button" type="submit"></Button>
-      </div>
-      <div className="dont-have-account-wrapper">
-        <div className="dont-have-account">
-          Don't have an account?
-          <p
-            onClick={() => {
-              navigate("/signup");
-            }}
-          >
-            Sign Up
-          </p>
-        </div>
-      </div>
+      {error && <ErrorMessage className="error-message" text={error} />}
+      <Button text="Log In" className="login-button" type="submit"></Button>
+      <p className="dont-have-account">
+        Don't have an account?
+        <span
+          onClick={() => {
+            navigate("/signup");
+          }}
+        >
+          Sign Up
+        </span>
+      </p>
     </form>
   ) : null;
 };

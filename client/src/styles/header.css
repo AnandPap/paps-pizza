@@ -33,10 +33,6 @@ header h1 {
   padding-left: 10px;
 }
 
-.login-button {
-  padding: 5px 10px;
-}
-
 .dropdown {
   display: inline-block;
   position: relative;
@@ -61,41 +57,34 @@ header h1 {
   display: block;
 }
 
-.input-wrapper {
+.login,
+.signup {
   display: flex;
   flex-direction: column;
-  max-width: 200px;
+  gap: 0.5rem;
+  padding: 0.5rem;
 }
 .input {
-  margin: 5px;
-  font-size: 15px;
-  padding: 5px;
+  font-size: 1rem;
+  padding: 0.25rem;
 }
-.dont-have-account-wrapper {
-  display: flex;
+.login-button,
+.signup-button {
+  padding: 5px 10px;
+  font-size: inherit;
+}
+.modal-button {
+  align-self: flex-start;
 }
 .dont-have-account,
 .already-have-account {
   display: flex;
-  margin-top: 5px;
+  gap: 0.25rem;
 }
-.dont-have-account p,
-.already-have-account p {
+.dont-have-account span,
+.already-have-account span {
   text-decoration: underline;
   cursor: pointer;
-}
-.login-form,
-.signup-form {
-  margin: 5px;
-}
-.error-message {
-  font-size: 1rem;
-  color: red;
-  margin: 5px auto;
-}
-.login-button-wrapper,
-.signup-button-wrapper {
-  margin: 5px auto;
 }
 
 @media only screen and (max-width: 425px) {

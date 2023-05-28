@@ -6,6 +6,7 @@ import Home from "./components/Home";
 import Order from "./order/Order";
 import OrderHistory from "./order/OrderHistory";
 import Modal from "./reusable/Modal";
+import ErrorMessage from "./reusable/ErrorMessage";
 
 const MainRouter = () => {
   return (
@@ -32,6 +33,12 @@ const MainRouter = () => {
         </Route>
         <Route path="/order" element={<Order />} />
         <Route path="/orderhistory" element={<OrderHistory />} />
+        <Route
+          path="*"
+          element={
+            <ErrorMessage className="not-found" text="Page not found." />
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

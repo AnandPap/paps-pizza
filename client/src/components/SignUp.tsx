@@ -1,17 +1,27 @@
 import { useState } from "react";
-import Button from "../reusable/Button";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../redux/hooks";
 import { register } from "../services/user-apis";
+import Button from "../reusable/Button";
+import ErrorMessage from "../reusable/ErrorMessage";
+
+interface SignUpValues {
+  [key: string]: string;
+  username: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
 
 const SignUp = () => {
-  const [values, setValues] = useState({
+  const [values, setValues] = useState<SignUpValues>({
     username: "",
     email: "",
     password: "",
     confirmPassword: "",
-    error: "",
   });
+  const [error, setError] = useState("");
+  const valuesKeys = ["Username", "Email", "Password", "Confirm password"];
   const modal = useAppSelector((s) => s.pizza.modal);
   const navigate = useNavigate();
 
@@ -30,17 +40,14 @@ const SignUp = () => {
     register(user)
       .then((data) => {
         console.log(data);
-        if (data.error)
-          setValues({ ...values, error: capitalizeFirstLetter(data.error) });
+        if (data.error) setError(capitalizeFirstLetter(data.error));
         else if (data.message) {
-          setValues({ ...values, error: "" });
           navigate("/login");
           setValues({
             username: "",
             email: "",
             password: "",
             confirmPassword: "",
-            error: "",
           });
         }
       })
@@ -53,53 +60,47 @@ const SignUp = () => {
     setValues({ ...values, [key]: value });
   };
 
+  const toCamelCase = (text: string) => {
+    const words = text.split("");
+    let word = "";
+    for (let i = 0; i < words.length; i++) {
+      if (i === 0) word += words[0].charAt(0).toLowerCase() + words[0].slice(1);
+      else word += words[1].charAt(0).toUpperCase() + words[1].slice(1);
+    }
+    return word;
+  };
+
   return modal.type === "signup" ? (
-    <form className="signup-form" onSubmit={(e) => handleSubmit(e)}>
-      <div className="input-wrapper">
+    <form className="signup" onSubmit={(e) => handleSubmit(e)}>
+      {valuesKeys.map((key, i) => (
         <input
-          type="text"
-          placeholder="Name"
+          key={i}
+          type={
+            key === "Username"
+              ? "text"
+              : key === "Confirm password"
+              ? "password"
+              : key.toLowerCase()
+          }
+          placeholder={key}
           className="input"
-          value={values.username}
-          onChange={(e) => handleChange("username", e.target.value)}
+          value={values[key]}
+          onChange={(e) => handleChange(toCamelCase(key), e.target.value)}
         />
-        <input
-          type="email"
-          placeholder="Email"
-          className="input"
-          value={values.email}
-          onChange={(e) => handleChange("email", e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          className="input"
-          value={values.password}
-          onChange={(e) => handleChange("password", e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Confirm password"
-          className="input"
-          value={values.confirmPassword}
-          onChange={(e) => handleChange("confirmPassword", e.target.value)}
-        />
-      </div>
+      ))}
       <hr className="hr" />
-      {values.error && <div className="error-message">{values.error}</div>}
-      <div className="signup-button-wrapper">
-        <Button text="Sign Up" className="signup-button" type="submit"></Button>
-      </div>
-      <div className="already-have-account">
+      {error && <ErrorMessage className="error-message" text={error} />}
+      <Button text="Sign Up" className="signup-button" type="submit"></Button>
+      <p className="already-have-account">
         Already have an account?
-        <p
+        <span
           onClick={() => {
             navigate("/login");
           }}
         >
           Log in
-        </p>
-      </div>
+        </span>
+      </p>
     </form>
   ) : null;
 };
