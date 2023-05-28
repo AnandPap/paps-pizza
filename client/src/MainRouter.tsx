@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Header from "./components/Header";
-import SignUp from "./components/SignUp";
-import LogIn from "./components/LogIn";
-import Home from "./components/Home";
+import Header from "./header/Header";
+import SignUp from "./header/SignUp";
+import LogIn from "./header/LogIn";
+import Home from "./header/Home";
 import Order from "./order/Order";
 import OrderHistory from "./order/OrderHistory";
 import Modal from "./reusable/Modal";

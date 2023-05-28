@@ -1,21 +1,26 @@
-const User = require("../models/user.model");
-const errorHandler = require("../helpers/errorHandler");
-const config = require("../config/config");
+const User = require("./user.model");
+const config = require("./config");
 const jwt = require("jsonwebtoken");
 
-const register = (req, res, next) => {
+const register = (req, res) => {
   if (req.body.password !== req.body.confirmPassword)
     return res.status(400).json({ error: "Passwords do not match" });
   const user = new User(req.body);
   user.save((err, result) => {
+    let message = "";
+    for (let errName in err.errors) {
+      if (err.errors[errName].message) {
+        message = err.errors[errName].message;
+      }
+    }
     if (err) {
-      return res.status(400).json({ error: errorHandler(err) });
+      return res.status(400).json({ error: message });
     }
     res.status(200).json({ message: "Successfully created a new user." });
   });
 };
 
-const login = (req, res, next) => {
+const login = (req, res) => {
   User.findOne({ email: req.body.email }, async (err, user) => {
     if (!req.body.email || !req.body.password)
       return res

@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../redux/hooks";
-import { register } from "../services/user-apis";
+import { register } from "../helpers/fetch-functions";
 import Button from "../reusable/Button";
 import ErrorMessage from "../reusable/ErrorMessage";
 
-interface SignUpValues {
-  [key: string]: string;
-  username: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
+export interface SignUpValues {
+  [key: string]: string | undefined;
+  username: string | undefined;
+  email: string | undefined;
+  password: string | undefined;
+  confirmPassword: string | undefined;
 }
 
 const SignUp = () => {
@@ -90,7 +90,11 @@ const SignUp = () => {
       ))}
       <hr className="hr" />
       {error && <ErrorMessage className="error-message" text={error} />}
-      <Button text="Sign Up" className="signup-button" type="submit"></Button>
+      <Button
+        text="Sign Up"
+        className="signup-button modal-button"
+        type="submit"
+      ></Button>
       <p className="already-have-account">
         Already have an account?
         <span

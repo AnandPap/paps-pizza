@@ -3,11 +3,10 @@ import pizza from "../assets/images/pizza2.png";
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import { openModal, setIsLoggedIn, resetPizzas } from "../redux/pizza";
 import { useNavigate } from "react-router-dom";
-import { clearJWT } from "../services/auth-helpers";
+import { signout } from "../helpers/fetch-functions";
 
 const Header = () => {
   const { pizzasPicked, isLoggedIn } = useAppSelector((s) => s.pizza);
-
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -29,7 +28,9 @@ const Header = () => {
             {/* <p onClick={() => navigate("/orderhistory")}>Order History</p> */}
             <p
               onClick={() => {
-                clearJWT();
+                if (typeof window !== "undefined")
+                  sessionStorage.removeItem("token");
+                signout();
                 dispatch(setIsLoggedIn(false));
                 navigate("/");
                 dispatch(resetPizzas());

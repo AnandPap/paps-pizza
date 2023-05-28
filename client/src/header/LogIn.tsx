@@ -2,15 +2,14 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import { setIsLoggedIn } from "../redux/pizza";
-import { login } from "../services/user-apis";
-import { authenticate } from "../services/auth-helpers";
+import { login } from "../helpers/fetch-functions";
 import Button from "../reusable/Button";
 import ErrorMessage from "../reusable/ErrorMessage";
 
-interface LogInValues {
-  [key: string]: string;
-  email: string;
-  password: string;
+export interface LogInValues {
+  [key: string]: string | undefined;
+  email: string | undefined;
+  password: string | undefined;
 }
 
 const LogIn = () => {
@@ -35,8 +34,10 @@ const LogIn = () => {
         console.log(data);
         if (data.error) setError(data.error);
         else if (data.token) {
-          authenticate(data, () => navigate("/"));
+          if (typeof window !== "undefined")
+            sessionStorage.setItem("token", JSON.stringify(data.token));
           dispatch(setIsLoggedIn(true));
+          navigate("/");
           setValues({
             email: "",
             password: "",
@@ -65,7 +66,11 @@ const LogIn = () => {
       ))}
       <hr className="hr" />
       {error && <ErrorMessage className="error-message" text={error} />}
-      <Button text="Log In" className="login-button" type="submit"></Button>
+      <Button
+        text="Log In"
+        className="login-button modal-button"
+        type="submit"
+      ></Button>
       <p className="dont-have-account">
         Don't have an account?
         <span
