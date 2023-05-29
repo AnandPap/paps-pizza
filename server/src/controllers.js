@@ -29,7 +29,8 @@ const login = (req, res) => {
       return res.status(400).json("Email and password do not match.");
     const token = jwt.sign({ id: user._id }, config.secret);
     res.cookie("token", token, {
-      expires: new Date(Date.now() + 20 * 60 * 1000),
+      expires: new Date(Date.now() + 30 * 60 * 1000),
+      httpOnly: true,
     });
     res.status(200).json({
       token,

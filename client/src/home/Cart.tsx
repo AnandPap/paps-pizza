@@ -1,17 +1,15 @@
 import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
-import { openModal, setAmount } from "../redux/pizza";
+import { openModal, setTotalPrice } from "../redux/pizza";
 import { useNavigate } from "react-router-dom";
 import Button from "../reusable/Button";
 import CartItem from "./CartItem";
+import { isAuthenticated } from "../helpers/helper-functions";
 
 const Cart = () => {
-  const { totalPrice, pizzasPicked, isLoggedIn } = useAppSelector(
-    (s) => s.pizza
-  );
-  const dispatch = useAppDispatch();
-
   const deliveryPrice = 5;
+  const { totalPrice, pizzasPicked } = useAppSelector((s) => s.pizza);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,7 +17,7 @@ const Cart = () => {
     for (let i = 0; i < pizzasPicked.length; i++) {
       price += pizzasPicked[i].numberOfOrders * pizzasPicked[i].pizzaPrice;
     }
-    dispatch(setAmount(price));
+    dispatch(setTotalPrice({ type: "decrement", amount: price }));
   }, [pizzasPicked]);
 
   return (
@@ -48,7 +46,7 @@ const Cart = () => {
                 text="BUY"
                 className="buy-btn"
                 onClick={() => {
-                  if (isLoggedIn) {
+                  if (isAuthenticated()) {
                     navigate("/order");
                     sessionStorage.setItem(
                       "pizzasPicked",
@@ -56,7 +54,7 @@ const Cart = () => {
                     );
                   } else {
                     dispatch(openModal("login"));
-                    navigate("/login");
+                    navigate("/login", { state: "buy" });
                   }
                 }}
               />

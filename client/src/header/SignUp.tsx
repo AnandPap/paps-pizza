@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../redux/hooks";
 import { register } from "../helpers/fetch-functions";
@@ -6,6 +6,7 @@ import Button from "../reusable/Button";
 import ErrorMessage from "../reusable/ErrorMessage";
 import { toCamelCase } from "../helpers/helper-functions";
 import { errorHandler } from "../helpers/error-functions";
+import { isAuthenticated } from "../helpers/helper-functions";
 
 export interface SignUpValues {
   [key: string]: string | undefined;
@@ -26,6 +27,10 @@ const SignUp = () => {
   const valuesKeys = ["Username", "Email", "Password", "Confirm password"];
   const modal = useAppSelector((s) => s.pizza.modal);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated()) navigate("/", { replace: true });
+  }, []);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -63,6 +68,7 @@ const SignUp = () => {
       {valuesKeys.map((key, i) => (
         <input
           key={i}
+          id={key}
           type={
             key === "Username"
               ? "text"

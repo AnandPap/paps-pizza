@@ -2,12 +2,10 @@ import { FC } from "react";
 import { useAppDispatch } from "../redux/hooks";
 import Button from "../reusable/Button";
 import {
-  incrementTotalPrice,
-  decrementTotalPrice,
-  removePizza,
-  increaseNumberOfOrders,
-  decreaseNumberOfOrders,
   PizzaPicked,
+  setPizza,
+  setOrderNumber,
+  setTotalPrice,
 } from "../redux/pizza";
 
 interface CartItemProps {
@@ -32,11 +30,22 @@ const CartItem: FC<CartItemProps> = ({ i, pizza }) => {
         </div>
         <Button
           onClick={() => {
-            if (pizza.numberOfOrders === 1) {
-              dispatch(removePizza(i));
+            if (location.pathname === "/order") {
+              if (pizza.numberOfOrders > 1) {
+                dispatch(setOrderNumber({ type: "decrement", index: i }));
+                dispatch(
+                  setTotalPrice({ type: "decrement", amount: pizza.pizzaPrice })
+                );
+              }
             } else {
-              dispatch(decreaseNumberOfOrders(i));
-              dispatch(decrementTotalPrice(pizza.pizzaPrice));
+              if (pizza.numberOfOrders === 1) {
+                dispatch(setPizza({ type: "remove", index: i }));
+              } else {
+                dispatch(setOrderNumber({ type: "decrement", index: i }));
+                dispatch(
+                  setTotalPrice({ type: "decrement", amount: pizza.pizzaPrice })
+                );
+              }
             }
           }}
           text="-"
@@ -45,8 +54,10 @@ const CartItem: FC<CartItemProps> = ({ i, pizza }) => {
         <div className="number-of-orders">{pizza.numberOfOrders}</div>
         <Button
           onClick={() => {
-            dispatch(increaseNumberOfOrders(i));
-            dispatch(incrementTotalPrice(pizza.pizzaPrice));
+            dispatch(setOrderNumber({ type: "increment", index: i }));
+            dispatch(
+              setTotalPrice({ type: "increment", amount: pizza.pizzaPrice })
+            );
           }}
           text="+"
           className="increment-btn"

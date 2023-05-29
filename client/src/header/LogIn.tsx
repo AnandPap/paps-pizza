@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAppSelector, useAppDispatch } from "../redux/hooks";
-import { setIsLoggedIn } from "../redux/pizza";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useAppSelector } from "../redux/hooks";
 import { login } from "../helpers/fetch-functions";
 import Button from "../reusable/Button";
 import ErrorMessage from "../reusable/ErrorMessage";
 import { errorHandler } from "../helpers/error-functions";
+import { isAuthenticated } from "../helpers/helper-functions";
 
 export interface LogInValues {
   [key: string]: string | undefined;
@@ -21,8 +21,12 @@ const LogIn = () => {
   const [error, setError] = useState("");
   const valuesKeys = ["Email", "Password"];
   const modal = useAppSelector((s) => s.pizza.modal);
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (isAuthenticated()) navigate("/", { replace: true });
+  }, []);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -37,8 +41,8 @@ const LogIn = () => {
         else if (data.token) {
           if (typeof window !== "undefined")
             sessionStorage.setItem("token", JSON.stringify(data.token));
-          dispatch(setIsLoggedIn(true));
-          navigate("/");
+          if (location.state === "buy") navigate("/order", { replace: true });
+          else navigate("/");
           setValues({
             email: "",
             password: "",
@@ -59,6 +63,7 @@ const LogIn = () => {
       {valuesKeys.map((key, i) => (
         <input
           key={i}
+          id={key}
           type={key.toLowerCase()}
           className="input"
           placeholder={key}

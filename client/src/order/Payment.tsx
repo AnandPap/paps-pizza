@@ -1,6 +1,6 @@
 import { useState, useEffect, FC } from "react";
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
-import { resetPizzas } from "../redux/pizza";
+import { setPizza } from "../redux/pizza";
 import { useNavigate } from "react-router-dom";
 import CartItem from "../home/CartItem";
 import Button from "../reusable/Button";
@@ -12,12 +12,9 @@ interface PaymentProps {
 
 const Payment: FC<PaymentProps> = ({ addressSelected }) => {
   const [warningText, setWarningText] = useState("");
-
   const { pizzasPicked, totalPrice } = useAppSelector((s) => s.pizza);
   const dispatch = useAppDispatch();
-
   const navigate = useNavigate();
-
   const deliveryPrice = 5;
 
   useEffect(() => {
@@ -60,7 +57,7 @@ const Payment: FC<PaymentProps> = ({ addressSelected }) => {
             onClick={() => {
               if (addressSelected.address !== undefined) {
                 navigate("/orderhistory", { replace: true });
-                dispatch(resetPizzas());
+                dispatch(setPizza({ type: "reset" }));
               } else
                 setWarningText(
                   "Please select appropriate address for delivery."

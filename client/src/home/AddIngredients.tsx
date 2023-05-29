@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { addPizza, closeModal } from "../redux/pizza";
+import { closeModal, setPizza } from "../redux/pizza";
 import ingredients from "../assets/data/ingredients.json";
 import ListItem from "./ListItem";
 import Button from "../reusable/Button";
@@ -88,7 +88,7 @@ const AddIngredients: FC<AddIngredientsProps> = ({ doughSelected }) => {
               pizzaPrice: doughSelected.doughPrice + ingredientsPicked.price,
               numberOfOrders: 1,
             };
-            dispatch(addPizza(newPizza));
+            dispatch(setPizza({ type: "add", value: newPizza }));
             dispatch(closeModal());
           }}
         />

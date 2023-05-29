@@ -1,12 +1,13 @@
 import Button from "../reusable/Button";
 import pizza from "../assets/images/pizza2.png";
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
-import { openModal, setIsLoggedIn, resetPizzas } from "../redux/pizza";
+import { openModal, setPizza } from "../redux/pizza";
 import { useNavigate } from "react-router-dom";
 import { signout } from "../helpers/fetch-functions";
+import { isAuthenticated } from "../helpers/helper-functions";
 
 const Header = () => {
-  const { pizzasPicked, isLoggedIn } = useAppSelector((s) => s.pizza);
+  const pizzasPicked = useAppSelector((s) => s.pizza.pizzasPicked);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -21,7 +22,7 @@ const Header = () => {
       ) : (
         <i className="bi bi-cart4 cart-icon" title="Cart empty"></i>
       )}
-      {isLoggedIn ? (
+      {isAuthenticated() ? (
         <div className="dropdown">
           <i className="bi bi-person-circle avatar"></i>
           <div className="dropdown-content">
@@ -31,9 +32,8 @@ const Header = () => {
                 if (typeof window !== "undefined")
                   sessionStorage.removeItem("token");
                 signout();
-                dispatch(setIsLoggedIn(false));
                 navigate("/");
-                dispatch(resetPizzas());
+                dispatch(setPizza({ type: "reset" }));
               }}
             >
               Sign out
