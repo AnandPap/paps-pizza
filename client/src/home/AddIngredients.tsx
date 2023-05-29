@@ -1,15 +1,19 @@
 import { FC, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { closeModal, setPizza } from "../redux/pizza";
+import { useAppDispatch } from "../redux/hooks";
+import { setPizza } from "../redux/pizza";
 import ingredients from "../assets/data/ingredients.json";
 import ListItem from "./ListItem";
 import Button from "../reusable/Button";
 
 interface AddIngredientsProps {
   doughSelected: { doughName: string; doughPrice: number };
+  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const AddIngredients: FC<AddIngredientsProps> = ({ doughSelected }) => {
+const AddIngredients: FC<AddIngredientsProps> = ({
+  doughSelected,
+  setOpenModal,
+}) => {
   const [ingredientsPicked, setIngredientsPicked] = useState({
     cheese: "",
     olives: "",
@@ -20,10 +24,9 @@ const AddIngredients: FC<AddIngredientsProps> = ({ doughSelected }) => {
     cheese: 0,
     olives: 0,
   });
-  const modal = useAppSelector((s) => s.pizza.modal);
   const dispatch = useAppDispatch();
 
-  return modal.type === "ingredients" ? (
+  return (
     <>
       <div className="ingredients-list">
         <form>
@@ -89,12 +92,12 @@ const AddIngredients: FC<AddIngredientsProps> = ({ doughSelected }) => {
               numberOfOrders: 1,
             };
             dispatch(setPizza({ type: "add", value: newPizza }));
-            dispatch(closeModal());
+            setOpenModal(false);
           }}
         />
       </div>
     </>
-  ) : null;
+  );
 };
 
 export default AddIngredients;

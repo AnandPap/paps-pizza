@@ -1,6 +1,4 @@
 import { FC } from "react";
-import { useAppDispatch } from "../redux/hooks";
-import { openModal } from "../redux/pizza";
 import Button from "../reusable/Button";
 
 interface DoughRowProps {
@@ -13,6 +11,7 @@ interface DoughRowProps {
       doughPrice: number;
     }>
   >;
+  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const DoughRow: FC<DoughRowProps> = ({
@@ -20,9 +19,8 @@ const DoughRow: FC<DoughRowProps> = ({
   doughPrice,
   doughDesciption,
   setDoughSelected,
+  setOpenModal,
 }) => {
-  const dispatch = useAppDispatch();
-
   return (
     <div className="dough-row">
       <div>
@@ -32,13 +30,12 @@ const DoughRow: FC<DoughRowProps> = ({
       <div>
         <div className="dough-price">{doughPrice}$</div>
         <Button
-          className="add-ingredients-button"
           onClick={() => {
             setDoughSelected({
               doughName: doughName,
               doughPrice: doughPrice,
             });
-            dispatch(openModal("ingredients"));
+            setOpenModal(true);
           }}
           title="Add ingredients"
           text="+ADD"

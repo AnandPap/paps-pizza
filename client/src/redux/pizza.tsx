@@ -4,7 +4,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 interface InitialState {
   pizzasPicked: PizzaPicked[];
   totalPrice: number;
-  modal: Modal;
+  isLoggedIn: boolean | null;
 }
 export interface PizzaPicked {
   pizzaName: string;
@@ -36,16 +36,11 @@ interface TotalPriceAction {
   type: "increment" | "decrement" | "set";
   amount: number;
 }
-interface Modal {
-  type: ModalType;
-  display: boolean;
-}
-type ModalType = "login" | "signup" | "ingredients" | "";
 
 const initialState: InitialState = {
   pizzasPicked: [],
   totalPrice: 0,
-  modal: { type: "", display: false },
+  isLoggedIn: null,
 };
 
 export const pizzaSlice = createSlice({
@@ -98,21 +93,13 @@ export const pizzaSlice = createSlice({
         JSON.stringify(state.pizzasPicked)
       );
     },
-    openModal: (state, action: PayloadAction<ModalType>) => {
-      state.modal = { type: action.payload, display: true };
-    },
-    closeModal: (state) => {
-      state.modal = { type: "", display: false };
+    setIsLoggedIn: (state, action: PayloadAction<boolean>) => {
+      state.isLoggedIn = action.payload;
     },
   },
 });
 
-export const {
-  setPizza,
-  setOrderNumber,
-  setTotalPrice,
-  openModal,
-  closeModal,
-} = pizzaSlice.actions;
+export const { setPizza, setOrderNumber, setTotalPrice, setIsLoggedIn } =
+  pizzaSlice.actions;
 
 export default pizzaSlice.reducer;

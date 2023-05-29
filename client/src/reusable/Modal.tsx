@@ -1,24 +1,29 @@
 import { useNavigate } from "react-router";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { closeModal } from "../redux/pizza";
 import { FC, ReactNode } from "react";
+import { useAppSelector } from "../redux/hooks";
 
 interface ModalProps {
   headerTitle: string;
+  openModal?: boolean;
+  setOpenModal?: React.Dispatch<React.SetStateAction<boolean>>;
   children: ReactNode;
 }
 
-const Modal: FC<ModalProps> = ({ headerTitle, children }) => {
-  const modal = useAppSelector((s) => s.pizza.modal);
-  const dispatch = useAppDispatch();
+const Modal: FC<ModalProps> = ({
+  headerTitle,
+  openModal = true,
+  setOpenModal,
+  children,
+}) => {
   const navigate = useNavigate();
+  const { isLoggedIn } = useAppSelector((s) => s.pizza);
 
-  return modal.display ? (
+  return openModal && isLoggedIn !== null ? (
     <div
       className="modal-cover"
       onClick={() => {
         if (location.pathname !== "/") navigate("/");
-        dispatch(closeModal());
+        if (setOpenModal) setOpenModal(false);
       }}
     >
       <div className="modal" onClick={(e) => e.stopPropagation()}>
@@ -27,7 +32,7 @@ const Modal: FC<ModalProps> = ({ headerTitle, children }) => {
           <span
             onClick={() => {
               navigate("/");
-              dispatch(closeModal());
+              if (setOpenModal) setOpenModal(false);
             }}
           >
             &times;

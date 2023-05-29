@@ -48,7 +48,7 @@ const CartItem: FC<CartItemProps> = ({ i, pizza }) => {
               }
             }
           }}
-          text="-"
+          text="&minus;"
           className="increment-btn"
         />
         <div className="number-of-orders">{pizza.numberOfOrders}</div>

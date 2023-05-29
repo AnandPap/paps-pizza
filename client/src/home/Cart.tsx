@@ -1,23 +1,32 @@
 import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
-import { openModal, setTotalPrice } from "../redux/pizza";
+import { PizzaPicked, setPizza, setTotalPrice } from "../redux/pizza";
 import { useNavigate } from "react-router-dom";
 import Button from "../reusable/Button";
 import CartItem from "./CartItem";
-import { isAuthenticated } from "../helpers/helper-functions";
 
 const Cart = () => {
   const deliveryPrice = 5;
-  const { totalPrice, pizzasPicked } = useAppSelector((s) => s.pizza);
+  const { totalPrice, pizzasPicked, isLoggedIn } = useAppSelector(
+    (s) => s.pizza
+  );
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    let item = sessionStorage.getItem("pizzasPicked");
+    if (item) {
+      const pizzasPickedArray: PizzaPicked[] = JSON.parse(item);
+      dispatch(setPizza({ type: "set", value: pizzasPickedArray }));
+    }
+  }, []);
 
   useEffect(() => {
     let price = 0;
     for (let i = 0; i < pizzasPicked.length; i++) {
       price += pizzasPicked[i].numberOfOrders * pizzasPicked[i].pizzaPrice;
     }
-    dispatch(setTotalPrice({ type: "decrement", amount: price }));
+    dispatch(setTotalPrice({ type: "set", amount: price }));
   }, [pizzasPicked]);
 
   return (
@@ -46,16 +55,8 @@ const Cart = () => {
                 text="BUY"
                 className="buy-btn"
                 onClick={() => {
-                  if (isAuthenticated()) {
-                    navigate("/order");
-                    sessionStorage.setItem(
-                      "pizzasPicked",
-                      JSON.stringify(pizzasPicked)
-                    );
-                  } else {
-                    dispatch(openModal("login"));
-                    navigate("/login", { state: "buy" });
-                  }
+                  if (isLoggedIn) navigate("/order");
+                  else navigate("/login", { state: "buy" });
                 }}
               />
             </div>

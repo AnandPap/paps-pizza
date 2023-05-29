@@ -1,12 +1,11 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../redux/hooks";
 import { register } from "../helpers/fetch-functions";
 import Button from "../reusable/Button";
 import ErrorMessage from "../reusable/ErrorMessage";
 import { toCamelCase } from "../helpers/helper-functions";
 import { errorHandler } from "../helpers/error-functions";
-import { isAuthenticated } from "../helpers/helper-functions";
 
 export interface SignUpValues {
   [key: string]: string | undefined;
@@ -25,12 +24,8 @@ const SignUp = () => {
   });
   const [error, setError] = useState("");
   const valuesKeys = ["Username", "Email", "Password", "Confirm password"];
-  const modal = useAppSelector((s) => s.pizza.modal);
+  const { isLoggedIn } = useAppSelector((s) => s.pizza);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (isAuthenticated()) navigate("/", { replace: true });
-  }, []);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -44,15 +39,7 @@ const SignUp = () => {
       .then((data) => {
         console.log(data);
         if ("code" in data) setError(errorHandler(data));
-        else if (data.message) {
-          navigate("/login");
-          setValues({
-            username: "",
-            email: "",
-            password: "",
-            confirmPassword: "",
-          });
-        }
+        else if (data.message) navigate("/login");
       })
       .catch((err) => {
         console.log(err);
@@ -63,7 +50,7 @@ const SignUp = () => {
     setValues({ ...values, [key]: value });
   };
 
-  return modal.type === "signup" ? (
+  return !isLoggedIn ? (
     <form className="signup" onSubmit={(e) => handleSubmit(e)}>
       {valuesKeys.map((key, i) => (
         <input
@@ -100,7 +87,9 @@ const SignUp = () => {
         </span>
       </p>
     </form>
-  ) : null;
+  ) : (
+    <Navigate to="/" replace={true} />
+  );
 };
 
 export default SignUp;

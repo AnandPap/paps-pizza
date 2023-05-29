@@ -9,6 +9,7 @@ const CreatePizza = () => {
     doughName: "",
     doughPrice: 0,
   });
+  const [openModal, setOpenModal] = useState(false);
 
   return (
     <div className="create-pizza">
@@ -21,12 +22,20 @@ const CreatePizza = () => {
             doughPrice={item.price}
             doughDesciption={item.desc}
             setDoughSelected={setDoughSelected}
+            setOpenModal={setOpenModal}
           />
         ))}
       </div>
       {location.pathname === "/" && (
-        <Modal headerTitle="Ingredients">
-          <AddIngredients doughSelected={doughSelected} />
+        <Modal
+          headerTitle="Ingredients"
+          openModal={openModal}
+          setOpenModal={setOpenModal}
+        >
+          <AddIngredients
+            doughSelected={doughSelected}
+            setOpenModal={setOpenModal}
+          />
         </Modal>
       )}
     </div>

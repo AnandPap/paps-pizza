@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useAppSelector } from "../redux/hooks";
+import { useState } from "react";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { login } from "../helpers/fetch-functions";
 import Button from "../reusable/Button";
 import ErrorMessage from "../reusable/ErrorMessage";
 import { errorHandler } from "../helpers/error-functions";
-import { isAuthenticated } from "../helpers/helper-functions";
+import { setIsLoggedIn } from "../redux/pizza";
 
 export interface LogInValues {
   [key: string]: string | undefined;
@@ -20,13 +20,10 @@ const LogIn = () => {
   });
   const [error, setError] = useState("");
   const valuesKeys = ["Email", "Password"];
-  const modal = useAppSelector((s) => s.pizza.modal);
+  const { isLoggedIn } = useAppSelector((s) => s.pizza);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-
-  useEffect(() => {
-    if (isAuthenticated()) navigate("/", { replace: true });
-  }, []);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -36,17 +33,11 @@ const LogIn = () => {
     };
     login(user)
       .then((data) => {
-        console.log(data);
         if ("code" in data) setError(errorHandler(data));
         else if (data.token) {
-          if (typeof window !== "undefined")
-            sessionStorage.setItem("token", JSON.stringify(data.token));
           if (location.state === "buy") navigate("/order", { replace: true });
           else navigate("/");
-          setValues({
-            email: "",
-            password: "",
-          });
+          dispatch(setIsLoggedIn(true));
         }
       })
       .catch((err) => {
@@ -58,7 +49,7 @@ const LogIn = () => {
     setValues({ ...values, [key]: value });
   };
 
-  return modal.type === "login" ? (
+  return !isLoggedIn ? (
     <form className="login" onSubmit={(e) => handleSubmit(e)}>
       {valuesKeys.map((key, i) => (
         <input
@@ -89,7 +80,9 @@ const LogIn = () => {
         </span>
       </p>
     </form>
-  ) : null;
+  ) : location.state === "buy" ? null : (
+    <Navigate to="/" replace={true} />
+  );
 };
 
 export default LogIn;
