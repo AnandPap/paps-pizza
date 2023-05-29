@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 interface ButtonProps {
-  className: string;
+  className?: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   title?: string;
   type?: "button" | "submit" | "reset" | undefined;

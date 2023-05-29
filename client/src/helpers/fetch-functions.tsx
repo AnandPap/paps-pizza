@@ -29,10 +29,23 @@ export const login = async (user: LogInValues) => {
     });
 };
 
+export async function isAuthenticated() {
+  try {
+    const validateUser = await axios.get<boolean>(`/api/validate-cookie`);
+    return validateUser.data;
+  } catch (err) {
+    console.log(err);
+    return getAxiosErrorObject(err);
+  }
+}
+
 export const signout = async () => {
   return await axios
     .get(`/api/signout`)
-    .then((res) => console.log(res))
+    .then((res) => {
+      if (res.status === 200) return true;
+      else return false;
+    })
     .catch((err) => {
       console.log(err);
       return getAxiosErrorObject(err);

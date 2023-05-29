@@ -1,12 +1,19 @@
 const express = require("express");
-const userController = require("./controllers");
+const {
+  register,
+  login,
+  signout,
+  getOrderHistory,
+  validateCookie,
+} = require("./controllers");
 
 const router = express.Router();
 
 router
-  .post("/api/register", userController.register)
-  .post("/api/login", userController.login)
-  .get("/api/signout", userController.signout)
-  .get("/api/order-history", userController.getOrderHistory);
+  .post("/api/register", register)
+  .post("/api/login", login)
+  .get("/api/signout", signout)
+  .get("/api/order-history", getOrderHistory)
+  .get("/api/validate-cookie", validateCookie);
 
 module.exports = router;

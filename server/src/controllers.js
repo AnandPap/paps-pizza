@@ -1,6 +1,7 @@
 const User = require("./user.model");
 const config = require("./config");
 const jwt = require("jsonwebtoken");
+/** @type {import("express").RequestHandler} */
 
 const register = (req, res) => {
   if (req.body.password !== req.body.confirmPassword)
@@ -48,6 +49,11 @@ const signout = (req, res) => {
   res.status(200).json("User signed out.");
 };
 
+function validateCookie(req, res) {
+  if (req.cookies.token) res.send(true);
+  else res.send(false);
+}
+
 const getOrderHistory = (req, res) => {};
 
-module.exports = { register, login, signout, getOrderHistory };
+module.exports = { register, login, signout, getOrderHistory, validateCookie };

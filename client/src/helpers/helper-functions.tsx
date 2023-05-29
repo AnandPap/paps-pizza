@@ -1,9 +1,3 @@
-function isAuthenticated() {
-  if (typeof window == "undefined" || !sessionStorage.getItem("token"))
-    return false;
-  return true;
-}
-
 function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -18,4 +12,4 @@ const toCamelCase = (text: string) => {
   return word;
 };
 
-export { isAuthenticated, capitalizeFirstLetter, toCamelCase };
+export { capitalizeFirstLetter, toCamelCase };
