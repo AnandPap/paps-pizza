@@ -4,30 +4,28 @@ header {
   border-bottom: 1px solid black;
   margin-bottom: 30px;
   padding: 5px 20px;
+  font-size: var(--fs-medium);
+  gap: 10px;
 }
 header > :first-child {
   flex-grow: 1;
-  font-size: 1.25rem;
   align-items: center;
   display: flex;
   gap: 10px;
 }
 header img {
-  width: 50px;
+  width: 60px;
   cursor: pointer;
 }
 header h1 {
   cursor: pointer;
   text-align: center;
-  font-size: 1.75em;
+  font-size: var(--fs-very-big);
   font-weight: 500;
 }
 .cart-icon,
 .avatar {
-  font-size: 40px;
-}
-.cart-icon {
-  margin-right: 10px;
+  font-size: var(--fs-very-big);
 }
 .avatar {
   padding-left: 10px;
@@ -62,16 +60,15 @@ header h1 {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  padding: 0.5rem;
+  padding: 0.75rem;
 }
 .input {
-  font-size: 1rem;
+  font-size: inherit;
   padding: 0.25rem;
 }
 .login-button,
 .signup-button {
-  padding: 5px 10px;
-  font-size: inherit;
+  padding: 7px 10px;
 }
 .modal-button {
   align-self: flex-start;
@@ -88,22 +85,18 @@ header h1 {
 }
 
 @media only screen and (max-width: 425px) {
+  header {
+    padding-inline: 15px;
+  }
+  header > :first-child {
+    gap: 5px;
+  }
   .cart-icon {
     display: none;
   }
 }
 @media only screen and (max-width: 720px) {
-  header > :first-child {
-    font-size: 1rem;
-  }
-  .cart-icon,
-  .avatar {
-    font-size: 35px;
-  }
-  .login-button {
-    font-size: 15px;
-  }
-  .logo {
+  header img {
     width: 50px;
   }
 }

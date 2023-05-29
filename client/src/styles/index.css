@@ -1,4 +1,8 @@
 :root {
+  --fs-very-big: 2.5rem;
+  --fs-big: 2rem;
+  --fs-medium: 1.25rem;
+  --fs-small: 1rem;
 }
 
 * {
@@ -9,4 +13,13 @@
 
 body {
   background-color: rgb(250, 250, 250);
+}
+
+@media screen and (max-width: 720px) {
+  :root {
+    --fs-very-big: 2.125rem;
+    --fs-big: 1.75rem;
+    --fs-medium: 1.125rem;
+    --fs-small: 0.875rem;
+  }
 }

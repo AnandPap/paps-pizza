@@ -4,6 +4,7 @@
   gap: 30px;
   max-width: 95%;
   padding-bottom: 30px;
+  font-size: var(--fs-medium);
 }
 .home > * {
   flex: 1;
@@ -13,9 +14,10 @@
   background-color: white;
   border-radius: 5px;
   height: max-content;
-  margin: 30px 0;
-  width: 300px;
+  margin: 10px 0;
+  width: 350px;
   max-width: 90%;
+  box-shadow: 1px 1px 10px -3px black;
 }
 .ingredients-list {
   padding: 10px;
@@ -36,6 +38,7 @@
 .list-item-left-side-container {
   display: flex;
   flex-grow: 1;
+  margin-right: 5px;
 }
 .add-to-cart-btn-wrapper {
   border-top: 1px solid black;
@@ -43,18 +46,21 @@
   display: flex;
   justify-content: flex-end;
 }
+.add-to-cart-btn {
+  padding: 5px;
+}
 
 .create-pizza,
 .cart {
   outline: 1.5px solid black;
   box-shadow: 2px 2px 7px -2px black;
   border-radius: 5px;
-  min-height: 400px;
+  min-height: 500px;
 }
 .cart-list {
   display: flex;
   flex-direction: column;
-  min-height: 400px;
+  min-height: 500px;
 }
 .cart-placeholder {
   display: flex;
@@ -71,7 +77,7 @@
   border-bottom: 1px solid black;
   padding: 10px;
   font-style: italic;
-  font-size: 1.5rem;
+  font-size: var(--fs-big);
   font-weight: 500;
 }
 .dough-rows-container,
@@ -79,7 +85,7 @@
   padding: 10px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 1rem;
 }
 .dough-row,
 .cart-item {
@@ -92,6 +98,10 @@
   flex-grow: 1;
   line-height: 22px;
   padding-bottom: 5px;
+  font-size: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
 }
 .dough-row > :last-child,
 .cart-item > :last-child {
@@ -117,7 +127,7 @@
   flex-grow: 1;
 }
 .delivery span {
-  margin-right: 4.25rem;
+  margin-right: 73px;
 }
 .cart-total {
   display: flex;
@@ -133,7 +143,7 @@
   padding: 5px 17px;
 }
 
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 720px) {
   .home {
     flex-direction: column;
     align-items: center;
@@ -141,5 +151,8 @@
   }
   .home > * {
     width: 100%;
+  }
+  .delivery span {
+    margin-right: 71px;
   }
 }
