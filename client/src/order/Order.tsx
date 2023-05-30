@@ -16,12 +16,16 @@ const Order = () => {
 
   useEffect(() => {
     let item = sessionStorage.getItem("pizzasPicked");
-    if (!item) navigate("/", { replace: true });
-    else dispatch(setPizza({ type: "set", value: JSON.parse(item) }));
+    if (item) {
+      const parsedItem = JSON.parse(item);
+      if (parsedItem.constructor === Array)
+        dispatch(setPizza({ type: "set", value: parsedItem }));
+      else navigate("/", { replace: true });
+    } else navigate("/", { replace: true });
   }, []);
 
   return pizzasPicked.length > 0 && isLoggedIn !== null ? (
-    !isLoggedIn ? (
+    isLoggedIn ? (
       <div className="order-page">
         <DeliveryAddress setAddressSelected={setAddressSelected} />
         <Payment addressSelected={addressSelected} />

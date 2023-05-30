@@ -2,7 +2,6 @@ import { useState } from "react";
 import doughData from "../assets/data/types_of_dough.json";
 import DoughRow from "./DoughRow";
 import AddIngredients from "./AddIngredients";
-import Modal from "../reusable/Modal";
 
 const CreatePizza = () => {
   const [doughSelected, setDoughSelected] = useState({
@@ -27,16 +26,11 @@ const CreatePizza = () => {
         ))}
       </div>
       {location.pathname === "/" && (
-        <Modal
-          headerTitle="Ingredients"
+        <AddIngredients
+          doughSelected={doughSelected}
           openModal={openModal}
           setOpenModal={setOpenModal}
-        >
-          <AddIngredients
-            doughSelected={doughSelected}
-            setOpenModal={setOpenModal}
-          />
-        </Modal>
+        />
       )}
     </div>
   );

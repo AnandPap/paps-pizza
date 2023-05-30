@@ -1,23 +1,24 @@
 import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
-import { PizzaPicked, setPizza, setTotalPrice } from "../redux/pizza";
+import { setPizza, setTotalPrice } from "../redux/pizza";
 import { useNavigate } from "react-router-dom";
 import Button from "../reusable/Button";
 import CartItem from "./CartItem";
 
 const Cart = () => {
-  const deliveryPrice = 5;
   const { totalPrice, pizzasPicked, isLoggedIn } = useAppSelector(
     (s) => s.pizza
   );
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const deliveryPrice = 5;
 
   useEffect(() => {
     let item = sessionStorage.getItem("pizzasPicked");
     if (item) {
-      const pizzasPickedArray: PizzaPicked[] = JSON.parse(item);
-      dispatch(setPizza({ type: "set", value: pizzasPickedArray }));
+      const parsedItem = JSON.parse(item);
+      if (parsedItem.constructor === Array)
+        dispatch(setPizza({ type: "set", value: parsedItem }));
     }
   }, []);
 

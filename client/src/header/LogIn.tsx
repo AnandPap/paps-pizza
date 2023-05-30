@@ -2,10 +2,11 @@ import { useState } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { login } from "../helpers/fetch-functions";
-import Button from "../reusable/Button";
-import ErrorMessage from "../reusable/ErrorMessage";
 import { errorHandler } from "../helpers/error-functions";
 import { setIsLoggedIn } from "../redux/pizza";
+import Button from "../reusable/Button";
+import ErrorMessage from "../reusable/ErrorMessage";
+import Modal from "../reusable/Modal";
 
 export interface LogInValues {
   [key: string]: string | undefined;
@@ -50,36 +51,38 @@ const LogIn = () => {
   };
 
   return !isLoggedIn ? (
-    <form className="login" onSubmit={(e) => handleSubmit(e)}>
-      {valuesKeys.map((key, i) => (
-        <input
-          key={i}
-          id={key}
-          type={key.toLowerCase()}
-          className="input"
-          placeholder={key}
-          value={values[key]}
-          onChange={(e) => handleChange(key.toLowerCase(), e.target.value)}
+    <Modal headerTitle="Log In">
+      <form className="login" onSubmit={(e) => handleSubmit(e)}>
+        {valuesKeys.map((key, i) => (
+          <input
+            key={i}
+            id={key}
+            type={key.toLowerCase()}
+            className="input"
+            placeholder={key}
+            value={values[key]}
+            onChange={(e) => handleChange(key.toLowerCase(), e.target.value)}
+          />
+        ))}
+        <hr className="hr" />
+        {error && <ErrorMessage className="error-message" text={error} />}
+        <Button
+          text="Log In"
+          className="login-button modal-button"
+          type="submit"
         />
-      ))}
-      <hr className="hr" />
-      {error && <ErrorMessage className="error-message" text={error} />}
-      <Button
-        text="Log In"
-        className="login-button modal-button"
-        type="submit"
-      />
-      <p className="dont-have-account">
-        Don't have an account?
-        <span
-          onClick={() => {
-            navigate("/signup");
-          }}
-        >
-          Sign Up
-        </span>
-      </p>
-    </form>
+        <p className="dont-have-account">
+          Don't have an account?
+          <span
+            onClick={() => {
+              navigate("/signup");
+            }}
+          >
+            Sign Up
+          </span>
+        </p>
+      </form>
+    </Modal>
   ) : location.state === "buy" ? null : (
     <Navigate to="/" replace={true} />
   );

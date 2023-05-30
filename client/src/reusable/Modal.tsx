@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router";
 import { FC, ReactNode } from "react";
-import { useAppSelector } from "../redux/hooks";
 
 interface ModalProps {
   headerTitle: string;
@@ -16,9 +15,8 @@ const Modal: FC<ModalProps> = ({
   children,
 }) => {
   const navigate = useNavigate();
-  const { isLoggedIn } = useAppSelector((s) => s.pizza);
 
-  return openModal && isLoggedIn !== null ? (
+  return openModal ? (
     <div
       className="modal-cover"
       onClick={() => {

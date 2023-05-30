@@ -6,14 +6,16 @@ import LogIn from "./header/LogIn";
 import Home from "./header/Home";
 import Order from "./order/Order";
 import OrderHistory from "./order/OrderHistory";
-import Modal from "./reusable/Modal";
 import ErrorMessage from "./reusable/ErrorMessage";
 import { setIsLoggedIn } from "./redux/pizza";
-import { useAppDispatch } from "./redux/hooks";
+import { useAppDispatch, useAppSelector } from "./redux/hooks";
 import { isAuthenticated } from "./helpers/fetch-functions";
 
 const MainRouter = () => {
   const dispatch = useAppDispatch();
+  const { pizzasPicked, totalPrice, isLoggedIn } = useAppSelector(
+    (s) => s.pizza
+  );
 
   useEffect(() => {
     async function checkIsLoggedIn() {
@@ -22,29 +24,20 @@ const MainRouter = () => {
       else setIsLoggedIn(false);
     }
     checkIsLoggedIn();
-  }, []);
+  }, [isLoggedIn]);
+
+  useEffect(() => {
+    if (totalPrice !== 0)
+      sessionStorage.setItem("pizzasPicked", JSON.stringify(pizzasPicked));
+  }, [totalPrice]);
 
   return (
     <BrowserRouter>
       <Header />
       <Routes>
         <Route path="/" element={<Home />}>
-          <Route
-            path="signup"
-            element={
-              <Modal headerTitle="Sign Up">
-                <SignUp />
-              </Modal>
-            }
-          />
-          <Route
-            path="login"
-            element={
-              <Modal headerTitle="Log In">
-                <LogIn />
-              </Modal>
-            }
-          />
+          <Route path="signup" element={<SignUp />} />
+          <Route path="login" element={<LogIn />} />
         </Route>
         <Route path="/order" element={<Order />} />
         <Route path="/orderhistory" element={<OrderHistory />} />

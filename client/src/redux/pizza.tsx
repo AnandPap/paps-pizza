@@ -88,10 +88,6 @@ export const pizzaSlice = createSlice({
         case "set":
           state.totalPrice = action.payload.amount;
       }
-      sessionStorage.setItem(
-        "pizzasPicked",
-        JSON.stringify(state.pizzasPicked)
-      );
     },
     setIsLoggedIn: (state, action: PayloadAction<boolean>) => {
       state.isLoggedIn = action.payload;

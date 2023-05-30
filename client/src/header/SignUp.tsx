@@ -2,10 +2,11 @@ import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../redux/hooks";
 import { register } from "../helpers/fetch-functions";
-import Button from "../reusable/Button";
-import ErrorMessage from "../reusable/ErrorMessage";
 import { toCamelCase } from "../helpers/helper-functions";
 import { errorHandler } from "../helpers/error-functions";
+import ErrorMessage from "../reusable/ErrorMessage";
+import Button from "../reusable/Button";
+import Modal from "../reusable/Modal";
 
 export interface SignUpValues {
   [key: string]: string | undefined;
@@ -37,7 +38,6 @@ const SignUp = () => {
     };
     register(user)
       .then((data) => {
-        console.log(data);
         if ("code" in data) setError(errorHandler(data));
         else if (data.message) navigate("/login");
       })
@@ -51,42 +51,44 @@ const SignUp = () => {
   };
 
   return !isLoggedIn ? (
-    <form className="signup" onSubmit={(e) => handleSubmit(e)}>
-      {valuesKeys.map((key, i) => (
-        <input
-          key={i}
-          id={key}
-          type={
-            key === "Username"
-              ? "text"
-              : key === "Confirm password"
-              ? "password"
-              : key.toLowerCase()
-          }
-          placeholder={key}
-          className="input"
-          value={values[key]}
-          onChange={(e) => handleChange(toCamelCase(key), e.target.value)}
+    <Modal headerTitle="Sign Up">
+      <form className="signup" onSubmit={(e) => handleSubmit(e)}>
+        {valuesKeys.map((key, i) => (
+          <input
+            key={i}
+            id={key}
+            type={
+              key === "Username"
+                ? "text"
+                : key === "Confirm password"
+                ? "password"
+                : key.toLowerCase()
+            }
+            placeholder={key}
+            className="input"
+            value={values[key]}
+            onChange={(e) => handleChange(toCamelCase(key), e.target.value)}
+          />
+        ))}
+        <hr className="hr" />
+        {error && <ErrorMessage className="error-message" text={error} />}
+        <Button
+          text="Sign Up"
+          className="signup-button modal-button"
+          type="submit"
         />
-      ))}
-      <hr className="hr" />
-      {error && <ErrorMessage className="error-message" text={error} />}
-      <Button
-        text="Sign Up"
-        className="signup-button modal-button"
-        type="submit"
-      />
-      <p className="already-have-account">
-        Already have an account?
-        <span
-          onClick={() => {
-            navigate("/login");
-          }}
-        >
-          Log in
-        </span>
-      </p>
-    </form>
+        <p className="already-have-account">
+          Already have an account?
+          <span
+            onClick={() => {
+              navigate("/login");
+            }}
+          >
+            Log in
+          </span>
+        </p>
+      </form>
+    </Modal>
   ) : (
     <Navigate to="/" replace={true} />
   );
