@@ -1,7 +1,6 @@
 const User = require("./user.model");
 const config = require("./config");
 const jwt = require("jsonwebtoken");
-/** @type {import("express").RequestHandler} */
 
 const register = (req, res) => {
   if (req.body.password !== req.body.confirmPassword)

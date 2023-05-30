@@ -6,10 +6,8 @@ import { getAxiosErrorObject } from "./error-functions";
 export const register = async (user: SignUpValues) => {
   try {
     const res = await axios.post(`/api/register`, user);
-    console.log(res);
     return res.data;
   } catch (err) {
-    console.log(err);
     return getAxiosErrorObject(err);
   }
 };
@@ -20,11 +18,9 @@ export const login = async (user: LogInValues) => {
       withCredentials: true,
     })
     .then((res) => {
-      console.log(res);
       return res.data;
     })
     .catch((err) => {
-      console.log(err);
       return getAxiosErrorObject(err);
     });
 };
@@ -34,7 +30,6 @@ export async function isAuthenticated() {
     const validateUser = await axios.get<boolean>(`/api/validate-cookie`);
     return validateUser.data;
   } catch (err) {
-    console.log(err);
     return getAxiosErrorObject(err);
   }
 }
@@ -47,7 +42,6 @@ export const signout = async () => {
       else return false;
     })
     .catch((err) => {
-      console.log(err);
       return getAxiosErrorObject(err);
     });
 };
@@ -56,11 +50,9 @@ export const getOrderHistory = async () => {
   return await axios
     .get(`/api/order-history`)
     .then((res) => {
-      console.log(res);
       return res.data;
     })
     .catch((err) => {
-      console.log(err);
       return getAxiosErrorObject(err);
     });
 };

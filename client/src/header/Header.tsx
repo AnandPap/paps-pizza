@@ -4,6 +4,7 @@ import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import { setIsLoggedIn, setPizza } from "../redux/pizza";
 import { useNavigate } from "react-router-dom";
 import { signout } from "../helpers/fetch-functions";
+import Spinner from "../reusable/Spinner";
 
 const Header = () => {
   const { pizzasPicked, isLoggedIn } = useAppSelector((s) => s.pizza);
@@ -46,7 +47,7 @@ const Header = () => {
             </p>
           </div>
         </div>
-      ) : (
+      ) : isLoggedIn === false ? (
         <Button
           text="Log In"
           className="login-button"
@@ -54,6 +55,8 @@ const Header = () => {
             navigate("/login");
           }}
         />
+      ) : (
+        <Spinner size="50px" />
       )}
     </header>
   );

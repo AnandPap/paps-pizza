@@ -143,7 +143,7 @@
   padding: 5px 17px;
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 800px) {
   .home {
     flex-direction: column;
     align-items: center;
