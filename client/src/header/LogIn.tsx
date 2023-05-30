@@ -48,6 +48,7 @@ const LogIn = () => {
 
   const handleChange = (key: string, value: string) => {
     setValues({ ...values, [key]: value });
+    setError("");
   };
 
   return !isLoggedIn ? (

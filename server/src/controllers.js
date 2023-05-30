@@ -8,17 +8,17 @@ const register = (req, res) => {
   const user = new User(req.body);
   user.save((err, result) => {
     let message = "";
-    for (let errName in err.errors) {
-      if (err.errors[errName].message) {
-        message =
-          err.errors[errName].message.charAt(0).toUpperCase() +
-          err.errors[errName].message.slice(1);
-      }
-    }
     if (err) {
+      for (let errName in err.errors) {
+        if (err.errors[errName].message) {
+          message =
+            err.errors[errName].message.charAt(0).toUpperCase() +
+            err.errors[errName].message.slice(1);
+        }
+      }
       return res.status(400).json(message);
     }
-    res.status(200).json("Successfully created a new user.");
+    res.status(200).json({ message: "Successfully created a new user." });
   });
 };
 
