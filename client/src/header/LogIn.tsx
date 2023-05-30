@@ -51,7 +51,7 @@ const LogIn = () => {
   };
 
   return !isLoggedIn ? (
-    <Modal headerTitle="Log In">
+    <Modal headerTitle="Log In" className="login-modal">
       <form className="login" onSubmit={(e) => handleSubmit(e)}>
         {valuesKeys.map((key, i) => (
           <input

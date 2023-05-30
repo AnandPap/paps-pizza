@@ -10,17 +10,8 @@
   flex: 1;
 }
 
-.modal {
-  background-color: white;
-  border-radius: 5px;
-  height: max-content;
-  margin: 10px 0;
-  width: 350px;
-  max-width: 90%;
-  box-shadow: 1px 1px 10px -3px black;
-}
 .ingredients-list {
-  padding: 10px;
+  padding: 20px;
 }
 .list-item {
   display: flex;

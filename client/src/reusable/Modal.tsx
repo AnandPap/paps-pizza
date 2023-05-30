@@ -3,6 +3,7 @@ import { FC, ReactNode } from "react";
 
 interface ModalProps {
   headerTitle: string;
+  className?: string;
   openModal?: boolean;
   setOpenModal?: React.Dispatch<React.SetStateAction<boolean>>;
   children: ReactNode;
@@ -10,6 +11,7 @@ interface ModalProps {
 
 const Modal: FC<ModalProps> = ({
   headerTitle,
+  className,
   openModal = true,
   setOpenModal,
   children,
@@ -24,7 +26,10 @@ const Modal: FC<ModalProps> = ({
         if (setOpenModal) setOpenModal(false);
       }}
     >
-      <div className="modal" onClick={(e) => e.stopPropagation()}>
+      <div
+        className={`modal ${className}`}
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="modal-header">
           <h2>{headerTitle}</h2>
           <span
