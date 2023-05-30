@@ -3,8 +3,8 @@ const {
   register,
   login,
   signout,
+  authenticate,
   getOrderHistory,
-  validateCookie,
 } = require("./controllers");
 
 const router = express.Router();
@@ -14,6 +14,6 @@ router
   .post("/api/login", login)
   .get("/api/signout", signout)
   .get("/api/order-history", getOrderHistory)
-  .get("/api/validate-cookie", validateCookie);
+  .get("/api/authenticate", authenticate);
 
 module.exports = router;

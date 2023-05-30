@@ -46,9 +46,8 @@ const SignUp = () => {
       });
   }
 
-  const handleChange = (key: string, value: string) => {
+  const handleChange = (key: string, value: string) =>
     setValues({ ...values, [key]: value });
-  };
 
   return !isLoggedIn ? (
     <Modal headerTitle="Sign Up" className="signup-modal">

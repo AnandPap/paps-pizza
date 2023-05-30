@@ -56,7 +56,7 @@ const Payment: FC<PaymentProps> = ({ addressSelected }) => {
             className="order-button"
             onClick={() => {
               if (addressSelected.address !== undefined) {
-                navigate("/orderhistory", { replace: true });
+                navigate("/order-history");
                 dispatch(setPizza({ type: "reset" }));
               } else
                 setWarningText(

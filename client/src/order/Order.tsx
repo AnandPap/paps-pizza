@@ -3,7 +3,7 @@ import Payment from "./Payment";
 import DeliveryAddress, { Address } from "./DeliveryAddress";
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import { Navigate, useNavigate } from "react-router-dom";
-import { PizzaPicked, setPizza } from "../redux/pizza";
+import { setPizza } from "../redux/pizza";
 
 const Order = () => {
   const { pizzasPicked, isLoggedIn } = useAppSelector((s) => s.pizza);

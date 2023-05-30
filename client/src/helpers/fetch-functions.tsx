@@ -25,14 +25,14 @@ export const login = async (user: LogInValues) => {
     });
 };
 
-export async function isAuthenticated() {
+export const isAuthenticated = async () => {
   try {
-    const validateUser = await axios.get<boolean>(`/api/validate-cookie`);
-    return validateUser.data;
+    const res = await axios.get<boolean>(`/api/authenticate`);
+    return res.data;
   } catch (err) {
     return getAxiosErrorObject(err);
   }
-}
+};
 
 export const signout = async () => {
   return await axios
@@ -46,13 +46,13 @@ export const signout = async () => {
     });
 };
 
-export const getOrderHistory = async () => {
-  return await axios
-    .get(`/api/order-history`)
-    .then((res) => {
-      return res.data;
-    })
-    .catch((err) => {
-      return getAxiosErrorObject(err);
-    });
+export const fetchOrderHistory = async () => {
+  try {
+    const res = await axios.get("/api/order-history");
+    console.log(res);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return getAxiosErrorObject(err);
+  }
 };

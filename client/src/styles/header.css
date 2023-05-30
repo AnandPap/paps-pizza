@@ -5,20 +5,24 @@ header {
   margin-bottom: 30px;
   padding: 5px 20px;
   font-size: var(--fs-medium);
-  gap: 10px;
 }
 header > :first-child {
-  flex-grow: 1;
   align-items: center;
   display: flex;
+  cursor: pointer;
   gap: 10px;
+}
+header > :last-child {
+  flex-grow: 1;
+  justify-content: flex-end;
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 header img {
   width: 60px;
-  cursor: pointer;
 }
 header h1 {
-  cursor: pointer;
   text-align: center;
   font-size: var(--fs-very-big);
   font-weight: 500;

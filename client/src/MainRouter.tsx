@@ -18,12 +18,12 @@ const MainRouter = () => {
   );
 
   useEffect(() => {
-    async function checkIsLoggedIn() {
+    async function checkIfLoggedIn() {
       const res = await isAuthenticated();
       if (typeof res === "boolean") dispatch(setIsLoggedIn(res));
-      else setIsLoggedIn(false);
+      else dispatch(setIsLoggedIn(false));
     }
-    checkIsLoggedIn();
+    checkIfLoggedIn();
   }, [isLoggedIn]);
 
   useEffect(() => {
@@ -40,7 +40,7 @@ const MainRouter = () => {
           <Route path="login" element={<LogIn />} />
         </Route>
         <Route path="/order" element={<Order />} />
-        <Route path="/orderhistory" element={<OrderHistory />} />
+        <Route path="/order-history" element={<OrderHistory />} />
         <Route
           path="*"
           element={
