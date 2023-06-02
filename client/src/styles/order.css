@@ -1,119 +1,121 @@
-.order-page {
-  min-width: 90%;
-  max-width: 90%;
-  margin: auto;
+.order {
+  --box-shadow: 1px 1px 6px -2px black;
+  width: 90%;
+  margin: 0 auto;
+  font-size: var(--fs-medium);
 }
-
-.address-to-deliver,
+.delivery-address,
 .payment {
-  margin: 25px 0;
+  margin: 30px 0;
   border: 1px solid black;
 }
-
-.address-to-deliver-title,
-.payment-title {
-  font-size: 1.5rem;
+.delivery-address > h2,
+.payment > h2 {
+  font-size: var(--fs-big);
   border-bottom: 1px solid black;
-  padding: 15px;
+  padding: 1rem;
+  font-style: italic;
+  font-weight: 500;
 }
-
 .address-picker {
-  padding: 20px;
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
 }
-
+.address-picker > * {
+  min-height: 250px;
+}
+.card-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: var(--box-shadow);
+  gap: 1rem;
+}
+.card-wrapper > :first-child {
+  display: flex;
+  gap: 1rem;
+}
+.card-wrapper > :last-child {
+  align-self: flex-end;
+  height: fit-content;
+  margin-top: auto;
+}
+.card-info > * {
+  margin-block-start: 5px;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
 .add-new-card {
-  height: 100px;
-  margin: 10px;
-  font-size: 35px;
+  font-size: var(--fs-big);
   display: flex;
   justify-content: center;
   align-items: center;
-  outline: 1px solid black;
+  border-radius: 10px;
+  box-shadow: var(--box-shadow);
 }
-
 .add-new-card:hover {
-  background-color: grey;
+  background-color: hsl(0, 0%, 60%);
   opacity: 0.8;
   cursor: pointer;
 }
-
 .plus-sign {
-  font-size: 55px;
+  font-size: 60px;
   color: white;
   position: absolute;
 }
-
-.add-new-address-wrapper {
-  outline: 1px solid black;
-  display: flex;
-  justify-content: center;
-  margin: 10px;
-}
-
-.add-new-address {
-  padding: 5px;
-  height: 100px;
-  width: fit-content;
-}
-
-.add-new-address-form {
+.add-address {
+  border-radius: 10px;
+  box-shadow: var(--box-shadow);
+  padding: 1rem;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  gap: 0.75rem;
 }
-
-.add-address-input {
+.add-address input,
+.add-address label {
+  font-size: var(--fs-medium);
   width: 100%;
+  margin-block-start: 5px;
 }
-
-.address-input,
-.floor-input {
-  margin: 5px;
+.add-address input {
+  padding: 3px;
+}
+.add-address input::placeholder {
+  font-size: var(--fs-small);
+}
+.add-address input:focus {
+  outline: none;
+}
+.address-card-buttons-wrapper {
   display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: auto;
 }
-
-.floor-text,
-.address-text {
-  margin-right: 5px;
-}
-
-.buttons-error-wrapper {
-  display: flex;
-  margin-top: 5px;
-}
-
-.add-cancel-buttons-wrapper {
-  display: flex;
-  flex-direction: row-reverse;
-}
-
-.cancel-address-button,
-.add-address-button {
-  margin-left: 5px;
-}
-
 .address-fill-error {
   color: red;
+  visibility: hidden;
+}
+.address-fill-error.show-error {
+  visibility: visible;
 }
 
 .order-list-container {
   padding: 10px;
 }
-
 .notes-wrapper {
   display: flex;
   margin: 10px;
 }
-
 .notes-textarea {
   width: 100%;
   height: 100px;
   margin-left: 5px;
   resize: vertical;
 }
-
 .order-button-wrapper {
   margin: auto;
   width: fit-content;
@@ -125,87 +127,24 @@
   margin-top: 2rem;
   padding: 15px 30px;
 }
-
 .goodbye-message {
   font-size: 2rem;
   margin: 2rem auto;
   width: 80%;
   text-align: center;
 }
-
 .rotating-pizza {
   animation: logo-spin infinite 20s linear;
   margin-top: 2rem;
 }
-
 .warning-message {
   width: fit-content;
   margin: 0.5rem auto;
   color: red;
 }
 
-.card-wrapper {
-  border: 1px solid black;
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  margin: 10px;
-  height: 100px;
-  box-shadow: 0px 0px 2px black;
-}
-.card-radio-and-info-wrapper {
-  display: flex;
-}
-.card-radio-wrapper {
-  margin-top: 3px;
-}
-.card-info-wrapper {
-  margin-left: 5px;
-}
-.remove-card-wrapper {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: auto;
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media only screen and (min-width: 540px) {
-  .order-page {
-    margin: 15px auto;
-    min-width: 80%;
-    max-width: 80%;
-  }
-  .address-picker {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media only screen and (min-width: 720px) {
-  .order-page {
-    margin: 15px auto;
-    min-width: 80%;
-    max-width: 80%;
-  }
-  .address-picker {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media only screen and (min-width: 1024px) {
-  .order-page {
-    margin: 15px auto;
-    min-width: 80%;
-    max-width: 80%;
-  }
-  .address-picker {
-    grid-template-columns: repeat(4, 1fr);
+@media screen and (max-width: 720px) {
+  .button {
+    font-size: 1.0625rem;
   }
 }

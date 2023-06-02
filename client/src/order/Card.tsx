@@ -50,25 +50,21 @@ const Card: FC<CardProps> = ({
 
   return (
     <div className="card-wrapper">
-      <div className="card-radio-and-info-wrapper">
-        <div className="card-radio-wrapper">
-          <input
-            type="radio"
-            checked={checked}
-            onChange={() => {
-              setRadioSelected(i);
-              setAddressSelected(card);
-            }}
-          />
-        </div>
-        <div className="card-info-wrapper">
-          <p>{card.address}</p>
-          <p>{card.floor}</p>
+      <div>
+        <input
+          type="radio"
+          checked={checked}
+          onChange={() => {
+            setRadioSelected(i);
+            setAddressSelected(card);
+          }}
+        />
+        <div className="card-info">
+          <p>Address: {card.address}</p>
+          <p>Floor: {card.floor}</p>
         </div>
       </div>
-      <div className="remove-card-wrapper">
-        <Button className="" text="REMOVE" onClick={() => removeAddress(i)} />
-      </div>
+      <Button text="REMOVE" onClick={() => removeAddress(i)} />
     </div>
   );
 };

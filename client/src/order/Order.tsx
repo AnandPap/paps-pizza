@@ -26,7 +26,7 @@ const Order = () => {
 
   return pizzasPicked.length > 0 && isLoggedIn !== null ? (
     isLoggedIn ? (
-      <div className="order-page">
+      <div className="order">
         <DeliveryAddress setAddressSelected={setAddressSelected} />
         <Payment addressSelected={addressSelected} />
       </div>

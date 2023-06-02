@@ -9,7 +9,7 @@ interface ButtonProps {
 }
 
 const Button: FC<ButtonProps> = ({
-  className,
+  className = "",
   onClick,
   title,
   type = "submit",

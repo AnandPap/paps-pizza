@@ -21,14 +21,13 @@ const DeliveryAddress: FC<DeliveryAddressProps> = ({ setAddressSelected }) => {
   const localStorageItem = localStorage.getItem("addressCards");
 
   useEffect(() => {
-    if (localStorageItem && JSON.parse(localStorageItem) !== null)
-      setAddressCards(JSON.parse(localStorageItem));
+    if (localStorageItem) setAddressCards([...JSON.parse(localStorageItem)]);
     else localStorage.setItem("addressCards", JSON.stringify([]));
   }, []);
 
   return (
-    <div className="address-to-deliver">
-      <div className="address-to-deliver-title">Address to deliver</div>
+    <div className="delivery-address">
+      <h2>Delivery address</h2>
       <div className="address-picker">
         {addressCards.map((card, i) => (
           <Card

@@ -23,7 +23,7 @@ const Payment: FC<PaymentProps> = ({ addressSelected }) => {
 
   return (
     <div className="payment">
-      <div className="payment-title">Payment</div>
+      <h2>Payment</h2>
       <div className="order-list-container">
         <div className="order-title-container">
           <h1 className="order-title">Order</h1>

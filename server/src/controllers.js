@@ -1,4 +1,4 @@
-const { User, OrderHistory } = require("./models");
+const { User, Order } = require("./models");
 const config = require("./config");
 const jwt = require("jsonwebtoken");
 
@@ -54,29 +54,37 @@ const signout = (req, res) => {
   return res.clearCookie("token").status(200).json("User signed out.");
 };
 
+const saveOrder = (req, res) => {
+  const order = Order.save(req.user);
+};
+
 function authenticate(req, res) {
   if (req.cookies.token) res.send(true);
   else res.send(false);
 }
 
-function authorize(req, res) {
+function authorize(req, res, next) {
   const token = req.cookies.token;
-  jwt.verify(token, "config.secret", (err, decoded) => {
-    if (err) return res.sendStatus(403);
+  jwt.verify(token, config.secret, (err, decoded) => {
+    if (err) res.sendStatus(403);
     req.userId = decoded.id;
     next();
   });
 }
 
-const getOrderHistory = (req, res) => {
+const getUser = (req, res, next) => {
   const userId = req.userId;
   User.findById(userId, (err, user) => {
-    if (err) {
-      console.log(err);
-      return res.json(err);
-    }
-    user;
-    console.log(user);
+    if (err) res.json(err);
+    req.user = user;
+    next();
+  });
+};
+
+const getOrderHistory = (req, res, next) => {
+  Order.find({ username: req.user.username }, (err, orders) => {
+    if (err) res.status(404).json({ message: "Not found." });
+    res.status(200).json(orders);
   });
 };
 
@@ -84,7 +92,9 @@ module.exports = {
   register,
   login,
   signout,
+  saveOrder,
   authenticate,
   authorize,
+  getUser,
   getOrderHistory,
 };

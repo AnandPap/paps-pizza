@@ -44,13 +44,13 @@ UserSchema.methods.checkPassword = async function (enteredPassword) {
   return match;
 };
 
-const OrderHistorySchema = new mongoose.Schema({
+const OrderSchema = new mongoose.Schema({
   pizzasPicked: Array,
   email: String,
   date: Date,
 });
 
 const User = mongoose.model("User", UserSchema);
-const OrderHistory = mongoose.model("OrderHistory", OrderHistorySchema);
+const Order = mongoose.model("Order", OrderSchema);
 
-module.exports = { User, OrderHistory };
+module.exports = { User, Order };
