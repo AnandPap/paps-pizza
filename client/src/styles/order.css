@@ -1,5 +1,5 @@
 .order {
-  --box-shadow: 1px 1px 6px -2px black;
+  --card-box-shadow: 1px 1px 6px -3px black;
   width: 90%;
   margin: 0 auto;
   font-size: var(--fs-medium);
@@ -7,7 +7,9 @@
 .delivery-address,
 .payment {
   margin: 30px 0;
-  border: 1px solid black;
+  outline: 1px solid black;
+  box-shadow: 0px 0px 15px -10px black;
+  border-radius: 5px;
 }
 .delivery-address > h2,
 .payment > h2 {
@@ -17,6 +19,7 @@
   font-style: italic;
   font-weight: 500;
 }
+
 .address-picker {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
@@ -24,51 +27,52 @@
   padding: 1rem;
 }
 .address-picker > * {
-  min-height: 250px;
+  min-height: 245px;
 }
-.card-wrapper {
+.address-card-wrapper {
   display: flex;
   flex-direction: column;
   padding: 1rem;
   border-radius: 10px;
-  box-shadow: var(--box-shadow);
+  box-shadow: var(--card-box-shadow);
   gap: 1rem;
 }
-.card-wrapper > :first-child {
+.address-card-wrapper > :first-child {
   display: flex;
   gap: 1rem;
 }
-.card-wrapper > :last-child {
+.address-card-wrapper > button {
   align-self: flex-end;
   height: fit-content;
   margin-top: auto;
 }
-.card-info > * {
+.address-card-info > * {
   margin-block-start: 5px;
   overflow-wrap: break-word;
   hyphens: auto;
 }
-.add-new-card {
-  font-size: var(--fs-big);
+.add-new-address-card {
+  font-size: var(--fs-very-big);
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 10px;
-  box-shadow: var(--box-shadow);
+  box-shadow: var(--card-box-shadow);
+  text-align: center;
 }
-.add-new-card:hover {
-  background-color: hsl(0, 0%, 60%);
-  opacity: 0.8;
+.add-new-address-card:hover {
+  background-color: hsl(0, 0%, 70%);
   cursor: pointer;
+  box-shadow: 1px 1px 6px black;
 }
 .plus-sign {
-  font-size: 60px;
+  font-size: 70px;
   color: white;
   position: absolute;
 }
 .add-address {
   border-radius: 10px;
-  box-shadow: var(--box-shadow);
+  box-shadow: var(--card-box-shadow);
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -89,40 +93,41 @@
 .add-address input:focus {
   outline: none;
 }
-.address-card-buttons-wrapper {
+.add-address-buttons-wrapper {
   display: flex;
   justify-content: flex-end;
   gap: 0.5rem;
   margin-top: auto;
 }
-.address-fill-error {
+.add-address-fill-error {
+  font-weight: 500;
   color: red;
-  visibility: hidden;
-}
-.address-fill-error.show-error {
-  visibility: visible;
 }
 
-.order-list-container {
-  padding: 10px;
-}
-.notes-wrapper {
+.payment-items-container {
+  gap: 1rem;
   display: flex;
-  margin: 10px;
+  flex-direction: column;
+  padding: 1rem;
 }
-.notes-textarea {
+.cart-total.order-page > span {
+  margin-right: 75px;
+}
+.order-textarea {
   width: 100%;
-  height: 100px;
-  margin-left: 5px;
-  resize: vertical;
+  height: 150px;
+  resize: none;
+  font-size: var(--fs-medium);
+  padding: 5px;
 }
-.order-button-wrapper {
-  margin: auto;
-  width: fit-content;
+.order-textarea::placeholder {
+  font-size: var(--fs-small);
 }
 .order-button {
   padding: 10px 40px;
+  margin: 0 auto;
 }
+
 .order-more-btn {
   margin-top: 2rem;
   padding: 15px 30px;
@@ -137,14 +142,15 @@
   animation: logo-spin infinite 20s linear;
   margin-top: 2rem;
 }
-.warning-message {
-  width: fit-content;
-  margin: 0.5rem auto;
-  color: red;
-}
 
 @media screen and (max-width: 720px) {
   .button {
     font-size: 1.0625rem;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .cart-total.order-page > span {
+    margin-right: 77px;
   }
 }

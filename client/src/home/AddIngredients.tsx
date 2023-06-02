@@ -86,7 +86,6 @@ const AddIngredients: FC<AddIngredientsProps> = ({
         </div>
         <div className="add-to-cart-btn-wrapper">
           <Button
-            className="add-to-cart-btn"
             text="+ ADD TO CART"
             onClick={() => {
               let newPizza = {

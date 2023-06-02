@@ -81,6 +81,7 @@ header h1 {
 .already-have-account {
   display: flex;
   gap: 0.25rem;
+  flex-wrap: wrap;
 }
 .dont-have-account span,
 .already-have-account span {

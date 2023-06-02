@@ -37,32 +37,32 @@ const Cart = () => {
           <i className="bi bi-cart4"></i>
         </div>
       ) : (
-        <div className="cart-list">
+        <>
           <h2>Cart</h2>
-          <div className="order-items-container">
+          <div className="cart-items-container">
             {pizzasPicked.map((pizza, i) => (
               <CartItem key={i} i={i} pizza={pizza} />
             ))}
-          </div>
-          <div className="cart-total-price">
-            <div className="delivery">
-              <p>Delivery</p>
-              <span>{deliveryPrice}$</span>
+            <div className="cart-total-price">
+              <div className="delivery">
+                <p>Delivery</p>
+                <span>{deliveryPrice}$</span>
+              </div>
+              <div className="cart-total">
+                <p>TOTAL</p>
+                <span>{totalPrice + deliveryPrice}$</span>
+                <Button
+                  text="BUY"
+                  className="buy-btn"
+                  onClick={() => {
+                    if (isLoggedIn) navigate("/order");
+                    else navigate("/login", { state: "buy" });
+                  }}
+                />
+              </div>
             </div>
-            <div className="cart-total">
-              <p>TOTAL</p>
-              <span>{totalPrice + deliveryPrice}$</span>
-              <Button
-                text="BUY"
-                className="buy-btn"
-                onClick={() => {
-                  if (isLoggedIn) navigate("/order");
-                  else navigate("/login", { state: "buy" });
-                }}
-              />
-            </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );

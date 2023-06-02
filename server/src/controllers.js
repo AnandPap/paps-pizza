@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 
 const register = (req, res) => {
   if (req.body.password !== req.body.confirmPassword)
-    return res.status(400).json("Passwords do not match");
+    return res.status(400).json("Passwords do not match!");
   const user = new User(req.body);
   user.save((err, result) => {
     let message = "";
@@ -14,6 +14,7 @@ const register = (req, res) => {
           message =
             err.errors[errName].message.charAt(0).toUpperCase() +
             err.errors[errName].message.slice(1);
+          break;
         }
       }
       return res.status(400).json(message);

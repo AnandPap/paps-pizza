@@ -1,5 +1,5 @@
 import { useState, useEffect, FC } from "react";
-import Card from "./Card";
+import AddressCard from "./AddressCard";
 import AddAdress from "./AddAdress";
 
 export interface Address {
@@ -30,7 +30,7 @@ const DeliveryAddress: FC<DeliveryAddressProps> = ({ setAddressSelected }) => {
       <h2>Delivery address</h2>
       <div className="address-picker">
         {addressCards.map((card, i) => (
-          <Card
+          <AddressCard
             key={i}
             i={i}
             card={card}

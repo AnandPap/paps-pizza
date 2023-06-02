@@ -1,9 +1,8 @@
 .button {
-  height: 100%;
   background: none;
   cursor: pointer;
   border-radius: 5px;
-  padding: 4px 6px;
+  padding: 5px 10px;
   border: 1.5px solid black;
   font-size: var(--fs-small);
 }
@@ -67,6 +66,8 @@
   font-weight: 600;
   max-width: 350px;
   display: block;
+  text-align: center;
+  margin: auto;
 }
 
 .spinner-wrapper {

@@ -5,67 +5,53 @@ import { useNavigate } from "react-router-dom";
 import CartItem from "../home/CartItem";
 import Button from "../reusable/Button";
 import { Address } from "./DeliveryAddress";
+import ErrorMessage from "../reusable/ErrorMessage";
 
 interface PaymentProps {
   addressSelected: Address;
 }
 
 const Payment: FC<PaymentProps> = ({ addressSelected }) => {
-  const [warningText, setWarningText] = useState("");
+  const [error, setError] = useState("");
   const { pizzasPicked, totalPrice } = useAppSelector((s) => s.pizza);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const deliveryPrice = 5;
 
   useEffect(() => {
-    setWarningText("");
+    setError("");
   }, [addressSelected.address]);
 
   return (
     <div className="payment">
       <h2>Payment</h2>
-      <div className="order-list-container">
-        <div className="order-title-container">
-          <h1 className="order-title">Order</h1>
-        </div>
-        <div className="order-item-container">
-          {pizzasPicked.map((pizza, i) => (
-            <CartItem key={i} i={i} pizza={pizza} />
-          ))}
-        </div>
-        <div className="cart-total">
+      <div className="payment-items-container">
+        {pizzasPicked.map((pizza, i) => (
+          <CartItem key={i} i={i} pizza={pizza} />
+        ))}
+        <div className="cart-total-price">
           <div className="delivery">
-            <p className="delivery-text">Delivery</p>
-            <p className="delivery-price">{deliveryPrice}$</p>
+            <p>Delivery</p>
+            <span>{deliveryPrice}$</span>
           </div>
-          <div className="total">
-            <p className="total-text">TOTAL</p>
-            <p className="total-price">{totalPrice + deliveryPrice}$</p>
+          <div className="cart-total order-page">
+            <p>TOTAL</p>
+            <span>{totalPrice + deliveryPrice}$</span>
           </div>
         </div>
-        <div className="notes-wrapper">
-          <p>Notes:</p>
-          <textarea
-            className="notes-textarea"
-            placeholder="Any additional notes"
-          ></textarea>
-        </div>
-        <div className="order-button-wrapper">
-          <Button
-            text="ORDER"
-            className="order-button"
-            onClick={() => {
-              if (addressSelected.address !== undefined) {
-                navigate("/order-history");
-                dispatch(setPizza({ type: "reset" }));
-              } else
-                setWarningText(
-                  "Please select appropriate address for delivery."
-                );
-            }}
-          />
-        </div>
-        <div className="warning-message">{warningText}</div>
+        <p>Any additional notes?</p>
+        <textarea className="order-textarea" placeholder="Additional notes" />
+        <Button
+          text="PLACE ORDER"
+          className="order-button"
+          onClick={() => {
+            if (addressSelected.address) {
+              navigate("/order-history");
+              dispatch(setPizza({ type: "reset" }));
+            } else setError("Please select appropriate address for delivery.");
+          }}
+        />
+        {error && <ErrorMessage text={error} className="error-message" />}
       </div>
     </div>
   );

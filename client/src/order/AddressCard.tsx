@@ -2,7 +2,7 @@ import { useState, useEffect, FC } from "react";
 import Button from "../reusable/Button";
 import { Address } from "./DeliveryAddress";
 
-interface CardProps {
+interface AddressCardProps {
   i: number;
   card: Address;
   radioSelected: number | null;
@@ -12,7 +12,7 @@ interface CardProps {
   setAddressCards: React.Dispatch<React.SetStateAction<Address[]>>;
 }
 
-const Card: FC<CardProps> = ({
+const AddressCard: FC<AddressCardProps> = ({
   i,
   card,
   radioSelected,
@@ -49,7 +49,7 @@ const Card: FC<CardProps> = ({
   }
 
   return (
-    <div className="card-wrapper">
+    <div className="address-card-wrapper">
       <div>
         <input
           type="radio"
@@ -59,7 +59,7 @@ const Card: FC<CardProps> = ({
             setAddressSelected(card);
           }}
         />
-        <div className="card-info">
+        <div className="address-card-info">
           <p>Address: {card.address}</p>
           <p>Floor: {card.floor}</p>
         </div>
@@ -69,4 +69,4 @@ const Card: FC<CardProps> = ({
   );
 };
 
-export default Card;
+export default AddressCard;

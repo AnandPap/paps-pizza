@@ -2,6 +2,7 @@ import { useState, useEffect, FC } from "react";
 import Button from "../reusable/Button";
 import { Address } from "./DeliveryAddress";
 import { capitalizeFirstLetter } from "../helpers/helper-functions";
+import ErrorMessage from "../reusable/ErrorMessage";
 
 interface AddAdressProps {
   addressCards: Address[];
@@ -34,7 +35,7 @@ const AddAdress: FC<AddAdressProps> = ({
       setNewAddress({ ...newAddress, [key]: value });
       setError("");
     } else {
-      let error = capitalizeFirstLetter(key) + " too long!";
+      let error = capitalizeFirstLetter(key) + " input too long!";
       setError(error);
     }
   }
@@ -71,10 +72,8 @@ const AddAdress: FC<AddAdressProps> = ({
           onChange={(e) => handleChange("floor", e.target.value)}
         />
       </div>
-      <div className={`address-fill-error ${error && "show-error"}`}>
-        {error ? error : "placeholder"}
-      </div>
-      <div className="address-card-buttons-wrapper">
+      <ErrorMessage text={error} className="add-address-fill-error" />
+      <div className="add-address-buttons-wrapper">
         <Button
           text="CANCEL"
           type="button"
@@ -90,14 +89,14 @@ const AddAdress: FC<AddAdressProps> = ({
     </form>
   ) : (
     <div
-      className="add-new-card"
+      className="add-new-address-card"
       onClick={() => {
         setToggleAddNewAddress(true);
       }}
       onMouseEnter={() => setShowPlusSign(true)}
       onMouseLeave={() => setShowPlusSign(false)}
     >
-      <p className="cards-add-new-text">Add new</p>
+      <p>Add new</p>
       {showPlusSign && <i className="bi bi-plus plus-sign"></i>}
     </div>
   );

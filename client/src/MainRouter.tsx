@@ -20,6 +20,7 @@ const MainRouter = () => {
   useEffect(() => {
     async function checkIfLoggedIn() {
       const res = await isAuthenticated();
+      console.log(res);
       if (typeof res === "boolean") dispatch(setIsLoggedIn(res));
       else dispatch(setIsLoggedIn(false));
     }
