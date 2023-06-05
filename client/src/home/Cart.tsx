@@ -23,7 +23,7 @@ const Cart = () => {
   }, []);
 
   useEffect(() => {
-    let price = 0;
+    let price = 5;
     for (let i = 0; i < pizzasPicked.length; i++) {
       price += pizzasPicked[i].numberOfOrders * pizzasPicked[i].pizzaPrice;
     }
@@ -38,7 +38,13 @@ const Cart = () => {
         </div>
       ) : (
         <>
-          <h2>Cart</h2>
+          <div className="cart-header">
+            <h2>Cart</h2>
+            <Button
+              text="Remove all"
+              onClick={() => dispatch(setPizza({ type: "reset" }))}
+            />
+          </div>
           <div className="cart-items-container">
             {pizzasPicked.map((pizza, i) => (
               <CartItem key={i} i={i} pizza={pizza} />
@@ -50,7 +56,7 @@ const Cart = () => {
               </div>
               <div className="cart-total">
                 <p>TOTAL</p>
-                <span>{totalPrice + deliveryPrice}$</span>
+                <span>{totalPrice}$</span>
                 <Button
                   text="BUY"
                   className="buy-btn"

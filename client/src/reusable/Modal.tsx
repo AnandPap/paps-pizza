@@ -6,6 +6,7 @@ interface ModalProps {
   className?: string;
   openModal?: boolean;
   setOpenModal?: React.Dispatch<React.SetStateAction<boolean>>;
+  closeModalFunction?: () => void;
   children: ReactNode;
 }
 
@@ -14,6 +15,7 @@ const Modal: FC<ModalProps> = ({
   className,
   openModal = true,
   setOpenModal,
+  closeModalFunction,
   children,
 }) => {
   const navigate = useNavigate();
@@ -24,6 +26,7 @@ const Modal: FC<ModalProps> = ({
       onClick={() => {
         if (location.pathname !== "/") navigate("/");
         if (setOpenModal) setOpenModal(false);
+        if (closeModalFunction) closeModalFunction();
       }}
     >
       <div
@@ -34,8 +37,9 @@ const Modal: FC<ModalProps> = ({
           <h2>{headerTitle}</h2>
           <span
             onClick={() => {
-              navigate("/");
+              if (location.pathname !== "/") navigate("/");
               if (setOpenModal) setOpenModal(false);
+              if (closeModalFunction) closeModalFunction();
             }}
           >
             &times;

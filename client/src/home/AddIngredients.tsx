@@ -1,10 +1,11 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useAppDispatch } from "../redux/hooks";
 import { setPizza } from "../redux/pizza";
 import ingredients from "../assets/data/ingredients.json";
 import ListItem from "./ListItem";
 import Button from "../reusable/Button";
 import Modal from "../reusable/Modal";
+import ErrorMessage from "../reusable/ErrorMessage";
 
 interface AddIngredientsProps {
   doughSelected: { doughName: string; doughPrice: number };
@@ -27,13 +28,53 @@ const AddIngredients: FC<AddIngredientsProps> = ({
     cheese: 0,
     olives: 0,
   });
+  const [error, setError] = useState("");
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    setError("");
+  }, [ingredientsPicked]);
+
+  function addToCart() {
+    if (ingredientsPicked.price === 0)
+      setError("Please select at least one ingredient.");
+    else {
+      let newPizza = {
+        pizzaName: doughSelected.doughName,
+        pizzaIngredients: [
+          ingredientsPicked.cheese,
+          ingredientsPicked.olives,
+          ...ingredientsPicked.other,
+        ],
+        pizzaPrice: doughSelected.doughPrice + ingredientsPicked.price,
+        numberOfOrders: 1,
+      };
+      dispatch(setPizza({ type: "add", value: newPizza }));
+      setOpenModal(false);
+      setIngredientsPicked({
+        cheese: "",
+        olives: "",
+        other: [""],
+        price: 0,
+      });
+      setError("");
+    }
+  }
 
   return (
     <Modal
       headerTitle="Ingredients"
       openModal={openModal}
       setOpenModal={setOpenModal}
+      closeModalFunction={() => {
+        setIngredientsPicked({
+          cheese: "",
+          olives: "",
+          other: [""],
+          price: 0,
+        });
+        setError("");
+      }}
     >
       <>
         <div className="ingredients-list">
@@ -84,24 +125,11 @@ const AddIngredients: FC<AddIngredientsProps> = ({
             />
           ))}
         </div>
-        <div className="add-to-cart-btn-wrapper">
-          <Button
-            text="+ ADD TO CART"
-            onClick={() => {
-              let newPizza = {
-                pizzaName: doughSelected.doughName,
-                pizzaIngredients: [
-                  ingredientsPicked.cheese,
-                  ingredientsPicked.olives,
-                  ...ingredientsPicked.other,
-                ],
-                pizzaPrice: doughSelected.doughPrice + ingredientsPicked.price,
-                numberOfOrders: 1,
-              };
-              dispatch(setPizza({ type: "add", value: newPizza }));
-              setOpenModal(false);
-            }}
-          />
+        <div className="add-ingredients-footer">
+          <ErrorMessage className="" text={error} />
+          <div>
+            <Button text="ADD TO CART" onClick={addToCart} />
+          </div>
         </div>
       </>
     </Modal>
