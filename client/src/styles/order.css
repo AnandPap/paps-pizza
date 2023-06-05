@@ -128,21 +128,6 @@
   margin: 0 auto;
 }
 
-.order-more-btn {
-  margin-top: 2rem;
-  padding: 15px 30px;
-}
-.goodbye-message {
-  font-size: 2rem;
-  margin: 2rem auto;
-  width: 80%;
-  text-align: center;
-}
-.rotating-pizza {
-  animation: logo-spin infinite 20s linear;
-  margin-top: 2rem;
-}
-
 @media screen and (max-width: 720px) {
   .button {
     font-size: 1.0625rem;

@@ -1,9 +1,9 @@
-const mongoose = require("mongoose");
+const { model, Schema } = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
 const uniqueValidator = require("mongoose-unique-validator");
 
-const UserSchema = new mongoose.Schema({
+const UserSchema = new Schema({
   username: {
     type: String,
     trim: true,
@@ -44,13 +44,16 @@ UserSchema.methods.checkPassword = async function (enteredPassword) {
   return match;
 };
 
-const OrderSchema = new mongoose.Schema({
-  pizzasPicked: Array,
-  email: String,
+const OrderSchema = new Schema({
+  address: { address: String, floor: String },
   date: Date,
+  email: String,
+  notes: String,
+  order: Array,
+  price: Number,
 });
 
-const User = mongoose.model("User", UserSchema);
-const Order = mongoose.model("Order", OrderSchema);
+const User = model("User", UserSchema);
+const Order = model("Order", OrderSchema);
 
 module.exports = { User, Order };

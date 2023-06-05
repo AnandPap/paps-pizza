@@ -55,10 +55,6 @@ const signout = (req, res) => {
   return res.clearCookie("token").status(200).json("User signed out.");
 };
 
-const saveOrder = (req, res) => {
-  const order = Order.save(req.user);
-};
-
 function authenticate(req, res) {
   if (req.cookies.token) res.send(true);
   else res.send(false);
@@ -82,6 +78,24 @@ const getUser = (req, res, next) => {
   });
 };
 
+const saveOrder = (req, res) => {
+  const order = new Order({ email: req.user.email, ...req.body });
+  console.log(order);
+  order.save((err, result) => {
+    let message = "";
+    if (err) {
+      for (let errName in err.errors) {
+        message =
+          err.errors[errName].message.charAt(0).toUpperCase() +
+          err.errors[errName].message.slice(1);
+        break;
+      }
+      return res.status(400).json(message);
+    }
+    res.status(200).json({ message: "Successfully placed an order." });
+  });
+};
+
 const getOrderHistory = (req, res, next) => {
   Order.find({ username: req.user.username }, (err, orders) => {
     if (err) res.status(404).json({ message: "Not found." });
@@ -89,13 +103,19 @@ const getOrderHistory = (req, res, next) => {
   });
 };
 
+const deleteAllOrders = () => {
+  const res = Order.deleteMany();
+  console.log(res);
+};
+
 module.exports = {
   register,
   login,
   signout,
-  saveOrder,
   authenticate,
   authorize,
+  saveOrder,
   getUser,
   getOrderHistory,
+  deleteAllOrders,
 };

@@ -35,5 +35,6 @@ app.get("/*", (req, res) => {
 });
 
 app.use((err, req, res, next) => {
+  console.log(err);
   res.sendStatus(404);
 });
