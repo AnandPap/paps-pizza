@@ -19,50 +19,62 @@ const CartItem: FC<CartItemProps> = ({ i, pizza }) => {
   return (
     <div className="cart-item">
       <div>
-        <h3>{pizza.pizzaName}</h3>
+        <h3>{pizza.pizzaName} </h3>
         <p>
           {pizza.pizzaIngredients.filter((value) => value !== "").join(", ")}
         </p>
       </div>
-      <div className="pizza-price-container">
-        <div className="pizza-price">
+      <div className="cart-item-right">
+        <div className="cart-item-price">
           {pizza.pizzaPrice * pizza.numberOfOrders}$
         </div>
-        <Button
-          onClick={() => {
-            if (location.pathname === "/order") {
-              if (pizza.numberOfOrders > 1) {
-                dispatch(setOrderNumber({ type: "decrement", index: i }));
-                dispatch(
-                  setTotalPrice({ type: "decrement", amount: pizza.pizzaPrice })
-                );
-              }
-            } else {
-              if (pizza.numberOfOrders === 1) {
-                dispatch(setPizza({ type: "remove", index: i }));
+        <div className="cart-item-buttons">
+          <Button
+            onClick={() => {
+              if (location.pathname === "/order") {
+                if (pizza.numberOfOrders > 1) {
+                  dispatch(setOrderNumber({ type: "decrement", index: i }));
+                  dispatch(
+                    setTotalPrice({
+                      type: "decrement",
+                      amount: pizza.pizzaPrice,
+                    })
+                  );
+                }
               } else {
-                dispatch(setOrderNumber({ type: "decrement", index: i }));
-                dispatch(
-                  setTotalPrice({ type: "decrement", amount: pizza.pizzaPrice })
-                );
+                if (pizza.numberOfOrders === 1) {
+                  dispatch(setPizza({ type: "remove", index: i }));
+                } else {
+                  dispatch(setOrderNumber({ type: "decrement", index: i }));
+                  dispatch(
+                    setTotalPrice({
+                      type: "decrement",
+                      amount: pizza.pizzaPrice,
+                    })
+                  );
+                }
               }
-            }
-          }}
-          text="&minus;"
-          className="increment-btn"
-        />
-        <div className="number-of-orders">{pizza.numberOfOrders}</div>
-        <Button
-          onClick={() => {
-            dispatch(setOrderNumber({ type: "increment", index: i }));
-            dispatch(
-              setTotalPrice({ type: "increment", amount: pizza.pizzaPrice })
-            );
-          }}
-          text="+"
-          className="increment-btn"
-        />
+            }}
+            text="&minus;"
+            className="increment-btn"
+          />
+          <div className="number-of-orders">{pizza.numberOfOrders}</div>
+          <Button
+            onClick={() => {
+              dispatch(setOrderNumber({ type: "increment", index: i }));
+              dispatch(
+                setTotalPrice({ type: "increment", amount: pizza.pizzaPrice })
+              );
+            }}
+            text="+"
+            className="increment-btn"
+          />
+        </div>
       </div>
+      <div
+        className="remove-cart-item"
+        onClick={() => dispatch(setPizza({ type: "remove", index: i }))}
+      ></div>
     </div>
   );
 };
