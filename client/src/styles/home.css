@@ -46,7 +46,7 @@
 .create-pizza,
 .cart {
   outline: 1.5px solid black;
-  box-shadow: 2px 2px 7px -2px black;
+  box-shadow: 2px 2px 7px -4px black;
   border-radius: 5px;
   min-height: 525px;
 }
@@ -145,7 +145,7 @@
   transform: rotate(-45deg);
 }
 .remove-cart-item:hover {
-  transform: scale(1.05);
+  transform: scale(1.025);
 }
 .increment-btn {
   border-radius: 0;

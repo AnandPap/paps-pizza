@@ -25,7 +25,7 @@ const Header = () => {
         )}
         {isLoggedIn ? (
           <div className="dropdown">
-            <i className="bi bi-person-circle avatar"></i>
+            <i className="bi bi-person-circle avatar" />
             <div className="dropdown-content">
               <p
                 onClick={() =>

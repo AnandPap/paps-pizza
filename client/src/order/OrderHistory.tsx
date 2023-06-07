@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useAppSelector } from "../redux/hooks";
 import { OrderDetails, fetchOrderHistory } from "../helpers/fetch-functions";
 import { errorHandler } from "../helpers/error-functions";
@@ -11,7 +11,6 @@ const OrderHistory = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [orderHistory, setOrderHistory] = useState<OrderDetails[]>([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     async function getOrderHistory() {
@@ -19,37 +18,72 @@ const OrderHistory = () => {
       setTimeout(() => {
         setLoading(false);
       }, 750);
-      console.log(res);
       if (res && !("code" in res)) setOrderHistory(res);
       else setError(errorHandler(res));
     }
     getOrderHistory();
   }, []);
 
+  function addZero(number: string) {
+    if (+number < 10) number = "0" + number;
+    return number;
+  }
+
+  function getOrderDate(date: Date) {
+    const newDate = new Date(date);
+    const year = newDate.toLocaleDateString("es-sp");
+    const hours = addZero(newDate.getHours().toString());
+    const minutes = addZero(newDate.getMinutes().toString());
+    return `${year} ${hours}:${minutes}`;
+  }
+
   return isLoggedIn !== null ? (
     isLoggedIn ? (
       loading ? (
         <Loading className="dot-flashing" />
       ) : error ? (
-        <ErrorMessage text={error} />
+        <ErrorMessage className="not-found" text={error} />
       ) : (
-        <div className="order-history">
+        <div className="order-history-wrapper">
           {orderHistory.map((item, i) => (
-            <div key={i}>
-              <div>{i + 1}. Order</div>
-              {item.order.map((order, i) => (
-                <div className="order-info" key={i}>
-                  <div>{order.pizzaName}</div>
-                  <div>
-                    {order.pizzaIngredients
-                      .filter((value) => value !== "")
-                      .join(", ")}
-                  </div>
-                  <div>{order.numberOfOrders}</div>
-                </div>
-              ))}
-              <div>{item.price}</div>
-              <div>{new Date(item.date).toLocaleDateString("es-sp")}</div>
+            <div key={i} className="order-history">
+              <table>
+                <caption>
+                  <h2>{i + 1}. Order</h2>
+                  <p className="order-date">{getOrderDate(item.date)}</p>
+                </caption>
+                <thead>
+                  <tr>
+                    <th>Pizzas ordered:</th>
+                    <th>Orders</th>
+                    <th>Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {item.order.map((order, i) => (
+                    <tr key={i}>
+                      <td>
+                        <h4>{order.pizzaName}</h4>
+                        <p>
+                          {order.pizzaIngredients
+                            .filter((value) => value !== "")
+                            .join(", ")}
+                        </p>
+                      </td>
+                      <td>{order.numberOfOrders}</td>
+                      <td>{order.pizzaPrice}$</td>
+                    </tr>
+                  ))}
+                  <tr>
+                    <td colSpan={2}>
+                      <h4>
+                        Total price: <span>(with 5$ delivery)</span>
+                      </h4>
+                    </td>
+                    <td>{item.price}$</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           ))}
         </div>
