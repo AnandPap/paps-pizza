@@ -1,4 +1,7 @@
+const jwt = require("jsonwebtoken");
+const config = require("./config");
 const { validateEmailFormat } = require("./helper-functions");
+const { User } = require("./models");
 
 const validateSignUpFields = (req, res, next) => {
   const { username, email, password, confirmPassword } = req.body;
@@ -44,9 +47,11 @@ const getUser = (req, res, next) => {
 function authenticate(req, res, next) {
   jwt.verify(req.cookies.loginToken, config.secret, (err, decoded) => {
     if (err) res.sendStatus(403);
-    req.userId = decoded.id;
-    req.cookieDate = decoded.iat;
-    next();
+    else {
+      req.userId = decoded.id;
+      req.cookieDate = decoded.iat;
+      next();
+    }
   });
 }
 

@@ -35,11 +35,18 @@ const login = (req, res) => {
         expires: new Date(Date.now() + 1000 * 60 * 60 * 72),
         httpOnly: true,
       });
-      res.status(200).json("Successfully logged in.");
+      res.status(200).json({ message: "Successfully logged in." });
     });
   } catch (err) {
     return res.status(500).json("Server error.");
   }
+};
+
+const checkLoggedIn = (req, res) => {
+  jwt.verify(req.cookies.loginToken, config.secret, (err, decoded) => {
+    if (err) res.json(false);
+    else res.json(true);
+  });
 };
 
 const signout = (req, res) => {
@@ -78,6 +85,7 @@ const deleteAllOrders = (req, res) => {
 module.exports = {
   signup,
   login,
+  checkLoggedIn,
   signout,
   saveOrder,
   getOrderHistory,

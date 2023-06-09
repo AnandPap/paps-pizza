@@ -47,12 +47,12 @@ export const signout = async () => {
     });
 };
 
-export const isAuthenticated = async () => {
+export const checkLoggedIn = async () => {
   try {
-    const res = await axios.get<boolean>(`/api/authenticate`);
+    const res = await axios.get<boolean>(`/api/check-login`);
     return res.data;
   } catch (err) {
-    return getAxiosErrorObject(err);
+    return false;
   }
 };
 

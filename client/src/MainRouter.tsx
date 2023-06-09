@@ -9,7 +9,7 @@ import OrderHistory from "./order/OrderHistory";
 import ErrorMessage from "./reusable/ErrorMessage";
 import { setIsLoggedIn } from "./redux/pizza";
 import { useAppDispatch, useAppSelector } from "./redux/hooks";
-import { isAuthenticated } from "./helpers/fetch-functions";
+import { checkLoggedIn } from "./helpers/fetch-functions";
 
 const MainRouter = () => {
   const dispatch = useAppDispatch();
@@ -19,7 +19,7 @@ const MainRouter = () => {
 
   useEffect(() => {
     async function checkIfLoggedIn() {
-      const res = await isAuthenticated();
+      const res = await checkLoggedIn();
       if (typeof res === "boolean") dispatch(setIsLoggedIn(res));
       else dispatch(setIsLoggedIn(false));
     }

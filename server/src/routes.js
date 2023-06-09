@@ -7,6 +7,7 @@ const {
 const {
   signup,
   login,
+  checkLoggedIn,
   signout,
   saveOrder,
   getOrderHistory,
@@ -19,7 +20,7 @@ router
   .post("/api/signup", validateSignUpFields, signup)
   .post("/api/login", login)
   .get("/api/signout", signout)
-  .get("/api/authenticate", authenticate)
+  .get("/api/check-login", checkLoggedIn)
   .post("/api/order", authenticate, getUser, saveOrder)
   .get("/api/order-history", authenticate, getUser, getOrderHistory)
   .get("/api/delete-orders", deleteAllOrders);
