@@ -18,8 +18,10 @@ const OrderHistory = () => {
       setTimeout(() => {
         setLoading(false);
       }, 750);
-      if (res && !("code" in res)) setOrderHistory(res);
-      else setError(errorHandler(res));
+      if (res && !("code" in res)) {
+        if (res.length === 0) setError("No results");
+        else setOrderHistory(res);
+      } else setError(errorHandler(res));
     }
     getOrderHistory();
   }, []);

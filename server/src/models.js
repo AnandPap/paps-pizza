@@ -1,35 +1,32 @@
 const { model, Schema } = require("mongoose");
-const validator = require("validator");
 const bcrypt = require("bcrypt");
-const uniqueValidator = require("mongoose-unique-validator");
+const {
+  validateUniqueUsername,
+  validateUniqueEmail,
+} = require("./helper-functions");
 
 const UserSchema = new Schema({
   username: {
     type: String,
     trim: true,
-    unique: true,
-    required: "Name is required.",
+    required: "Username is required.",
+    validate: [validateUniqueUsername, "Username already exists!"],
   },
   email: {
     type: String,
     trim: true,
-    unique: true,
     required: "Email is required.",
-    validate: [validator.isEmail, "Invalid email format."],
+    validate: [validateUniqueEmail, "Email already exists!"],
   },
   password: {
     type: String,
     required: "Password is required.",
-    validate: [checkLength, "Password must be at least 6 characters long."],
+  },
+  created: {
+    type: Date,
+    default: Date.now,
   },
 });
-
-function checkLength(password) {
-  if (password.length < 6) return false;
-  return true;
-}
-
-UserSchema.plugin(uniqueValidator, { message: "{PATH} already exists!" });
 
 // hash password before save
 UserSchema.pre("save", async function (next) {

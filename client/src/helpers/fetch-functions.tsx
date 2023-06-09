@@ -13,9 +13,9 @@ export interface OrderDetails {
   order: PizzaPicked[];
   price: number;
 }
-export const register = async (user: SignUpValues) => {
+export const signup = async (user: SignUpValues) => {
   try {
-    const res = await axios.post(`/api/register`, user);
+    const res = await axios.post(`/api/signup`, user);
     return res.data;
   } catch (err) {
     return getAxiosErrorObject(err);

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../redux/hooks";
-import { register } from "../helpers/fetch-functions";
+import { signup } from "../helpers/fetch-functions";
 import { toCamelCase } from "../helpers/helper-functions";
 import { errorHandler } from "../helpers/error-functions";
 import ErrorMessage from "../reusable/ErrorMessage";
@@ -36,9 +36,9 @@ const SignUp = () => {
       password: values.password || undefined,
       confirmPassword: values.confirmPassword || undefined,
     };
-    register(user)
+    signup(user)
       .then((data) => {
-        if ("code" in data) setError(errorHandler(data));
+        if (data.errorMessage) setError(errorHandler(data));
         else if (data.message) navigate("/login");
       })
       .catch((err) => {

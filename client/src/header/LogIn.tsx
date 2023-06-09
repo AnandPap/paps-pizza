@@ -35,7 +35,7 @@ const LogIn = () => {
     login(user)
       .then((data) => {
         if ("code" in data) setError(errorHandler(data));
-        else if (data.token) {
+        else if (data.loginToken) {
           if (location.state === "buy") navigate("/order", { replace: true });
           else navigate("/");
           dispatch(setIsLoggedIn(true));
