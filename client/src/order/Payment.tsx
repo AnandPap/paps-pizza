@@ -23,7 +23,7 @@ const Payment: FC<PaymentProps> = ({ addressSelected }) => {
 
   useEffect(() => {
     setError("");
-  }, [addressSelected.address]);
+  }, [addressSelected]);
 
   useEffect(() => {
     let price = deliveryPrice;
@@ -37,9 +37,13 @@ const Payment: FC<PaymentProps> = ({ addressSelected }) => {
     <div className="payment">
       <h2>Payment</h2>
       <div className="payment-items-container">
-        {pizzasPicked.map((pizza, i) => (
-          <CartItem key={i} i={i} pizza={pizza} />
-        ))}
+        {pizzasPicked.length > 0 ? (
+          pizzasPicked.map((pizza, i) => (
+            <CartItem key={i} i={i} pizza={pizza} />
+          ))
+        ) : (
+          <ErrorMessage className="not-found" text="No pizza selected" />
+        )}
         <div className="cart-total-price">
           <div className="delivery">
             <p>Delivery</p>
@@ -56,11 +60,12 @@ const Payment: FC<PaymentProps> = ({ addressSelected }) => {
           placeholder="Additional notes"
           onChange={(e) => setNotes(e.target.value)}
         />
+        {error && <ErrorMessage text={error} className="error-message" />}
         <Button
           text="PLACE ORDER"
           className="order-button"
           onClick={() => {
-            if (addressSelected.address) {
+            if (addressSelected.address && pizzasPicked.length > 0) {
               saveOrder({
                 order: pizzasPicked,
                 address: addressSelected,
@@ -73,10 +78,13 @@ const Payment: FC<PaymentProps> = ({ addressSelected }) => {
                   dispatch(setPizza({ type: "reset" }));
                 })
                 .catch((err) => console.log(err));
-            } else setError("Please select appropriate address for delivery.");
+            } else if (pizzasPicked.length === 0)
+              setError(
+                "No pizza selected. Please go back and select at least one pizza."
+              );
+            else setError("Please select appropriate address for delivery.");
           }}
         />
-        {error && <ErrorMessage text={error} className="error-message" />}
       </div>
     </div>
   );

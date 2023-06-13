@@ -4,23 +4,22 @@ import { Address } from "./DeliveryAddress";
 import { capitalizeFirstLetter } from "../helpers/helper-functions";
 import ErrorMessage from "../reusable/ErrorMessage";
 
-interface AddAdressProps {
+interface AddAdressCardProps {
   addressCards: Address[];
   setAddressCards: React.Dispatch<React.SetStateAction<Address[]>>;
-  newAddress: Address;
-  setNewAddress: React.Dispatch<React.SetStateAction<Address>>;
 }
 
-const AddAdress: FC<AddAdressProps> = ({
+const AddAdressCard: FC<AddAdressCardProps> = ({
   addressCards,
   setAddressCards,
-  newAddress,
-  setNewAddress,
 }) => {
   const [toggleAddNewAddress, setToggleAddNewAddress] = useState(false);
   const [showPlusSign, setShowPlusSign] = useState(false);
   const [error, setError] = useState("");
-  const localStorageItem = localStorage.getItem("addressCards");
+  const [newAddress, setNewAddress] = useState<Address>({
+    address: "",
+    floor: "",
+  });
 
   useEffect(() => {
     setToggleAddNewAddress(false);
@@ -44,13 +43,10 @@ const AddAdress: FC<AddAdressProps> = ({
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (newAddress.address.length > 0 && newAddress.floor.length > 0) {
-      setAddressCards([...addressCards, newAddress]);
+      const newAddressCards = [...addressCards, newAddress];
+      setAddressCards(newAddressCards);
       setNewAddress({ address: "", floor: "" });
-      if (localStorageItem)
-        localStorage.setItem(
-          "addressCards",
-          JSON.stringify([...JSON.parse(localStorageItem), newAddress])
-        );
+      localStorage.setItem("addressCards", JSON.stringify(newAddressCards));
     } else setError("Please fill out the form.");
   }
 
@@ -103,4 +99,4 @@ const AddAdress: FC<AddAdressProps> = ({
   );
 };
 
-export default AddAdress;
+export default AddAdressCard;
