@@ -1,6 +1,6 @@
 import { useState, useEffect, FC } from "react";
 import AddressCard from "./AddressCard";
-import AddAdressCard from "./AddAdress";
+import AddAdressCard from "./AddAdressCard";
 
 export interface Address {
   address: string;

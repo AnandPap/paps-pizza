@@ -33,6 +33,27 @@ const Payment: FC<PaymentProps> = ({ addressSelected }) => {
     setTotalPrice(price);
   }, [pizzasPicked]);
 
+  function placeOrder() {
+    if (addressSelected.address && pizzasPicked.length > 0) {
+      saveOrder({
+        order: pizzasPicked,
+        address: addressSelected,
+        price: totalPrice,
+        notes: notes,
+        date: Date.now(),
+      })
+        .then(() => {
+          navigate("/order-history", { replace: true });
+          dispatch(setPizza({ type: "reset" }));
+        })
+        .catch((err) => console.log(err));
+    } else if (pizzasPicked.length === 0)
+      setError(
+        "No pizza selected. Please go back and select at least one pizza."
+      );
+    else setError("Please select appropriate address for delivery.");
+  }
+
   return (
     <div className="payment">
       <h2>Payment</h2>
@@ -44,15 +65,15 @@ const Payment: FC<PaymentProps> = ({ addressSelected }) => {
         ) : (
           <ErrorMessage className="not-found" text="No pizza selected" />
         )}
-        <div className="cart-total-price">
-          <div className="delivery">
-            <p>Delivery</p>
-            <span>{deliveryPrice}$</span>
-          </div>
-          <div className="cart-total order-page">
-            <p>TOTAL</p>
-            <span>{totalPrice}$</span>
-          </div>
+      </div>
+      <div className="payment-footer">
+        <div className="delivery">
+          <p>Delivery</p>
+          <span>{deliveryPrice}$</span>
+        </div>
+        <div className="cart-total order-page">
+          <p>TOTAL</p>
+          <span>{totalPrice}$</span>
         </div>
         <p>Any additional notes?</p>
         <textarea
@@ -64,26 +85,7 @@ const Payment: FC<PaymentProps> = ({ addressSelected }) => {
         <Button
           text="PLACE ORDER"
           className="order-button"
-          onClick={() => {
-            if (addressSelected.address && pizzasPicked.length > 0) {
-              saveOrder({
-                order: pizzasPicked,
-                address: addressSelected,
-                price: totalPrice,
-                notes: notes,
-                date: Date.now(),
-              })
-                .then(() => {
-                  navigate("/order-history", { replace: true });
-                  dispatch(setPizza({ type: "reset" }));
-                })
-                .catch((err) => console.log(err));
-            } else if (pizzasPicked.length === 0)
-              setError(
-                "No pizza selected. Please go back and select at least one pizza."
-              );
-            else setError("Please select appropriate address for delivery.");
-          }}
+          onClick={placeOrder}
         />
       </div>
     </div>

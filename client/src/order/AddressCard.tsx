@@ -27,7 +27,12 @@ const AddressCard: FC<AddressCardProps> = ({
   return (
     <div className="address-card-wrapper">
       <div onClick={() => selectAddress(i, card)}>
-        <input type="radio" checked={checked} />
+        <input
+          className="address-card-radio"
+          readOnly
+          type="radio"
+          checked={checked}
+        />
         <div className="address-card-info">
           <p>Address: {card.address}</p>
           <p>Floor: {card.floor}</p>
