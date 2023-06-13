@@ -10,13 +10,13 @@ const UserSchema = new Schema({
     type: String,
     trim: true,
     required: "Username is required.",
-    validate: [validateUniqueUsername, "Username already exists!"],
+    validate: [validateUniqueUsername, "Username already exists."],
   },
   email: {
     type: String,
     trim: true,
     required: "Email is required.",
-    validate: [validateUniqueEmail, "Email already exists!"],
+    validate: [validateUniqueEmail, "Email already exists."],
   },
   password: {
     type: String,
@@ -44,7 +44,7 @@ UserSchema.methods.checkPassword = async function (enteredPassword) {
 const OrderSchema = new Schema({
   address: { address: String, floor: String },
   date: Date,
-  email: String,
+  userId: String,
   notes: String,
   order: Array,
   price: Number,

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Button from "../reusable/Button";
 import pizza from "../assets/images/pizza2.png";
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
@@ -5,8 +6,10 @@ import { setIsLoggedIn, setPizza } from "../redux/pizza";
 import { useNavigate } from "react-router-dom";
 import { signout } from "../helpers/fetch-functions";
 import Spinner from "../reusable/Spinner";
+import { getErrorMessage } from "../helpers/error-functions";
 
 const Header = () => {
+  const [error, setError] = useState("");
   const { pizzasPicked, isLoggedIn } = useAppSelector((s) => s.pizza);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -37,18 +40,16 @@ const Header = () => {
               </p>
               <p
                 onClick={() => {
-                  async function signOutUser() {
-                    const res = await signout();
-                    if (typeof res === "boolean") {
-                      location.pathname !== "/" && navigate("/");
-                      dispatch(setIsLoggedIn(false));
-                      dispatch(setPizza({ type: "reset" }));
-                      sessionStorage.removeItem("pizzasPicked");
-                    } else {
-                      console.log(res);
-                    }
-                  }
-                  signOutUser();
+                  signout()
+                    .then((res) => {
+                      if (res === true) {
+                        location.pathname !== "/" && navigate("/");
+                        dispatch(setIsLoggedIn(false));
+                        dispatch(setPizza({ type: "reset" }));
+                        sessionStorage.removeItem("pizzasPicked");
+                      } else setError(getErrorMessage(res));
+                    })
+                    .catch((err) => console.log(err));
                 }}
               >
                 Sign out

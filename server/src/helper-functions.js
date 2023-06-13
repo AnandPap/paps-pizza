@@ -23,9 +23,23 @@ async function validateUniqueEmail(email) {
   } else return true;
 }
 
+function getSaveErrorMessage(err, type) {
+  let errorMessage = `Error while saving the ${type}.`;
+  if (err.errors) {
+    for (let errName in err.errors) {
+      if (err.errors[errName].message) {
+        errorMessage = capitalizeFirstLetter(err.errors[errName].message);
+        break;
+      }
+    }
+  }
+  return errorMessage;
+}
+
 module.exports = {
   capitalizeFirstLetter,
   validateEmailFormat,
   validateUniqueUsername,
   validateUniqueEmail,
+  getSaveErrorMessage,
 };

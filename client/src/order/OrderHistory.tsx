@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { useAppSelector } from "../redux/hooks";
 import { OrderDetails, fetchOrderHistory } from "../helpers/fetch-functions";
-import { errorHandler } from "../helpers/error-functions";
+import { getErrorMessage } from "../helpers/error-functions";
 import ErrorMessage from "../reusable/ErrorMessage";
 import Loading from "../reusable/Loading";
 
@@ -13,17 +13,17 @@ const OrderHistory = () => {
   const [orderHistory, setOrderHistory] = useState<OrderDetails[]>([]);
 
   useEffect(() => {
-    async function getOrderHistory() {
-      const res = await fetchOrderHistory();
-      setTimeout(() => {
-        setLoading(false);
-      }, 750);
-      if (res && !("code" in res)) {
-        if (res.length === 0) setError("No results");
-        else setOrderHistory(res);
-      } else setError(errorHandler(res));
-    }
-    getOrderHistory();
+    fetchOrderHistory()
+      .then((res) => {
+        if (res && !("code" in res)) {
+          if (res.length === 0) setError("No results");
+          else setOrderHistory(res);
+        } else setError(getErrorMessage(res));
+        setTimeout(() => {
+          setLoading(false);
+        }, 750);
+      })
+      .catch((err) => console.log(err));
   }, []);
 
   function addZero(number: string) {

@@ -3,7 +3,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../redux/hooks";
 import { signup } from "../helpers/fetch-functions";
 import { toCamelCase } from "../helpers/helper-functions";
-import { errorHandler } from "../helpers/error-functions";
+import { getErrorMessage } from "../helpers/error-functions";
 import ErrorMessage from "../reusable/ErrorMessage";
 import Button from "../reusable/Button";
 import Modal from "../reusable/Modal";
@@ -37,9 +37,9 @@ const SignUp = () => {
       confirmPassword: values.confirmPassword || undefined,
     };
     signup(user)
-      .then((data) => {
-        if (data.errorMessage) setError(errorHandler(data));
-        else if (data.message) navigate("/login");
+      .then((res) => {
+        if (res && "message" in res) navigate("/login");
+        else setError(getErrorMessage(res));
       })
       .catch((err) => {
         console.log(err);

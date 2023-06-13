@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { login } from "../helpers/fetch-functions";
-import { errorHandler } from "../helpers/error-functions";
+import { getErrorMessage } from "../helpers/error-functions";
 import { setIsLoggedIn } from "../redux/pizza";
 import Button from "../reusable/Button";
 import ErrorMessage from "../reusable/ErrorMessage";
@@ -33,13 +33,12 @@ const LogIn = () => {
       password: values.password || undefined,
     };
     login(user)
-      .then((data) => {
-        if ("code" in data) setError(errorHandler(data));
-        else if (data.message) {
+      .then((res) => {
+        if (res && "message" in res) {
           if (location.state === "buy") navigate("/order", { replace: true });
           else navigate("/");
           dispatch(setIsLoggedIn(true));
-        }
+        } else setError(getErrorMessage(res));
       })
       .catch((err) => {
         console.log(err);

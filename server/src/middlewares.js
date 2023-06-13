@@ -1,6 +1,9 @@
 const jwt = require("jsonwebtoken");
 const config = require("./config");
-const { validateEmailFormat } = require("./helper-functions");
+const {
+  validateEmailFormat,
+  capitalizeFirstLetter,
+} = require("./helper-functions");
 const { User } = require("./models");
 
 const validateSignUpFields = (req, res, next) => {
@@ -18,7 +21,9 @@ const validateSignUpFields = (req, res, next) => {
       (bodyObject[key] == undefined || bodyObject[key].length === 0) &&
       key !== "confirmPassword"
     ) {
-      return res.status(400).json(`${capitalizeFirstLetter(key)} is required.`);
+      return res
+        .status(400)
+        .json({ error: `${capitalizeFirstLetter(key)} is required.` });
     } else if (key !== "password" && key !== "confirmPassword")
       bodyObject[key] = bodyObject[key].trim();
   }
@@ -31,17 +36,8 @@ const validateSignUpFields = (req, res, next) => {
     message = "Password must not contain any whitespaces.";
   else if (!confirmPassword || password !== confirmPassword)
     message = "Password and confirm password do not match.";
-  if (message.length > 0) return res.status(400).json(message);
+  if (message.length > 0) return res.status(400).json({ error: message });
   else next();
-};
-
-const getUser = (req, res, next) => {
-  const userId = req.userId;
-  User.findById(userId, (err, user) => {
-    if (err) res.json(err);
-    req.user = user;
-    next();
-  });
 };
 
 function authenticate(req, res, next) {
@@ -55,4 +51,15 @@ function authenticate(req, res, next) {
   });
 }
 
-module.exports = { validateSignUpFields, getUser, authenticate };
+const getUser = (req, res, next) => {
+  User.findById(req.userId, (err, user) => {
+    if (err) res.status(500).json({ error: "Something went wrong." });
+    else if (!user) res.status(404).json({ error: "User not found." });
+    else {
+      req.user = user;
+      next();
+    }
+  });
+};
+
+module.exports = { validateSignUpFields, authenticate, getUser };

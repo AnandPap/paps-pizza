@@ -52,16 +52,19 @@ const Payment: FC<PaymentProps> = ({ addressSelected }) => {
           className="order-button"
           onClick={() => {
             if (addressSelected.address) {
-              navigate("/order-history", { replace: true });
-              dispatch(setPizza({ type: "reset" }));
-              sessionStorage.removeItem("pizzasPicked");
               saveOrder({
                 order: pizzasPicked,
                 address: addressSelected,
                 price: totalPrice,
                 notes: notes,
                 date: Date.now(),
-              });
+              })
+                .then(() => {
+                  navigate("/order-history", { replace: true });
+                  dispatch(setPizza({ type: "reset" }));
+                  sessionStorage.removeItem("pizzasPicked");
+                })
+                .catch((err) => console.log(err));
             } else setError("Please select appropriate address for delivery.");
           }}
         />

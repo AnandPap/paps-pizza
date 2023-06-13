@@ -18,12 +18,9 @@ const MainRouter = () => {
   );
 
   useEffect(() => {
-    async function checkIfLoggedIn() {
-      const res = await checkLoggedIn();
-      if (typeof res === "boolean") dispatch(setIsLoggedIn(res));
-      else dispatch(setIsLoggedIn(false));
-    }
-    checkIfLoggedIn();
+    checkLoggedIn()
+      .then((res) => dispatch(setIsLoggedIn(res)))
+      .catch((err) => console.log(err));
   }, [isLoggedIn]);
 
   useEffect(() => {

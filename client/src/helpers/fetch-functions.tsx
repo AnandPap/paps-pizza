@@ -13,9 +13,14 @@ export interface OrderDetails {
   order: PizzaPicked[];
   price: number;
 }
+
+interface AxiosMessage {
+  message: string;
+}
+
 export const signup = async (user: SignUpValues) => {
   try {
-    const res = await axios.post(`/api/signup`, user);
+    const res = await axios.post<AxiosMessage>(`/api/signup`, user);
     return res.data;
   } catch (err) {
     return getAxiosErrorObject(err);
@@ -23,28 +28,24 @@ export const signup = async (user: SignUpValues) => {
 };
 
 export const login = async (user: LogInValues) => {
-  return await axios
-    .post(`/api/login`, user, {
+  try {
+    const res = await axios.post<AxiosMessage>(`/api/login`, user, {
       withCredentials: true,
-    })
-    .then((res) => {
-      return res.data;
-    })
-    .catch((err) => {
-      return getAxiosErrorObject(err);
     });
+    return res.data;
+  } catch (err) {
+    return getAxiosErrorObject(err);
+  }
 };
 
 export const signout = async () => {
-  return await axios
-    .get(`/api/signout`)
-    .then((res) => {
-      if (res.status === 200) return true;
-      else return false;
-    })
-    .catch((err) => {
-      return getAxiosErrorObject(err);
-    });
+  try {
+    const res = await axios.get<AxiosMessage>("/api/signout");
+    if (res.status === 200) return true;
+    else return undefined;
+  } catch (err) {
+    return getAxiosErrorObject(err);
+  }
 };
 
 export const checkLoggedIn = async () => {
@@ -58,8 +59,7 @@ export const checkLoggedIn = async () => {
 
 export const saveOrder = async (order: any) => {
   try {
-    const res = await axios.post("/api/order", order);
-    console.log(res);
+    const res = await axios.post<AxiosMessage>("/api/order", order);
     return res.data;
   } catch (err) {
     return getAxiosErrorObject(err);
