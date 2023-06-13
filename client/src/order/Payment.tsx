@@ -15,7 +15,8 @@ interface PaymentProps {
 const Payment: FC<PaymentProps> = ({ addressSelected }) => {
   const [error, setError] = useState("");
   const [notes, setNotes] = useState("");
-  const { pizzasPicked, totalPrice } = useAppSelector((s) => s.pizza);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const { pizzasPicked } = useAppSelector((s) => s.pizza);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const deliveryPrice = 5;
@@ -23,6 +24,14 @@ const Payment: FC<PaymentProps> = ({ addressSelected }) => {
   useEffect(() => {
     setError("");
   }, [addressSelected.address]);
+
+  useEffect(() => {
+    let price = deliveryPrice;
+    for (let i = 0; i < pizzasPicked.length; i++) {
+      price += pizzasPicked[i].numberOfOrders * pizzasPicked[i].pizzaPrice;
+    }
+    setTotalPrice(price);
+  }, [pizzasPicked]);
 
   return (
     <div className="payment">
@@ -62,7 +71,6 @@ const Payment: FC<PaymentProps> = ({ addressSelected }) => {
                 .then(() => {
                   navigate("/order-history", { replace: true });
                   dispatch(setPizza({ type: "reset" }));
-                  sessionStorage.removeItem("pizzasPicked");
                 })
                 .catch((err) => console.log(err));
             } else setError("Please select appropriate address for delivery.");

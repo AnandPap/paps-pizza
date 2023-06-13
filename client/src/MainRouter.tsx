@@ -13,20 +13,13 @@ import { checkLoggedIn } from "./helpers/fetch-functions";
 
 const MainRouter = () => {
   const dispatch = useAppDispatch();
-  const { pizzasPicked, totalPrice, isLoggedIn } = useAppSelector(
-    (s) => s.pizza
-  );
+  const { isLoggedIn } = useAppSelector((s) => s.pizza);
 
   useEffect(() => {
     checkLoggedIn()
       .then((res) => dispatch(setIsLoggedIn(res)))
       .catch((err) => console.log(err));
   }, [isLoggedIn]);
-
-  useEffect(() => {
-    if (totalPrice !== 0)
-      sessionStorage.setItem("pizzasPicked", JSON.stringify(pizzasPicked));
-  }, [totalPrice]);
 
   return (
     <BrowserRouter>

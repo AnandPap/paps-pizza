@@ -1,9 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-interface InitialState {
+export interface InitialState {
   pizzasPicked: PizzaPicked[];
-  totalPrice: number;
   isLoggedIn: boolean | null;
 }
 export interface PizzaPicked {
@@ -32,14 +31,9 @@ interface OrderNumberAction {
   type: "increment" | "decrement";
   index: number;
 }
-interface TotalPriceAction {
-  type: "increment" | "decrement" | "set";
-  amount: number;
-}
 
 const initialState: InitialState = {
   pizzasPicked: [],
-  totalPrice: 0,
   isLoggedIn: null,
 };
 
@@ -77,25 +71,12 @@ export const pizzaSlice = createSlice({
           state.pizzasPicked[action.payload.index].numberOfOrders -= 1;
       }
     },
-    setTotalPrice: (state, action: PayloadAction<TotalPriceAction>) => {
-      switch (action.payload.type) {
-        case "increment":
-          state.totalPrice += action.payload.amount;
-          break;
-        case "decrement":
-          state.totalPrice -= action.payload.amount;
-          break;
-        case "set":
-          state.totalPrice = action.payload.amount;
-      }
-    },
     setIsLoggedIn: (state, action: PayloadAction<boolean>) => {
       state.isLoggedIn = action.payload;
     },
   },
 });
 
-export const { setPizza, setOrderNumber, setTotalPrice, setIsLoggedIn } =
-  pizzaSlice.actions;
+export const { setPizza, setOrderNumber, setIsLoggedIn } = pizzaSlice.actions;
 
 export default pizzaSlice.reducer;

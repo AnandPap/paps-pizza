@@ -57,6 +57,10 @@ const AddIngredients: FC<AddIngredientsProps> = ({
         other: [""],
         price: 0,
       });
+      setPreviousPrices({
+        cheese: 0,
+        olives: 0,
+      });
       setError("");
     }
   }

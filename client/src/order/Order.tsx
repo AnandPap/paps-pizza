@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import Payment from "./Payment";
 import DeliveryAddress, { Address } from "./DeliveryAddress";
-import { useAppSelector, useAppDispatch } from "../redux/hooks";
+import { useAppSelector } from "../redux/hooks";
 import { Navigate, useNavigate } from "react-router-dom";
-import { setPizza } from "../redux/pizza";
 
 const Order = () => {
   const { pizzasPicked, isLoggedIn } = useAppSelector((s) => s.pizza);
@@ -11,21 +10,14 @@ const Order = () => {
     address: "",
     floor: "",
   });
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    let item = sessionStorage.getItem("pizzasPicked");
-    if (item) {
-      const parsedItem = JSON.parse(item);
-      if (parsedItem.constructor === Array)
-        dispatch(setPizza({ type: "set", value: parsedItem }));
-      else navigate("/", { replace: true });
-    } else navigate("/", { replace: true });
-  }, []);
+    if (pizzasPicked.length === 0) navigate("/", { replace: true });
+  }, [pizzasPicked]);
 
-  return pizzasPicked.length > 0 && isLoggedIn !== null ? (
-    isLoggedIn ? (
+  return isLoggedIn !== null ? (
+    isLoggedIn && pizzasPicked.length > 0 ? (
       <div className="order">
         <DeliveryAddress setAddressSelected={setAddressSelected} />
         <Payment addressSelected={addressSelected} />

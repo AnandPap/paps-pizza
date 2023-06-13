@@ -46,7 +46,6 @@ const Header = () => {
                         location.pathname !== "/" && navigate("/");
                         dispatch(setIsLoggedIn(false));
                         dispatch(setPizza({ type: "reset" }));
-                        sessionStorage.removeItem("pizzasPicked");
                       } else setError(getErrorMessage(res));
                     })
                     .catch((err) => console.log(err));

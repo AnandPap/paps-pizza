@@ -25,6 +25,7 @@ const AddAdress: FC<AddAdressProps> = ({
   useEffect(() => {
     setToggleAddNewAddress(false);
     setShowPlusSign(false);
+    setError("");
   }, [addressCards]);
 
   function handleChange(key: string, value: string) {

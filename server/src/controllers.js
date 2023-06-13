@@ -50,7 +50,7 @@ const saveOrder = (req, res) => {
   const order = new Order({ userId: req.userId, ...req.body });
   order.save((err, result) => {
     if (err) res.status(400).json({ error: getSaveErrorMessage(err, "order") });
-    else res.status(200).json({ message: "Successfully placed an order." });
+    else res.status(201).json({ message: "Successfully placed an order." });
   });
 };
 
