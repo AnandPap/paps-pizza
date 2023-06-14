@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { useAppDispatch } from "../redux/hooks";
 import { setPizza } from "../redux/pizza";
 import ingredients from "../assets/data/ingredients.json";
@@ -12,6 +12,11 @@ interface AddIngredientsProps {
   openModal: boolean;
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
+interface PreviousPrices {
+  [key: string]: number;
+  cheese: number;
+  olives: number;
+}
 
 const AddIngredients: FC<AddIngredientsProps> = ({
   doughSelected,
@@ -24,18 +29,43 @@ const AddIngredients: FC<AddIngredientsProps> = ({
     other: [""],
     price: 0,
   });
-  const [previousPrices, setPreviousPrices] = useState({
+  const [previousPrices, setPreviousPrices] = useState<PreviousPrices>({
     cheese: 0,
     olives: 0,
   });
   const [error, setError] = useState("");
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
+  function addIngredient(name: string, price: number, type: string) {
+    if (type === "other") {
+      const otherArray = ingredientsPicked.other;
+      if (otherArray.includes(name)) {
+        const newOtherArray = otherArray.filter((value) => value !== name);
+        setIngredientsPicked((s) => ({
+          ...s,
+          other: newOtherArray,
+          price: s.price - price,
+        }));
+      } else {
+        setIngredientsPicked((s) => ({
+          ...s,
+          other: [...s.other, name],
+          price: s.price + price,
+        }));
+      }
+    } else {
+      setPreviousPrices((s) => ({ ...s, [type]: price }));
+      setIngredientsPicked((s) => ({
+        ...s,
+        [type]: name,
+        price: s.price + price - previousPrices[type],
+      }));
+    }
     setError("");
-  }, [ingredientsPicked]);
+  }
 
-  function addToCart() {
+  function addToCart(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
     if (ingredientsPicked.price === 0)
       setError("Please select at least one ingredient.");
     else {
@@ -50,70 +80,57 @@ const AddIngredients: FC<AddIngredientsProps> = ({
         numberOfOrders: 1,
       };
       dispatch(setPizza({ type: "add", value: newPizza }));
-      setOpenModal(false);
-      setIngredientsPicked({
-        cheese: "",
-        olives: "",
-        other: [""],
-        price: 0,
-      });
-      setPreviousPrices({
-        cheese: 0,
-        olives: 0,
-      });
-      setError("");
+      closeModal();
     }
+  }
+
+  function closeModal() {
+    setOpenModal(false);
+    setIngredientsPicked({
+      cheese: "",
+      olives: "",
+      other: [""],
+      price: 0,
+    });
+    setPreviousPrices({
+      cheese: 0,
+      olives: 0,
+    });
+    setError("");
   }
 
   return (
     <Modal
       headerTitle="Ingredients"
       openModal={openModal}
-      setOpenModal={setOpenModal}
-      closeModalFunction={() => {
-        setIngredientsPicked({
-          cheese: "",
-          olives: "",
-          other: [""],
-          price: 0,
-        });
-        setError("");
-      }}
+      closeModal={closeModal}
     >
-      <>
+      <form onSubmit={(e) => addToCart(e)}>
         <div className="ingredients-list">
-          <form>
-            <h3>Cheese:</h3>
-            {ingredients.cheese.map((item, i) => (
-              <ListItem
-                key={i}
-                i={i}
-                glutenFree={item.gluten_free}
-                name={item.name}
-                price={item.price}
-                type={item.type}
-                setIngredientsPicked={setIngredientsPicked}
-                previousPrices={previousPrices}
-                setPreviousPrices={setPreviousPrices}
-              />
-            ))}
-          </form>
-          <form>
-            <h3>Olives:</h3>
-            {ingredients.olives.map((item, i) => (
-              <ListItem
-                key={i}
-                i={i + 5}
-                glutenFree={item.gluten_free}
-                name={item.name}
-                price={item.price}
-                type={item.type}
-                setIngredientsPicked={setIngredientsPicked}
-                previousPrices={previousPrices}
-                setPreviousPrices={setPreviousPrices}
-              />
-            ))}
-          </form>
+          <h3>Cheese:</h3>
+          {ingredients.cheese.map((item, i) => (
+            <ListItem
+              key={i}
+              i={i}
+              glutenFree={item.gluten_free}
+              name={item.name}
+              price={item.price}
+              type={item.type}
+              addIngredient={addIngredient}
+            />
+          ))}
+          <h3>Olives:</h3>
+          {ingredients.olives.map((item, i) => (
+            <ListItem
+              key={i}
+              i={i + 5}
+              glutenFree={item.gluten_free}
+              name={item.name}
+              price={item.price}
+              type={item.type}
+              addIngredient={addIngredient}
+            />
+          ))}
           <h3>Other:</h3>
           {ingredients.other.map((item, i) => (
             <ListItem
@@ -123,19 +140,17 @@ const AddIngredients: FC<AddIngredientsProps> = ({
               name={item.name}
               price={item.price}
               type={item.type}
-              setIngredientsPicked={setIngredientsPicked}
-              previousPrices={previousPrices}
-              setPreviousPrices={setPreviousPrices}
+              addIngredient={addIngredient}
             />
           ))}
         </div>
         <div className="add-ingredients-footer">
           <ErrorMessage className="" text={error} />
           <div>
-            <Button text="ADD TO CART" onClick={addToCart} />
+            <Button text="ADD TO CART" type="submit" />
           </div>
         </div>
-      </>
+      </form>
     </Modal>
   );
 };

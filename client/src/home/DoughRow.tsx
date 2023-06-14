@@ -5,21 +5,14 @@ interface DoughRowProps {
   doughName: string;
   doughPrice: number;
   doughDesciption: string;
-  setDoughSelected: React.Dispatch<
-    React.SetStateAction<{
-      doughName: string;
-      doughPrice: number;
-    }>
-  >;
-  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
+  selectDough: (name: string, price: number) => void;
 }
 
 const DoughRow: FC<DoughRowProps> = ({
   doughName,
   doughPrice,
   doughDesciption,
-  setDoughSelected,
-  setOpenModal,
+  selectDough,
 }) => {
   return (
     <div className="dough-row">
@@ -30,13 +23,7 @@ const DoughRow: FC<DoughRowProps> = ({
       <div>
         <div className="dough-price">{doughPrice}$</div>
         <Button
-          onClick={() => {
-            setDoughSelected({
-              doughName: doughName,
-              doughPrice: doughPrice,
-            });
-            setOpenModal(true);
-          }}
+          onClick={() => selectDough(doughName, doughPrice)}
           title="Add ingredients"
           text="+ADD"
         />

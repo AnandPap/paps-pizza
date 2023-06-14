@@ -10,6 +10,14 @@ const CreatePizza = () => {
   });
   const [openModal, setOpenModal] = useState(false);
 
+  function selectDough(name: string, price: number) {
+    setDoughSelected({
+      doughName: name,
+      doughPrice: price,
+    });
+    setOpenModal(true);
+  }
+
   return (
     <div className="create-pizza">
       <h2>Create Pizza</h2>
@@ -20,18 +28,15 @@ const CreatePizza = () => {
             doughName={item.name}
             doughPrice={item.price}
             doughDesciption={item.desc}
-            setDoughSelected={setDoughSelected}
-            setOpenModal={setOpenModal}
+            selectDough={selectDough}
           />
         ))}
       </div>
-      {location.pathname === "/" && (
-        <AddIngredients
-          doughSelected={doughSelected}
-          openModal={openModal}
-          setOpenModal={setOpenModal}
-        />
-      )}
+      <AddIngredients
+        doughSelected={doughSelected}
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+      />
     </div>
   );
 };
