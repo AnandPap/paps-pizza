@@ -16,16 +16,27 @@ const DeliveryAddress: FC<DeliveryAddressProps> = ({ setAddressSelected }) => {
   const [radioSelected, setRadioSelected] = useState<number | null>(null);
 
   useEffect(() => {
-    const item = localStorage.getItem("addressCards");
-    if (item) {
-      const parsedItem = JSON.parse(item);
-      if (parsedItem.constructor === Array) setAddressCards([...parsedItem]);
+    const localItem = localStorage.getItem("addressCards");
+    if (localItem) {
+      const parsedLocalItem = JSON.parse(localItem);
+      if (parsedLocalItem.constructor === Array) {
+        setAddressCards(parsedLocalItem);
+        const sessionItem = sessionStorage.getItem("radioSelected");
+        if (sessionItem) {
+          const parsedSessionItem = JSON.parse(sessionItem);
+          if (typeof parsedSessionItem === "number") {
+            setRadioSelected(parsedSessionItem);
+            setAddressSelected(parsedLocalItem[parsedSessionItem]);
+          }
+        }
+      }
     }
   }, []);
 
   function selectAddress(i: number, card: Address) {
     setRadioSelected(i);
     setAddressSelected(card);
+    sessionStorage.setItem("radioSelected", i + "");
   }
 
   function removeAddressCard(i: number) {
@@ -36,6 +47,7 @@ const DeliveryAddress: FC<DeliveryAddressProps> = ({ setAddressSelected }) => {
     setAddressCards(newAddressCards);
     localStorage.setItem("addressCards", JSON.stringify(newAddressCards));
     if (i === radioSelected) {
+      sessionStorage.removeItem("radioSelected");
       setAddressSelected({
         address: "",
         floor: "",

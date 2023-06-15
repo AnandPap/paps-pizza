@@ -35,6 +35,7 @@ const Payment: FC<PaymentProps> = ({ addressSelected }) => {
 
   function placeOrder() {
     if (addressSelected.address && pizzasPicked.length > 0) {
+      sessionStorage.removeItem("radioSelected");
       saveOrder({
         order: pizzasPicked,
         address: addressSelected,
@@ -63,7 +64,12 @@ const Payment: FC<PaymentProps> = ({ addressSelected }) => {
             <CartItem key={i} i={i} pizza={pizza} />
           ))
         ) : (
-          <ErrorMessage className="not-found" text="No pizza selected" />
+          <div className="no-pizza">
+            <ErrorMessage className="not-found" text="No pizza selected" />
+            <button className="go-back-btn" onClick={() => navigate("/")}>
+              Go back
+            </button>
+          </div>
         )}
       </div>
       <div className="payment-footer">
