@@ -1,5 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import ErrorBoundary from "./reusable/ErrorBoundary";
+import ErrorMessage from "./reusable/ErrorMessage";
 import MainRouter from "./MainRouter";
 import "./styles/reusable.css";
 import "./styles/index.css";
@@ -13,7 +15,18 @@ import { Provider } from "react-redux";
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <Provider store={store}>
-      <MainRouter />
+      <ErrorBoundary
+        fallback={
+          <ErrorMessage
+            className="not-found error-boundary"
+            text={
+              "Something went wrong. \n Please refresh the page and try again."
+            }
+          />
+        }
+      >
+        <MainRouter />
+      </ErrorBoundary>
     </Provider>
   </React.StrictMode>
 );

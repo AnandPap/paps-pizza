@@ -61,7 +61,7 @@ const getOrderHistory = (req, res, next) => {
   });
 };
 
-const deleteAllOrders = async (req, res) => {
+const deleteAllOrders = (req, res) => {
   Order.deleteMany({}, (err, number) => {
     if (err)
       res
