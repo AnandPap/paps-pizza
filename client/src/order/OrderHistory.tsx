@@ -21,7 +21,7 @@ const OrderHistory = () => {
         } else setError(getErrorMessage(res));
         setTimeout(() => {
           setLoading(false);
-        }, 750);
+        }, 500);
       })
       .catch((err) => console.log(err));
   }, []);

@@ -35,7 +35,6 @@ const Payment: FC<PaymentProps> = ({ addressSelected }) => {
 
   function placeOrder() {
     if (addressSelected.address && pizzasPicked.length > 0) {
-      sessionStorage.removeItem("radioSelected");
       saveOrder({
         order: pizzasPicked,
         address: addressSelected,
@@ -46,6 +45,7 @@ const Payment: FC<PaymentProps> = ({ addressSelected }) => {
         .then(() => {
           navigate("/order-history", { replace: true });
           dispatch(setPizza({ type: "reset" }));
+          sessionStorage.removeItem("radioSelected");
         })
         .catch((err) => console.log(err));
     } else if (pizzasPicked.length === 0)

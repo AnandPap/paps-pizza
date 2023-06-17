@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react";
+import { useState, FC, ReactNode } from "react";
 
 interface ModalProps {
   headerTitle: string;
@@ -15,11 +15,25 @@ const Modal: FC<ModalProps> = ({
   closeModal,
   children,
 }) => {
+  const [clickedInsideModal, setClickedInsideModal] = useState(false);
+  const turnOffClickedInside = () => setClickedInsideModal(false);
+
   return openModal ? (
-    <div className="modal-cover" onClick={closeModal}>
+    <div
+      className="modal-cover"
+      onClick={() => {
+        if (!clickedInsideModal) closeModal();
+        else turnOffClickedInside();
+      }}
+    >
       <div
         className={`modal ${className || ""}`}
         onClick={(e) => e.stopPropagation()}
+        onMouseDown={() => {
+          setClickedInsideModal(true);
+        }}
+        onMouseUp={turnOffClickedInside}
+        onDragEnd={turnOffClickedInside}
       >
         <div className="modal-header">
           <h2>{headerTitle}</h2>
