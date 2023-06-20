@@ -1,5 +1,9 @@
 const express = require("express");
-const { validateSignUpFields, authenticate } = require("./middlewares");
+const {
+  validateSignUpFields,
+  authenticate,
+  getUser,
+} = require("./middlewares");
 const {
   signup,
   login,
@@ -13,7 +17,7 @@ const {
 const router = express.Router();
 
 router
-  .get("/api/check-login", checkLoggedIn)
+  .get("/api/check-login", authenticate, getUser, checkLoggedIn)
   .post("/api/signup", validateSignUpFields, signup)
   .post("/api/login", login)
   .get("/api/signout", signout)

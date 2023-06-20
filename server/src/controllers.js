@@ -4,10 +4,8 @@ const { User, Order } = require("./models");
 const { getSaveErrorMessage } = require("./helper-functions");
 
 const checkLoggedIn = (req, res) => {
-  jwt.verify(req.cookies.loginToken, config.secret, (err, decoded) => {
-    if (err) res.status(200).json(false);
-    else res.status(200).json(true);
-  });
+  if (req.user.username) res.status(200).json({ message: req.user.username });
+  else res.sendStatus(400);
 };
 
 const signup = (req, res, next) => {
@@ -34,7 +32,7 @@ const login = (req, res) => {
           httpOnly: true,
         })
         .status(200)
-        .json({ message: "Successfully logged in." });
+        .json({ message: user.username });
     }
   });
 };

@@ -4,6 +4,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 export interface InitialState {
   pizzasPicked: PizzaPicked[];
   isLoggedIn: boolean | null;
+  username: string;
 }
 export interface PizzaPicked {
   pizzaName: string;
@@ -35,6 +36,7 @@ interface OrderNumberAction {
 const initialState: InitialState = {
   pizzasPicked: [],
   isLoggedIn: null,
+  username: "",
 };
 
 export const pizzaSlice = createSlice({
@@ -74,9 +76,13 @@ export const pizzaSlice = createSlice({
     setIsLoggedIn: (state, action: PayloadAction<boolean>) => {
       state.isLoggedIn = action.payload;
     },
+    setUsername: (state, action: PayloadAction<string>) => {
+      state.username = action.payload;
+    },
   },
 });
 
-export const { setPizza, setOrderNumber, setIsLoggedIn } = pizzaSlice.actions;
+export const { setPizza, setOrderNumber, setIsLoggedIn, setUsername } =
+  pizzaSlice.actions;
 
 export default pizzaSlice.reducer;

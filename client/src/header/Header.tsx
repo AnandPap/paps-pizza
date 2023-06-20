@@ -10,7 +10,7 @@ import { getErrorMessage } from "../helpers/error-functions";
 
 const Header = () => {
   const [error, setError] = useState("");
-  const { pizzasPicked, isLoggedIn } = useAppSelector((s) => s.pizza);
+  const { pizzasPicked, isLoggedIn, username } = useAppSelector((s) => s.pizza);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -30,6 +30,7 @@ const Header = () => {
           <div className="dropdown">
             <i className="bi bi-person-circle avatar" />
             <div className="dropdown-content">
+              <p>{username}</p>
               <p
                 onClick={() =>
                   location.pathname !== "/order-history" &&

@@ -50,7 +50,7 @@ export const signout = async () => {
 
 export const checkLoggedIn = async () => {
   try {
-    const res = await axios.get<boolean>(`/api/check-login`);
+    const res = await axios.get<AxiosMessage>(`/api/check-login`);
     return res.data;
   } catch (err) {
     return false;

@@ -7,7 +7,7 @@ import Home from "./home/Home";
 import Order from "./order/Order";
 import OrderHistory from "./order/OrderHistory";
 import ErrorMessage from "./reusable/ErrorMessage";
-import { setIsLoggedIn } from "./redux/pizza";
+import { setIsLoggedIn, setUsername } from "./redux/pizza";
 import { useAppDispatch, useAppSelector } from "./redux/hooks";
 import { checkLoggedIn } from "./helpers/fetch-functions";
 
@@ -17,8 +17,20 @@ const MainRouter = () => {
 
   useEffect(() => {
     checkLoggedIn()
-      .then((res) => dispatch(setIsLoggedIn(res)))
-      .catch((err) => console.log(err));
+      .then((res) => {
+        if (res) {
+          dispatch(setIsLoggedIn(true));
+          dispatch(setUsername(res.message));
+        } else {
+          dispatch(setIsLoggedIn(false));
+          dispatch(setUsername(""));
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch(setIsLoggedIn(false));
+        dispatch(setUsername(""));
+      });
   }, [isLoggedIn]);
 
   return (
