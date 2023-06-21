@@ -1,24 +1,16 @@
-import { useEffect, useState } from "react";
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import { setPizza } from "../redux/pizza";
 import { useNavigate } from "react-router-dom";
 import Button from "../reusable/Button";
 import CartItem from "./CartItem";
+import useTotalPrice from "../reusable/useTotalPrice";
 
 const Cart = () => {
+  const totalPrice = useTotalPrice();
   const { pizzasPicked, isLoggedIn } = useAppSelector((s) => s.pizza);
-  const [totalPrice, setTotalPrice] = useState(0);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const deliveryPrice = 5;
-
-  useEffect(() => {
-    let price = deliveryPrice;
-    for (let i = 0; i < pizzasPicked.length; i++) {
-      price += pizzasPicked[i].numberOfOrders * pizzasPicked[i].pizzaPrice;
-    }
-    setTotalPrice(price);
-  }, [pizzasPicked]);
 
   return (
     <div className="cart">

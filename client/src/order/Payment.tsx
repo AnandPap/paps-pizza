@@ -7,6 +7,7 @@ import Button from "../reusable/Button";
 import { Address } from "./DeliveryAddress";
 import ErrorMessage from "../reusable/ErrorMessage";
 import { saveOrder } from "../helpers/fetch-functions";
+import useTotalPrice from "../reusable/useTotalPrice";
 
 interface PaymentProps {
   addressSelected: Address;
@@ -15,7 +16,7 @@ interface PaymentProps {
 const Payment: FC<PaymentProps> = ({ addressSelected }) => {
   const [error, setError] = useState("");
   const [notes, setNotes] = useState("");
-  const [totalPrice, setTotalPrice] = useState(0);
+  const totalPrice = useTotalPrice();
   const { pizzasPicked } = useAppSelector((s) => s.pizza);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -24,14 +25,6 @@ const Payment: FC<PaymentProps> = ({ addressSelected }) => {
   useEffect(() => {
     setError("");
   }, [addressSelected]);
-
-  useEffect(() => {
-    let price = deliveryPrice;
-    for (let i = 0; i < pizzasPicked.length; i++) {
-      price += pizzasPicked[i].numberOfOrders * pizzasPicked[i].pizzaPrice;
-    }
-    setTotalPrice(price);
-  }, [pizzasPicked]);
 
   function placeOrder() {
     if (addressSelected.address && pizzasPicked.length > 0) {
