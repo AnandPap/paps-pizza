@@ -1,10 +1,10 @@
-const jwt = require("jsonwebtoken");
-const config = require("./config");
-const {
+import jwt from "jsonwebtoken";
+import config from "./config.js";
+import { User } from "./models.js";
+import {
   validateEmailFormat,
   capitalizeFirstLetter,
-} = require("./helper-functions");
-const { User } = require("./models");
+} from "./helper-functions.js";
 
 const validateSignUpFields = (req, res, next) => {
   const { username, email, password, confirmPassword } = req.body;
@@ -62,4 +62,4 @@ const getUser = (req, res, next) => {
   });
 };
 
-module.exports = { validateSignUpFields, authenticate, getUser };
+export { validateSignUpFields, authenticate, getUser };

@@ -1,14 +1,16 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const helmet = require("helmet");
-const compress = require("compression");
-const cookieParser = require("cookie-parser");
-const cors = require("cors");
-const path = require("path");
-const config = require("./src/config");
-const userRoutes = require("./src/routes");
+import express from "express";
+import mongoose from "mongoose";
+import helmet from "helmet";
+import compress from "compression";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import { dirname, join } from "path";
+import { fileURLToPath } from "url";
+import config from "./src/config.js";
+import userRoutes from "./src/routes.js";
 
 const app = express();
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -29,9 +31,9 @@ mongoose
   .then(() => console.log("MongoDB successfully connected..."))
   .catch((err) => console.log(err));
 
-app.use(express.static(path.join(__dirname, "../client", "dist")));
+app.use(express.static(join(__dirname, "../client", "dist")));
 app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client", "dist", "index.html"));
+  res.sendFile(join(__dirname, "../client", "dist", "index.html"));
 });
 
 app.use((err, req, res, next) => {

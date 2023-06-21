@@ -36,7 +36,7 @@ function getSaveErrorMessage(err, type) {
   return errorMessage;
 }
 
-module.exports = {
+export {
   capitalizeFirstLetter,
   validateEmailFormat,
   validateUniqueUsername,

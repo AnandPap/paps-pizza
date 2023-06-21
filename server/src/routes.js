@@ -1,10 +1,6 @@
-const express = require("express");
-const {
-  validateSignUpFields,
-  authenticate,
-  getUser,
-} = require("./middlewares");
-const {
+import express from "express";
+import { validateSignUpFields, authenticate, getUser } from "./middlewares.js";
+import {
   signup,
   login,
   checkLoggedIn,
@@ -12,7 +8,7 @@ const {
   saveOrder,
   getOrderHistory,
   deleteAllOrders,
-} = require("./controllers");
+} from "./controllers.js";
 
 const router = express.Router();
 
@@ -25,4 +21,4 @@ router
   .get("/api/order-history", authenticate, getOrderHistory)
   .get("/api/delete-orders", deleteAllOrders);
 
-module.exports = router;
+export default router;

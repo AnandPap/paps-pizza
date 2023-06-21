@@ -1,7 +1,7 @@
-const jwt = require("jsonwebtoken");
-const config = require("./config");
-const { User, Order } = require("./models");
-const { getSaveErrorMessage } = require("./helper-functions");
+import jwt from "jsonwebtoken";
+import config from "./config.js";
+import { User, Order } from "./models.js";
+import { getSaveErrorMessage } from "./helper-functions.js";
 
 const checkLoggedIn = (req, res) => {
   if (req.user.username) res.status(200).json({ message: req.user.username });
@@ -72,7 +72,7 @@ const deleteAllOrders = (req, res) => {
   });
 };
 
-module.exports = {
+export {
   signup,
   login,
   checkLoggedIn,

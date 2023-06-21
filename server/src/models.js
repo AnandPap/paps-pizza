@@ -1,9 +1,9 @@
-const { model, Schema } = require("mongoose");
-const bcrypt = require("bcrypt");
-const {
+import { model, Schema } from "mongoose";
+import bcrypt from "bcrypt";
+import {
   validateUniqueUsername,
   validateUniqueEmail,
-} = require("./helper-functions");
+} from "./helper-functions.js";
 
 const UserSchema = new Schema({
   username: {
@@ -54,4 +54,4 @@ const OrderSchema = new Schema({
 const User = model("User", UserSchema);
 const Order = model("Order", OrderSchema);
 
-module.exports = { User, Order };
+export { User, Order };
