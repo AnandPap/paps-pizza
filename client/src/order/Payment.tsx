@@ -7,7 +7,7 @@ import Button from "../reusable/Button";
 import { Address } from "./DeliveryAddress";
 import ErrorMessage from "../reusable/ErrorMessage";
 import { saveOrder } from "../helpers/fetch-functions";
-import useTotalPrice from "../reusable/useTotalPrice";
+import useTotalPrice from "../hooks/useTotalPrice";
 
 interface PaymentProps {
   addressSelected: Address;

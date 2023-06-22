@@ -3,7 +3,7 @@ import { setPizza } from "../redux/pizza";
 import { useNavigate } from "react-router-dom";
 import Button from "../reusable/Button";
 import CartItem from "./CartItem";
-import useTotalPrice from "../reusable/useTotalPrice";
+import useTotalPrice from "../hooks/useTotalPrice";
 
 const Cart = () => {
   const totalPrice = useTotalPrice();
