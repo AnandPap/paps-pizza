@@ -17,24 +17,30 @@ export interface SignUpValues {
 }
 
 const SignUp = () => {
-  const [values, setValues] = useState<SignUpValues>({
+  const [signupValues, setSignupValues] = useState<SignUpValues>({
     username: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
   const [error, setError] = useState("");
-  const valuesKeys = ["Username", "Email", "Password", "Confirm password"];
+  const inputKeys = ["Username", "Email", "Password", "Confirm password"];
+  const autoCompleteValues = [
+    "username",
+    "email",
+    "new-password",
+    "new-password",
+  ];
   const { isLoggedIn } = useAppSelector((s) => s.pizza);
   const navigate = useNavigate();
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const user = {
-      username: values.username || undefined,
-      email: values.email || undefined,
-      password: values.password || undefined,
-      confirmPassword: values.confirmPassword || undefined,
+      username: signupValues.username || undefined,
+      email: signupValues.email || undefined,
+      password: signupValues.password || undefined,
+      confirmPassword: signupValues.confirmPassword || undefined,
     };
     signup(user)
       .then((res) => {
@@ -47,7 +53,7 @@ const SignUp = () => {
   }
 
   const handleChange = (key: string, value: string) => {
-    setValues({ ...values, [key]: value });
+    setSignupValues({ ...signupValues, [key]: value });
     setError("");
   };
 
@@ -58,7 +64,7 @@ const SignUp = () => {
       closeModal={() => navigate("/")}
     >
       <form className="signup" onSubmit={(e) => handleSubmit(e)}>
-        {valuesKeys.map((key, i) => (
+        {inputKeys.map((key, i) => (
           <input
             key={i}
             id={key}
@@ -69,9 +75,10 @@ const SignUp = () => {
                 ? "password"
                 : key.toLowerCase()
             }
-            placeholder={key}
             className="input"
-            value={values[key]}
+            placeholder={key}
+            autoComplete={autoCompleteValues[i]}
+            value={signupValues[key]}
             onChange={(e) => handleChange(toCamelCase(key), e.target.value)}
           />
         ))}

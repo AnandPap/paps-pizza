@@ -15,12 +15,13 @@ export interface LogInValues {
 }
 
 const LogIn = () => {
-  const [values, setValues] = useState<LogInValues>({
+  const [loginValues, setLoginValues] = useState<LogInValues>({
     email: "",
     password: "",
   });
   const [error, setError] = useState("");
-  const valuesKeys = ["Email", "Password"];
+  const inputKeys = ["Email", "Password"];
+  const autoCompleteValues = ["email", "current-password"];
   const { isLoggedIn } = useAppSelector((s) => s.pizza);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -29,8 +30,8 @@ const LogIn = () => {
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const user = {
-      email: values.email || undefined,
-      password: values.password || undefined,
+      email: loginValues.email || undefined,
+      password: loginValues.password || undefined,
     };
     login(user)
       .then((res) => {
@@ -47,7 +48,7 @@ const LogIn = () => {
   }
 
   const handleChange = (key: string, value: string) => {
-    setValues({ ...values, [key]: value });
+    setLoginValues({ ...loginValues, [key]: value });
     setError("");
   };
 
@@ -58,14 +59,15 @@ const LogIn = () => {
       closeModal={() => navigate("/")}
     >
       <form className="login" onSubmit={(e) => handleSubmit(e)}>
-        {valuesKeys.map((key, i) => (
+        {inputKeys.map((key, i) => (
           <input
             key={i}
             id={key}
             type={key.toLowerCase()}
             className="input"
             placeholder={key}
-            value={values[key]}
+            autoComplete={autoCompleteValues[i]}
+            value={loginValues[key]}
             onChange={(e) => handleChange(key.toLowerCase(), e.target.value)}
           />
         ))}
