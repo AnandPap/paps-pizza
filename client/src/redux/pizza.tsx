@@ -4,7 +4,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 export interface InitialState {
   pizzasPicked: PizzaPicked[];
   isLoggedIn: boolean | null;
-  username: string;
+  username: string | null;
 }
 export interface PizzaPicked {
   pizzaName: string;
@@ -36,7 +36,7 @@ interface OrderNumberAction {
 const initialState: InitialState = {
   pizzasPicked: [],
   isLoggedIn: null,
-  username: "",
+  username: null,
 };
 
 export const pizzaSlice = createSlice({

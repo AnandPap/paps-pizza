@@ -30,7 +30,9 @@ const Header = () => {
           <div className="dropdown">
             <i className="bi bi-person-circle avatar" />
             <div className="dropdown-content">
-              <p>{username}</p>
+              <p onClick={() => navigate(`user-profile/${username}`)}>
+                {username}
+              </p>
               <p
                 onClick={() =>
                   location.pathname !== "/order-history" &&

@@ -8,12 +8,12 @@ import Order from "./order/Order";
 import OrderHistory from "./order/OrderHistory";
 import ErrorMessage from "./reusable/ErrorMessage";
 import { setIsLoggedIn, setUsername } from "./redux/pizza";
-import { useAppDispatch, useAppSelector } from "./redux/hooks";
+import { useAppDispatch } from "./redux/hooks";
 import { checkLoggedIn } from "./helpers/fetch-functions";
+import UserProfile from "./UserProfile";
 
 const MainRouter = () => {
   const dispatch = useAppDispatch();
-  const { isLoggedIn } = useAppSelector((s) => s.pizza);
 
   useEffect(() => {
     checkLoggedIn()
@@ -31,7 +31,7 @@ const MainRouter = () => {
         dispatch(setIsLoggedIn(false));
         dispatch(setUsername(""));
       });
-  }, [isLoggedIn]);
+  }, []);
 
   return (
     <BrowserRouter>
@@ -43,6 +43,7 @@ const MainRouter = () => {
         </Route>
         <Route path="/order" element={<Order />} />
         <Route path="/order-history" element={<OrderHistory />} />
+        <Route path="user-profile/:usernames" element={<UserProfile />} />
         <Route
           path="*"
           element={

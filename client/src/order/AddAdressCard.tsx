@@ -53,17 +53,19 @@ const AddAdressCard: FC<AddAdressCardProps> = ({
   return toggleAddNewAddress ? (
     <form className="add-address" onSubmit={(e) => handleSubmit(e)}>
       <div>
-        <label>Address:</label>
+        <label htmlFor="address">Address:</label>
         <input
           autoFocus
+          id="address"
           placeholder="Add address"
           value={newAddress.address}
           onChange={(e) => handleChange("address", e.target.value)}
         />
       </div>
       <div>
-        <label>Floor:</label>
+        <label htmlFor="floor">Floor:</label>
         <input
+          id="floor"
           placeholder="Add floor"
           value={newAddress.floor}
           onChange={(e) => handleChange("floor", e.target.value)}
