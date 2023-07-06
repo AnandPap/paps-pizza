@@ -17,14 +17,10 @@
   background-color: white;
   border-radius: 5px;
   height: max-content;
-  margin: 10px 0;
   width: 350px;
   max-width: 90%;
   box-shadow: 1px 1px 10px -3px black;
-}
-.modal.signup-modal,
-.modal.login-modal {
-  margin-top: 30px;
+  margin: 30px 0 10px 0;
 }
 .modal-cover {
   display: flex;
@@ -37,6 +33,9 @@
   z-index: 1;
   overflow: auto;
   background-color: rgb(0, 0, 0, 0.7);
+}
+.add-ingredients-modal {
+  margin-top: 10px;
 }
 .modal-header {
   display: flex;
@@ -54,6 +53,9 @@
 .modal-header > span:hover {
   color: black;
 }
+.modal-content {
+  padding: 1rem;
+}
 
 .not-found {
   opacity: 0.7;
@@ -69,6 +71,9 @@
   text-align: center;
   margin: auto;
 }
+.error-message.left {
+  text-align: left;
+}
 .error-boundary {
   margin: 30px;
   white-space: pre-line;
@@ -82,6 +87,23 @@
 .spinner {
   width: 50%;
   height: 50%;
+}
+
+.notification-box {
+  position: fixed;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  transition: top 0.5s;
+  max-width: 90%;
+  z-index: 1;
+}
+.notification-box.show {
+  top: 30px;
 }
 
 .loading-wrapper {

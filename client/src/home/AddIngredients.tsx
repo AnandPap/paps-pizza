@@ -102,11 +102,12 @@ const AddIngredients: FC<AddIngredientsProps> = ({
   return (
     <Modal
       headerTitle="Ingredients"
+      className="add-ingredients-modal"
       openModal={openModal}
       closeModal={closeModal}
     >
       <form onSubmit={(e) => addToCart(e)}>
-        <div className="ingredients-list">
+        <div className="modal-content">
           <h3>Cheese:</h3>
           {ingredients.cheese.map((item, i) => (
             <ListItem

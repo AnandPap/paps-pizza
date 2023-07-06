@@ -10,12 +10,18 @@
   flex: 1;
 }
 
-.ingredients-list {
-  padding: 1.25rem;
-}
 .list-item {
   display: flex;
+  align-items: center;
   margin: 10px 3px;
+}
+.list-item-label {
+  cursor: pointer;
+  flex-grow: 1;
+  display: flex;
+}
+.list-item-label > :first-child {
+  flex-grow: 1;
 }
 .checkbox-input,
 .radio-input {
@@ -25,11 +31,6 @@
   width: 20px;
   height: 20px;
   margin-right: 3px;
-}
-.list-item-left-side-container {
-  display: flex;
-  flex-grow: 1;
-  margin-right: 5px;
 }
 .add-ingredients-footer {
   border-top: 1px solid black;

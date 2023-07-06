@@ -22,27 +22,27 @@ const ListItem: FC<ListItemProps> = ({
 
   return (
     <div className="list-item">
-      <div className="list-item-left-side-container">
-        {glutenFree ? (
-          <img
-            className="no-gluten-icon"
-            src={noGluten}
-            alt=""
-            title="No Gluten"
-          />
-        ) : (
-          <div className="no-gluten-icon"></div>
-        )}
-        <input
-          type={inputType}
-          id={i.toString()}
-          className={`${inputType}-input`}
-          name={type}
-          onChange={() => addIngredient(name, price, type)}
+      {glutenFree ? (
+        <img
+          className="no-gluten-icon"
+          src={noGluten}
+          alt=""
+          title="No Gluten"
         />
-        <label htmlFor={i.toString()}>{name}</label>
-      </div>
-      <div>{price}$</div>
+      ) : (
+        <div className="no-gluten-icon"></div>
+      )}
+      <input
+        type={inputType}
+        id={i.toString()}
+        className={`${inputType}-input`}
+        name={type}
+        onChange={() => addIngredient(name, price, type)}
+      />
+      <label className="list-item-label" htmlFor={i.toString()}>
+        <p>{name}</p>
+        <p>{price}$</p>
+      </label>
     </div>
   );
 };

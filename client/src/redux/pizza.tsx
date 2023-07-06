@@ -5,12 +5,18 @@ export interface InitialState {
   pizzasPicked: PizzaPicked[];
   isLoggedIn: boolean | null;
   username: string | null;
+  notification: Notification;
 }
 export interface PizzaPicked {
   pizzaName: string;
   pizzaIngredients: string[];
   pizzaPrice: number;
   numberOfOrders: number;
+}
+interface Notification {
+  text: string;
+  show: boolean;
+  type: "error" | "success" | null;
 }
 type PizzasPickedAction =
   | {
@@ -37,6 +43,7 @@ const initialState: InitialState = {
   pizzasPicked: [],
   isLoggedIn: null,
   username: null,
+  notification: { text: "", show: false, type: null },
 };
 
 export const pizzaSlice = createSlice({
@@ -79,10 +86,25 @@ export const pizzaSlice = createSlice({
     setUsername: (state, action: PayloadAction<string>) => {
       state.username = action.payload;
     },
+    setNotification: (
+      state,
+      action: PayloadAction<Omit<Notification, "show">>
+    ) => {
+      state.notification = { show: true, ...action.payload };
+    },
+    closeNotification: (state) => {
+      state.notification = { text: "", show: false, type: null };
+    },
   },
 });
 
-export const { setPizza, setOrderNumber, setIsLoggedIn, setUsername } =
-  pizzaSlice.actions;
+export const {
+  setPizza,
+  setOrderNumber,
+  setIsLoggedIn,
+  setUsername,
+  setNotification,
+  closeNotification,
+} = pizzaSlice.actions;
 
 export default pizzaSlice.reducer;

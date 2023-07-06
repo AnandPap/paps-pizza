@@ -16,7 +16,7 @@ const OrderHistory = () => {
     fetchOrderHistory()
       .then((res) => {
         if (res && !("code" in res)) {
-          if (res.length === 0) setError("No results");
+          if (res.length === 0) setError("No orders yet");
           else setOrderHistory(res);
         } else setError(getErrorMessage(res));
         setTimeout(() => {

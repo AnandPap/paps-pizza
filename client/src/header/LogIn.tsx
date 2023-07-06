@@ -53,11 +53,7 @@ const LogIn = () => {
   };
 
   return !isLoggedIn ? (
-    <Modal
-      headerTitle="Log In"
-      className="login-modal"
-      closeModal={() => navigate("/")}
-    >
+    <Modal headerTitle="Log In" closeModal={() => navigate("/")}>
       <form className="login" onSubmit={(e) => handleSubmit(e)}>
         {inputKeys.map((key, i) => (
           <input
