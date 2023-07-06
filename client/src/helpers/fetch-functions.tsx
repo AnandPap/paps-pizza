@@ -15,6 +15,7 @@ export interface OrderDetails {
 }
 
 interface AxiosMessage {
+  status: number;
   message: string;
 }
 
@@ -41,8 +42,7 @@ export const login = async (user: LogInValues) => {
 export const signout = async () => {
   try {
     const res = await axios.get<AxiosMessage>("/api/signout");
-    if (res.status === 200) return true;
-    else return undefined;
+    return res.data;
   } catch (err) {
     return getAxiosErrorObject(err);
   }
@@ -75,11 +75,22 @@ export const fetchOrderHistory = async () => {
   }
 };
 
-export async function deleteOrders() {
+export const deleteProfile = async () => {
   try {
-    const res = await axios.get("/api/delete-orders");
-    console.log(res);
+    const res = await axios.delete<AxiosMessage>("/api/delete-profile");
+    return res.data;
   } catch (err) {
-    console.log(err);
+    return getAxiosErrorObject(err);
   }
-}
+};
+
+export const changePassword = async (newPassword: string) => {
+  try {
+    const res = await axios.patch<AxiosMessage>("/api/change-password", {
+      newPassword: newPassword,
+    });
+    return res.data;
+  } catch (err) {
+    return getAxiosErrorObject(err);
+  }
+};
