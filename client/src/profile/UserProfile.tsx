@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { useAppSelector } from "./redux/hooks";
+import { useAppSelector } from "../redux/hooks";
 import { useNavigate, useParams } from "react-router";
 import ChangePassword from "./ChangePassword";
 import DeleteProfile from "./DeleteProfile";

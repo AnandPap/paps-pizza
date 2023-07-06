@@ -1,16 +1,16 @@
 import { FC } from "react";
-import Modal from "./reusable/Modal";
-import { deleteProfile } from "./helpers/fetch-functions";
+import Modal from "../reusable/Modal";
+import { deleteProfile } from "../helpers/fetch-functions";
 import {
   closeNotification,
   setIsLoggedIn,
   setNotification,
   setPizza,
   setUsername,
-} from "./redux/pizza";
+} from "../redux/pizza";
 import { useNavigate } from "react-router";
-import { useAppDispatch } from "./redux/hooks";
-import { getErrorMessage } from "./helpers/error-functions";
+import { useAppDispatch } from "../redux/hooks";
+import { getErrorMessage } from "../helpers/error-functions";
 
 type DeleteProfileProps = {
   openDeleteModal: boolean;

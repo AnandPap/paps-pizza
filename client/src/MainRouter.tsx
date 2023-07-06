@@ -10,7 +10,7 @@ import ErrorMessage from "./reusable/ErrorMessage";
 import { setIsLoggedIn, setUsername } from "./redux/pizza";
 import { useAppDispatch } from "./redux/hooks";
 import { checkLoggedIn } from "./helpers/fetch-functions";
-import UserProfile from "./UserProfile";
+import UserProfile from "./profile/UserProfile";
 
 const MainRouter = () => {
   const dispatch = useAppDispatch();

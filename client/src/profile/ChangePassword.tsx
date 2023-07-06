@@ -1,10 +1,10 @@
 import { FC, useState, useEffect } from "react";
-import Modal from "./reusable/Modal";
-import { changePassword } from "./helpers/fetch-functions";
-import ErrorMessage from "./reusable/ErrorMessage";
-import { useAppDispatch } from "./redux/hooks";
-import { closeNotification, setNotification } from "./redux/pizza";
-import { getErrorMessage } from "./helpers/error-functions";
+import Modal from "../reusable/Modal";
+import { changePassword } from "../helpers/fetch-functions";
+import ErrorMessage from "../reusable/ErrorMessage";
+import { useAppDispatch } from "../redux/hooks";
+import { closeNotification, setNotification } from "../redux/pizza";
+import { getErrorMessage } from "../helpers/error-functions";
 
 type ChangePasswordProps = {
   openChangeModal: boolean;
