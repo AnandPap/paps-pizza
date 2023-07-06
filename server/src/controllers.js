@@ -8,7 +8,7 @@ const checkLoggedIn = (req, res) => {
   else res.sendStatus(400);
 };
 
-const signup = (req, res, next) => {
+const signup = (req, res) => {
   const user = new User(req.body);
   user.save((err, result) => {
     if (err) res.status(400).json({ error: getSaveErrorMessage(err, "user") });
@@ -41,7 +41,7 @@ const signout = (req, res) => {
   res
     .clearCookie("loginToken")
     .status(200)
-    .json({ message: "User signed out." });
+    .json({ message: "User signed out" });
 };
 
 const saveOrder = (req, res) => {
@@ -59,17 +59,28 @@ const getOrderHistory = (req, res, next) => {
   });
 };
 
-const deleteAllOrders = (req, res) => {
-  Order.deleteMany({}, (err, number) => {
-    if (err)
-      res
-        .status(500)
-        .json({ error: "An error occurred while deleting documents." });
-    else
-      res
-        .status(200)
-        .json({ message: `Deleted ${number.deletedCount} documents` });
-  });
+const changePassword = async (req, res) => {
+  const user = req.user;
+  user.password = req.body.newPassword;
+  try {
+    await user.save();
+    res.status(200).json({ message: "Password changed" });
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+const deleteProfile = async (req, res, next) => {
+  try {
+    await Order.deleteMany({ userId: req.userId });
+    await User.deleteOne({ _id: req.userId });
+    res
+      .clearCookie("loginToken")
+      .status(200)
+      .json({ message: "User successfully deleted." });
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
 };
 
 export {
@@ -79,5 +90,6 @@ export {
   signout,
   saveOrder,
   getOrderHistory,
-  deleteAllOrders,
+  changePassword,
+  deleteProfile,
 };

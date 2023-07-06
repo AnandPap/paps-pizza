@@ -7,7 +7,8 @@ import {
   signout,
   saveOrder,
   getOrderHistory,
-  deleteAllOrders,
+  changePassword,
+  deleteProfile,
 } from "./controllers.js";
 
 const router = express.Router();
@@ -19,6 +20,7 @@ router
   .get("/api/signout", signout)
   .post("/api/order", authenticate, saveOrder)
   .get("/api/order-history", authenticate, getOrderHistory)
-  .get("/api/delete-orders", deleteAllOrders);
+  .patch("/api/change-password", authenticate, getUser, changePassword)
+  .delete("/api/delete-profile", authenticate, deleteProfile);
 
 export default router;

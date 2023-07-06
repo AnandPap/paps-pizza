@@ -16,7 +16,7 @@ const validateSignUpFields = (req, res, next) => {
   };
   let message = "";
 
-  for (key in bodyObject) {
+  for (const key in bodyObject) {
     if (
       (bodyObject[key] == undefined || bodyObject[key].length === 0) &&
       key !== "confirmPassword"
