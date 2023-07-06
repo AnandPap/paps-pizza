@@ -43,7 +43,7 @@ const MainRouter = () => {
         </Route>
         <Route path="/order" element={<Order />} />
         <Route path="/order-history" element={<OrderHistory />} />
-        <Route path="user-profile/:usernames" element={<UserProfile />} />
+        <Route path="/user-profile/:profileName" element={<UserProfile />} />
         <Route
           path="*"
           element={
