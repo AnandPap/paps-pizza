@@ -1,0 +1,61 @@
+.user-profile {
+  width: fit-content;
+  margin: auto;
+  font-size: var(--fs-medium);
+  padding: 0 10px;
+}
+.user-profile > h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+.user-profile-name-wrapper {
+  font-style: italic;
+}
+.user-profile > p {
+  text-align: center;
+  font-size: calc(var(--fs-medium) * 1.15);
+  margin-bottom: 1rem;
+}
+.user-profile-buttons {
+  display: flex;
+  align-items: center;
+}
+.user-profile-buttons > * {
+  padding: 0.5rem 1rem;
+}
+
+.change-password-form > *:not(:first-child) {
+  margin-top: 0.5rem;
+  display: block;
+  outline: none;
+}
+.change-password-label {
+  cursor: pointer;
+  font-size: calc(var(--fs-medium) * 1.25);
+}
+.change-password-submit-button {
+  padding: 0.5rem 1rem;
+}
+
+.delete-profile {
+  padding-bottom: 1rem;
+  text-align: center;
+}
+.delete-profile > p {
+  margin-bottom: 1rem;
+}
+.delete-profile-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.delete-profile-buttons > * {
+  padding: 0.35rem 1rem;
+}
+
+@media all and (max-width: 400px) {
+  .user-profile-buttons {
+    flex-direction: column;
+  }
+}
