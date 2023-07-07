@@ -1,12 +1,16 @@
 # Pap's Pizza
 
-### This version is an example of full MERN app deployed on vercel.com:
+### Basic featuers of this pizza ordering app are:
+
+#### 1. register, login, change password or delete profile (CRUD operations)
+
+#### 2. order desired pizza on provided address
+
+#### 3. review history of previous orders
+
+### This is an example of full MERN app deployed on vercel.com:
 
 #### "master" branch deployed live version: https://paps-pizza-vercel-full.vercel.app/ (ctrl + click to open in new tab)
-
-### Whereas this one, on the other hand, has frontend deployed on vercel.com while the server is deployed on render.com:
-
-#### "render.com" branch deployed live version: https://paps-pizza-render.vercel.app/ (ctrl + click to open in new tab)
 
 ## To get a local copy up and running, follow these steps:
 
