@@ -91,7 +91,7 @@ header h1 {
 
 @media only screen and (max-width: 425px) {
   header {
-    padding-inline: 15px;
+    padding-inline: 10px;
   }
   header > :first-child {
     gap: 5px;

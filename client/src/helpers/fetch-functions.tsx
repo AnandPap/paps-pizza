@@ -18,6 +18,9 @@ interface AxiosMessage {
   status: number;
   message: string;
 }
+interface LoginMessage extends AxiosMessage {
+  username: string;
+}
 
 export const signup = async (user: SignUpValues) => {
   try {
@@ -30,7 +33,7 @@ export const signup = async (user: SignUpValues) => {
 
 export const login = async (user: LogInValues) => {
   try {
-    const res = await axios.post<AxiosMessage>(`/api/login`, user, {
+    const res = await axios.post<LoginMessage>(`/api/login`, user, {
       withCredentials: true,
     });
     return res.data;

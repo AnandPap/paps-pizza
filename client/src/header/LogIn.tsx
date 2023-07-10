@@ -3,7 +3,12 @@ import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { login } from "../helpers/fetch-functions";
 import { getErrorMessage } from "../helpers/error-functions";
-import { setIsLoggedIn, setUsername } from "../redux/pizza";
+import {
+  closeNotification,
+  setIsLoggedIn,
+  setNotification,
+  setUsername,
+} from "../redux/pizza";
 import Button from "../reusable/Button";
 import ErrorMessage from "../reusable/ErrorMessage";
 import Modal from "../reusable/Modal";
@@ -39,8 +44,15 @@ const LogIn = () => {
           if (location.state === "buy") navigate("/order", { replace: true });
           else navigate("/");
           dispatch(setIsLoggedIn(true));
-          dispatch(setUsername(res.message));
+          dispatch(setUsername(res.username));
+          dispatch(
+            setNotification({
+              text: res.message,
+              type: "success",
+            })
+          );
         } else setError(getErrorMessage(res));
+        setTimeout(() => dispatch(closeNotification()), 1500);
       })
       .catch((err) => {
         console.log(err);

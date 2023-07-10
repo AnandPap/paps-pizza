@@ -32,16 +32,13 @@ const login = (req, res) => {
           httpOnly: true,
         })
         .status(200)
-        .json({ message: user.username });
+        .json({ username: user.username, message: "Logged in" });
     }
   });
 };
 
 const signout = (req, res) => {
-  res
-    .clearCookie("loginToken")
-    .status(200)
-    .json({ message: "User signed out" });
+  res.clearCookie("loginToken").status(200).json({ message: "Signed out" });
 };
 
 const saveOrder = (req, res) => {
@@ -77,7 +74,7 @@ const deleteProfile = async (req, res, next) => {
     res
       .clearCookie("loginToken")
       .status(200)
-      .json({ message: "User successfully deleted." });
+      .json({ message: "User successfully deleted" });
   } catch (err) {
     res.status(500).json({ error: "Internal server error" });
   }
