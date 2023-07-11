@@ -13,14 +13,14 @@ import Button from "../reusable/Button";
 import ErrorMessage from "../reusable/ErrorMessage";
 import Modal from "../reusable/Modal";
 
-export interface LogInValues {
+export interface LoginValues {
   [key: string]: string | undefined;
   email: string | undefined;
   password: string | undefined;
 }
 
-const LogIn = () => {
-  const [loginValues, setLoginValues] = useState<LogInValues>({
+const Login = () => {
+  const [loginValues, setLoginValues] = useState<LoginValues>({
     email: "",
     password: "",
   });
@@ -103,4 +103,4 @@ const LogIn = () => {
   );
 };
 
-export default LogIn;
+export default Login;

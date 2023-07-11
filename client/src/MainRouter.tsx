@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
 import Header from "./header/Header";
 import SignUp from "./header/SignUp";
-import LogIn from "./header/LogIn";
+import Login from "./header/Login";
 import Home from "./home/Home";
 import Order from "./order/Order";
 import OrderHistory from "./order/OrderHistory";
@@ -39,7 +39,7 @@ const MainRouter = () => {
       <Routes>
         <Route path="/" element={<Home />}>
           <Route path="signup" element={<SignUp />} />
-          <Route path="login" element={<LogIn />} />
+          <Route path="login" element={<Login />} />
         </Route>
         <Route path="/order" element={<Order />} />
         <Route path="/order-history" element={<OrderHistory />} />

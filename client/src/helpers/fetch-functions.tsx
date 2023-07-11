@@ -1,6 +1,6 @@
 import axios from "axios";
 import { SignUpValues } from "../header/SignUp";
-import { LogInValues } from "../header/LogIn";
+import { LoginValues } from "../header/Login";
 import { getAxiosErrorObject } from "./error-functions";
 import { PizzaPicked } from "../redux/pizza";
 import { Address } from "../order/DeliveryAddress";
@@ -31,7 +31,7 @@ export const signup = async (user: SignUpValues) => {
   }
 };
 
-export const login = async (user: LogInValues) => {
+export const login = async (user: LoginValues) => {
   try {
     const res = await axios.post<LoginMessage>(`/api/login`, user, {
       withCredentials: true,

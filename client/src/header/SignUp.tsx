@@ -17,7 +17,7 @@ export interface SignUpValues {
 }
 
 const SignUp = () => {
-  const [signupValues, setSignupValues] = useState<SignUpValues>({
+  const [signUpValues, setSignUpValues] = useState<SignUpValues>({
     username: "",
     email: "",
     password: "",
@@ -37,10 +37,10 @@ const SignUp = () => {
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const user = {
-      username: signupValues.username || undefined,
-      email: signupValues.email || undefined,
-      password: signupValues.password || undefined,
-      confirmPassword: signupValues.confirmPassword || undefined,
+      username: signUpValues.username || undefined,
+      email: signUpValues.email || undefined,
+      password: signUpValues.password || undefined,
+      confirmPassword: signUpValues.confirmPassword || undefined,
     };
     signup(user)
       .then((res) => {
@@ -53,7 +53,7 @@ const SignUp = () => {
   }
 
   const handleChange = (key: string, value: string) => {
-    setSignupValues({ ...signupValues, [key]: value });
+    setSignUpValues({ ...signUpValues, [key]: value });
     setError("");
   };
 
@@ -74,7 +74,7 @@ const SignUp = () => {
             className="input"
             placeholder={key}
             autoComplete={autoCompleteValues[i]}
-            value={signupValues[key]}
+            value={signUpValues[key]}
             onChange={(e) => handleChange(toCamelCase(key), e.target.value)}
           />
         ))}
