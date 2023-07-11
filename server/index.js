@@ -11,6 +11,7 @@ import userRoutes from "./src/routes.js";
 
 const app = express();
 const __dirname = dirname(fileURLToPath(import.meta.url));
+mongoose.set("strictQuery", true);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

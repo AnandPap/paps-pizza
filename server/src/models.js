@@ -43,12 +43,12 @@ UserSchema.methods.checkPassword = async function (enteredPassword) {
 };
 
 const OrderSchema = new Schema({
-  address: { address: String, floor: String },
-  date: Date,
   userId: String,
-  notes: String,
-  order: Array,
+  pizzas: Array,
+  date: Date,
   price: Number,
+  address: { address: String, floor: String },
+  notes: String,
 });
 
 const User = model("User", UserSchema);

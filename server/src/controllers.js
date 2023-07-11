@@ -8,22 +8,23 @@ const checkLoggedIn = (req, res) => {
   else res.sendStatus(400);
 };
 
-const signup = (req, res) => {
+const signup = async (req, res) => {
   const user = new User(req.body);
-  user.save((err, result) => {
-    if (err) res.status(400).json({ error: getSaveErrorMessage(err, "user") });
-    else res.status(201).json({ message: "Successfully created a new user." });
-  });
+  try {
+    await user.save();
+    res.status(201).json({ message: "Successfully created a new user" });
+  } catch (err) {
+    res.status(500).json({ error: getSaveErrorMessage(err, "user") });
+  }
 };
 
-const login = (req, res) => {
-  User.findOne({ email: req.body.email }, async (err, user) => {
-    if (err) {
-      res.status(500).json({ error: "Internal server error" });
-    } else if (!req.body.email || !req.body.password)
-      res.status(400).json({ error: "Please enter email and password." });
+const login = async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    if (!req.body.email || !req.body.password)
+      res.status(400).json({ error: "Please enter email and password" });
     else if (!user || !(await user.checkPassword(req.body.password)))
-      res.status(404).json({ error: "Email and password do not match." });
+      res.status(404).json({ error: "Email and password do not match" });
     else {
       const loginToken = jwt.sign({ id: user._id }, config.secret);
       res
@@ -34,26 +35,40 @@ const login = (req, res) => {
         .status(200)
         .json({ username: user.username, message: "Logged in" });
     }
-  });
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
 };
 
 const signout = (req, res) => {
   res.clearCookie("loginToken").status(200).json({ message: "Signed out" });
 };
 
-const saveOrder = (req, res) => {
-  const order = new Order({ userId: req.userId, ...req.body });
-  order.save((err, result) => {
-    if (err) res.status(400).json({ error: getSaveErrorMessage(err, "order") });
-    else res.status(201).json({ message: "Successfully placed an order." });
-  });
+const saveOrder = async (req, res) => {
+  const { pizzas, date, price, address, notes } = req.body;
+  try {
+    const order = new Order({
+      userId: req.userId,
+      pizzas: pizzas,
+      date: date,
+      price: price,
+      address: address,
+      notes: notes,
+    });
+    await order.save();
+    res.status(201).json({ message: "Successfully placed an order" });
+  } catch (err) {
+    res.status(500).json({ error: getSaveErrorMessage(err, "order") });
+  }
 };
 
-const getOrderHistory = (req, res, next) => {
-  Order.find({ userId: req.userId }, (err, orders) => {
-    if (err) res.status(500).json({ error: "Internal server error" });
-    else res.status(200).json(orders);
-  });
+const getOrderHistory = async (req, res) => {
+  try {
+    const orders = await Order.find({ userId: req.userId });
+    res.status(200).json(orders);
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
 };
 
 const changePassword = async (req, res) => {
@@ -67,7 +82,7 @@ const changePassword = async (req, res) => {
   }
 };
 
-const deleteProfile = async (req, res, next) => {
+const deleteProfile = async (req, res) => {
   try {
     await Order.deleteMany({ userId: req.userId });
     await User.deleteOne({ _id: req.userId });

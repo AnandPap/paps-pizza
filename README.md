@@ -10,7 +10,7 @@
 
 ### This is an example of full MERN app deployed on vercel.com:
 
-#### "master" branch deployed live version: https://paps-pizza-vercel-full.vercel.app/ (ctrl + click to open in new tab)
+#### "master" branch deployed live version: https://paps-pizza-vercel-full.vercel.app/
 
 ## To get a local copy up and running, follow these steps:
 

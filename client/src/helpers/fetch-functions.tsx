@@ -6,12 +6,11 @@ import { PizzaPicked } from "../redux/pizza";
 import { Address } from "../order/DeliveryAddress";
 
 export interface OrderDetails {
-  address: Address;
+  pizzas: PizzaPicked[];
   date: Date;
-  email: string;
-  notes: string;
-  order: PizzaPicked[];
   price: number;
+  address: Address;
+  notes: string;
 }
 
 interface AxiosMessage {
@@ -60,7 +59,7 @@ export const checkLoggedIn = async () => {
   }
 };
 
-export const saveOrder = async (order: any) => {
+export const saveOrder = async (order: OrderDetails) => {
   try {
     const res = await axios.post<AxiosMessage>("/api/order", order);
     return res.data;

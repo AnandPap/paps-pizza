@@ -28,13 +28,14 @@ const Payment: FC<PaymentProps> = ({ addressSelected }) => {
 
   function placeOrder() {
     if (addressSelected.address && pizzasPicked.length > 0) {
-      saveOrder({
-        order: pizzasPicked,
-        address: addressSelected,
+      const order = {
+        pizzas: pizzasPicked,
+        date: new Date(),
         price: totalPrice,
+        address: addressSelected,
         notes: notes,
-        date: Date.now(),
-      })
+      };
+      saveOrder(order)
         .then(() => {
           navigate("/order-history", { replace: true });
           dispatch(setPizza({ type: "reset" }));

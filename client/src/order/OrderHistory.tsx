@@ -62,18 +62,18 @@ const OrderHistory = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {item.order.map((order, i) => (
+                  {item.pizzas.map((pizza, i) => (
                     <tr key={i}>
                       <td>
-                        <h4>{order.pizzaName}</h4>
+                        <h4>{pizza.pizzaName}</h4>
                         <p>
-                          {order.pizzaIngredients
+                          {pizza.pizzaIngredients
                             .filter((value) => value !== "")
                             .join(", ")}
                         </p>
                       </td>
-                      <td>{order.numberOfOrders}</td>
-                      <td>{order.pizzaPrice}$</td>
+                      <td>{pizza.numberOfOrders}</td>
+                      <td>{pizza.pizzaPrice}$</td>
                     </tr>
                   ))}
                   <tr>
