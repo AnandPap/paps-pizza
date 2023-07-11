@@ -61,29 +61,33 @@ const ChangePassword: FC<ChangePasswordProps> = ({
         className="change-password-form modal-content"
         onSubmit={(e) => handleSubmit(e)}
       >
-        <label className="change-password-label" htmlFor="new-password">
-          New password:
-        </label>
-        <input
-          type="password"
-          className="input"
-          id="new-password"
-          placeholder="New password"
-          autoFocus
-          value={newPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
-        />
-        <label className="change-password-label" htmlFor="password">
-          Confirm new password:
-        </label>
-        <input
-          type="password"
-          className="input"
-          id="password"
-          placeholder="Confirm new password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-        />
+        <div className="change-password-input-wrapper">
+          <label className="change-password-label" htmlFor="new-password">
+            New password:
+          </label>
+          <input
+            type="password"
+            className="input"
+            id="new-password"
+            placeholder="New password"
+            autoFocus
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+          />
+        </div>
+        <div className="change-password-input-wrapper">
+          <label className="change-password-label" htmlFor="password">
+            Confirm new password:
+          </label>
+          <input
+            type="password"
+            className="input"
+            id="password"
+            placeholder="Confirm new password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+        </div>
         {error && <ErrorMessage className="error-message left" text={error} />}
         <button className="button change-password-submit-button" type="submit">
           Submit

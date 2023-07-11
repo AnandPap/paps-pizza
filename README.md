@@ -2,11 +2,11 @@
 
 ### Basic featuers of this pizza ordering app are:
 
-#### 1. register, login, change password or delete profile (CRUD operations)
+#### 1. Register, login, change password or delete profile (CRUD operations),
 
-#### 2. order desired pizza on provided address
+#### 2. Create and order desired pizza on provided address,
 
-#### 3. review history of previous orders
+#### 3. Review history of previous orders.
 
 ### This is an example of full MERN app deployed on vercel.com:
 
