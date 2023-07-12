@@ -2,18 +2,22 @@ import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../redux/hooks";
 import { signup } from "../helpers/fetch-functions";
-import { toCamelCase } from "../helpers/helper-functions";
+import {
+  capitalizeFirstLetter,
+  toCamelCase,
+  validateEmailFormat,
+} from "../helpers/helper-functions";
 import { getErrorMessage } from "../helpers/error-functions";
 import ErrorMessage from "../reusable/ErrorMessage";
 import Button from "../reusable/Button";
 import Modal from "../reusable/Modal";
 
 export interface SignUpValues {
-  [key: string]: string | undefined;
-  username: string | undefined;
-  email: string | undefined;
-  password: string | undefined;
-  confirmPassword: string | undefined;
+  [key: string]: string;
+  username: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
 }
 
 const SignUp = () => {
@@ -36,20 +40,30 @@ const SignUp = () => {
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const user = {
-      username: signUpValues.username || undefined,
-      email: signUpValues.email || undefined,
-      password: signUpValues.password || undefined,
-      confirmPassword: signUpValues.confirmPassword || undefined,
-    };
-    signup(user)
-      .then((res) => {
-        if (res && "message" in res) navigate("/login");
-        else setError(getErrorMessage(res));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const { username, email, password, confirmPassword } = signUpValues;
+    for (const key in signUpValues) {
+      if (signUpValues[key].length === 0 && key !== "confirmPassword") {
+        setError(`${capitalizeFirstLetter(key)} is required`);
+        return;
+      }
+    }
+    if (username.length < 2) setError("Username too short");
+    else if (!validateEmailFormat(email)) setError("Invalid email");
+    else if (password.length < 6)
+      setError("Password but be at least 6 characters long");
+    else if (/\s/.test(password))
+      setError("Password must not contain any whitespaces");
+    else if (!confirmPassword || password !== confirmPassword)
+      setError("Password and confirm password do not match");
+    else
+      signup(signUpValues)
+        .then((res) => {
+          if (res && "message" in res) navigate("/login");
+          else setError(getErrorMessage(res));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
   }
 
   const handleChange = (key: string, value: string) => {

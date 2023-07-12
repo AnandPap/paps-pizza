@@ -2,6 +2,11 @@ function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+function validateEmailFormat(email: string) {
+  const regEx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return regEx.test(email);
+}
+
 const toCamelCase = (text: string) => {
   const words = text.split(" ");
   let word = "";
@@ -12,4 +17,4 @@ const toCamelCase = (text: string) => {
   return word;
 };
 
-export { capitalizeFirstLetter, toCamelCase };
+export { capitalizeFirstLetter, validateEmailFormat, toCamelCase };

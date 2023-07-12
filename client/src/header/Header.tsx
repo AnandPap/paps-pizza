@@ -1,5 +1,5 @@
 import Button from "../reusable/Button";
-import pizza from "../assets/images/pizza2.png";
+import pizza from "../assets/images/pizza3.png";
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import {
   setIsLoggedIn,
