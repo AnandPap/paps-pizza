@@ -34,29 +34,29 @@ const Login = () => {
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const user = {
-      email: loginValues.email || undefined,
-      password: loginValues.password || undefined,
-    };
-    login(user)
-      .then((res) => {
-        if (res && "message" in res) {
-          if (location.state === "buy") navigate("/order", { replace: true });
-          else navigate("/");
-          dispatch(setIsLoggedIn(true));
-          dispatch(setUsername(res.username));
-          dispatch(
-            setNotification({
-              text: res.message,
-              type: "success",
-            })
-          );
-        } else setError(getErrorMessage(res));
-        setTimeout(() => dispatch(closeNotification()), 1500);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const { email, password } = loginValues;
+    if (!email || !password) {
+      setError("Please enter email and password");
+    } else
+      login(loginValues)
+        .then((res) => {
+          if (res && "message" in res) {
+            if (location.state === "buy") navigate("/order", { replace: true });
+            else navigate("/");
+            dispatch(setIsLoggedIn(true));
+            dispatch(setUsername(res.username));
+            dispatch(
+              setNotification({
+                text: res.message,
+                type: "success",
+              })
+            );
+          } else setError(getErrorMessage(res));
+          setTimeout(() => dispatch(closeNotification()), 1500);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
   }
 
   const handleChange = (key: string, value: string) => {

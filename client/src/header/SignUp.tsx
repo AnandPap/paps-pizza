@@ -42,7 +42,7 @@ const SignUp = () => {
     e.preventDefault();
     const { username, email, password, confirmPassword } = signUpValues;
     for (const key in signUpValues) {
-      if (signUpValues[key].length === 0 && key !== "confirmPassword") {
+      if (!signUpValues[key] && key !== "confirmPassword") {
         setError(`${capitalizeFirstLetter(key)} is required`);
         return;
       }
