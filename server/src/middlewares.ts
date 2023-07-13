@@ -1,3 +1,4 @@
+import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import config from "./config.js";
 import { User } from "./models.js";
@@ -6,9 +7,24 @@ import {
   capitalizeFirstLetter,
 } from "./helper-functions.js";
 
-const validateSignUpFields = (req, res, next) => {
+interface BodyObject {
+  [key: string]: string;
+  username: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+interface AuthRequest extends Request {
+  cookies: { loginToken: string };
+}
+
+const validateSignUpFields = (
+  req: Request<{}, {}, BodyObject>,
+  res: Response,
+  next: NextFunction
+) => {
   const { username, email, password, confirmPassword } = req.body;
-  const bodyObject = {
+  const bodyObject: BodyObject = {
     username: username,
     email: email,
     password: password,
@@ -40,26 +56,34 @@ const validateSignUpFields = (req, res, next) => {
   else next();
 };
 
-function authenticate(req, res, next) {
-  jwt.verify(req.cookies.loginToken, config.secret, (err, decoded) => {
-    if (err) res.sendStatus(403);
+const authenticate = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  jwt.verify(req.cookies.loginToken, config.secret, function (err, decoded) {
+    if (err) res.sendStatus(403).json({ error: err.message });
     else {
-      req.userId = decoded.id;
-      req.cookieDate = decoded.iat;
+      if (typeof decoded !== "string") {
+        req.userId = decoded?.id;
+        req.cookieDate = decoded?.iat;
+      }
       next();
     }
   });
-}
+};
 
-const getUser = (req, res, next) => {
-  User.findById(req.userId, (err, user) => {
-    if (err) res.status(500).json({ error: "Something went wrong" });
-    else if (!user) res.status(404).json({ error: "User not found" });
+const getUser = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const user = await User.findById(req.userId);
+    if (!user) res.status(404).json({ error: "User not found" });
     else {
       req.user = user;
       next();
     }
-  });
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
 };
 
 export { validateSignUpFields, authenticate, getUser };

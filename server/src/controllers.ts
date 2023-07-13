@@ -1,14 +1,15 @@
+import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import config from "./config.js";
 import { User, Order } from "./models.js";
 import { getSaveErrorMessage } from "./helper-functions.js";
 
-const checkLoggedIn = (req, res) => {
+const checkLoggedIn = (req: Request, res: Response) => {
   if (req.user.username) res.status(200).json({ message: req.user.username });
   else res.sendStatus(400);
 };
 
-const signup = async (req, res) => {
+const signup = async (req: Request, res: Response) => {
   const user = new User(req.body);
   try {
     await user.save();
@@ -18,7 +19,7 @@ const signup = async (req, res) => {
   }
 };
 
-const login = async (req, res) => {
+const login = async (req: Request, res: Response) => {
   try {
     const user = await User.findOne({ email: req.body.email });
     if (!req.body.email || !req.body.password)
@@ -40,11 +41,11 @@ const login = async (req, res) => {
   }
 };
 
-const signout = (req, res) => {
+const signout = (req: Request, res: Response) => {
   res.clearCookie("loginToken").status(200).json({ message: "Signed out" });
 };
 
-const saveOrder = async (req, res) => {
+const saveOrder = async (req: Request, res: Response) => {
   const { pizzas, date, price, address, notes } = req.body;
   try {
     const order = new Order({
@@ -62,7 +63,7 @@ const saveOrder = async (req, res) => {
   }
 };
 
-const getOrderHistory = async (req, res) => {
+const getOrderHistory = async (req: Request, res: Response) => {
   try {
     const orders = await Order.find({ userId: req.userId });
     res.status(200).json(orders);
@@ -71,7 +72,7 @@ const getOrderHistory = async (req, res) => {
   }
 };
 
-const changePassword = async (req, res) => {
+const changePassword = async (req: Request, res: Response) => {
   const user = req.user;
   user.password = req.body.newPassword;
   try {
@@ -82,7 +83,7 @@ const changePassword = async (req, res) => {
   }
 };
 
-const deleteProfile = async (req, res) => {
+const deleteProfile = async (req: Request, res: Response) => {
   try {
     await Order.deleteMany({ userId: req.userId });
     await User.deleteOne({ _id: req.userId });

@@ -1,13 +1,15 @@
-function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
+import { CallbackError } from "mongoose";
+
+function capitalizeFirstLetter(text: string) {
+  return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
-function validateEmailFormat(email) {
+function validateEmailFormat(email: string) {
   const regEx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return regEx.test(email);
 }
 
-async function validateUniqueUsername(username) {
+async function validateUniqueUsername(username: string) {
   const user = await this.constructor.findOne({ username });
   if (user) {
     if (this.id === user.id) return true;
@@ -15,7 +17,7 @@ async function validateUniqueUsername(username) {
   } else return true;
 }
 
-async function validateUniqueEmail(email) {
+async function validateUniqueEmail(email: string) {
   const user = await this.constructor.findOne({ email });
   if (user) {
     if (this.id === user.id) return true;
@@ -23,9 +25,9 @@ async function validateUniqueEmail(email) {
   } else return true;
 }
 
-function getSaveErrorMessage(err, type) {
+function getSaveErrorMessage(err: any, type: string) {
   let errorMessage = `Error while saving the ${type}.`;
-  if (err.errors) {
+  if (err && err.errors) {
     for (let errName in err.errors) {
       if (err.errors[errName].message) {
         errorMessage = capitalizeFirstLetter(err.errors[errName].message);

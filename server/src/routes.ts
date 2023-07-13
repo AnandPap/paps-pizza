@@ -1,4 +1,4 @@
-import express from "express";
+import { Router } from "express";
 import { validateSignUpFields, authenticate, getUser } from "./middlewares.js";
 import {
   signup,
@@ -11,7 +11,7 @@ import {
   deleteProfile,
 } from "./controllers.js";
 
-const router = express.Router();
+const router = Router();
 
 router
   .get("/api/check-login", authenticate, getUser, checkLoggedIn)

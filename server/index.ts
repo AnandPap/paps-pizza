@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Express, Request, Response } from "express";
 import mongoose from "mongoose";
 import helmet from "helmet";
 import compress from "compression";
@@ -9,7 +9,7 @@ import { fileURLToPath } from "url";
 import config from "./src/config.js";
 import userRoutes from "./src/routes.js";
 
-const app = express();
+const app: Express = express();
 const __dirname = dirname(fileURLToPath(import.meta.url));
 mongoose.set("strictQuery", true);
 
@@ -22,10 +22,9 @@ app.use(cors({ credentials: true }));
 
 app.use(userRoutes);
 
-app.listen(config.port, (err) => {
-  if (err) return console.log(err);
-  console.log(`Server started on port: ${config.port}`);
-});
+app.listen(config.port, () =>
+  console.log(`Server started on port: ${config.port}`)
+);
 
 mongoose
   .connect(config.mongo)
@@ -33,11 +32,11 @@ mongoose
   .catch((err) => console.log(err));
 
 app.use(express.static(join(__dirname, "../client", "dist")));
-app.get("/*", (req, res) => {
+app.get("/*", (req: Request, res: Response) => {
   res.sendFile(join(__dirname, "../client", "dist", "index.html"));
 });
 
-app.use((err, req, res, next) => {
+app.use((err: Error, req: Request, res: Response) => {
   console.log(err);
   res.sendStatus(404);
 });
