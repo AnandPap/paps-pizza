@@ -62,7 +62,7 @@ const authenticate = async (
   next: NextFunction
 ) => {
   jwt.verify(req.cookies.loginToken, config.secret, function (err, decoded) {
-    if (err) res.sendStatus(403).json({ error: err.message });
+    if (err) res.sendStatus(403);
     else {
       if (typeof decoded !== "string") {
         req.userId = decoded?.id;
