@@ -23,9 +23,9 @@ mongoose
     .connect(config.mongo)
     .then(() => console.log("MongoDB successfully connected..."))
     .catch((err) => console.log(err));
-app.use(express.static(join(__dirname, "../client", "dist")));
+app.use(express.static(join(__dirname, "../../client", "dist")));
 app.get("/*", (req, res) => {
-    res.sendFile(join(__dirname, "../client", "dist", "index.html"));
+    res.sendFile(join(__dirname, "../../client/dist/index.html"));
 });
 app.use((err, req, res) => {
     console.log(err);
