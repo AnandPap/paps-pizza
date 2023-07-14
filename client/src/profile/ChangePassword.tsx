@@ -27,23 +27,21 @@ const ChangePassword: FC<ChangePasswordProps> = ({
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (newPassword.length < 6) {
-      setError("Password must be 6 characters long.");
+      setError("Password must be 6 characters long");
     } else if (newPassword !== confirmPassword) {
-      setError("Passwords do not match.");
+      setError("Passwords do not match");
     } else {
       try {
         const res = await changePassword(newPassword);
-        setOpenChangeModal(false);
-        setNewPassword("");
-        setConfirmPassword("");
         if (res && "message" in res) {
+          setOpenChangeModal(false);
+          setNewPassword("");
+          setConfirmPassword("");
           dispatch(setNotification({ text: res.message, type: "success" }));
+          setTimeout(() => dispatch(closeNotification()), 2000);
         } else {
-          dispatch(
-            setNotification({ text: getErrorMessage(res), type: "error" })
-          );
+          setError(getErrorMessage(res));
         }
-        setTimeout(() => dispatch(closeNotification()), 1500);
       } catch (err) {
         console.log(err);
         setError("Something went wrong, please try again.");
@@ -88,7 +86,7 @@ const ChangePassword: FC<ChangePasswordProps> = ({
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </div>
-        {error && <ErrorMessage className="error-message left" text={error} />}
+        {error && <ErrorMessage className="error-message" text={error} />}
         <button className="button change-password-submit-button" type="submit">
           Submit
         </button>

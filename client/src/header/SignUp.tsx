@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import { useAppSelector } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { signup } from "../helpers/fetch-functions";
 import {
   capitalizeFirstLetter,
@@ -11,6 +11,7 @@ import { getErrorMessage } from "../helpers/error-functions";
 import ErrorMessage from "../reusable/ErrorMessage";
 import Button from "../reusable/Button";
 import Modal from "../reusable/Modal";
+import { closeNotification, setNotification } from "../redux/pizza";
 
 export interface SignUpValues {
   [key: string]: string;
@@ -37,6 +38,7 @@ const SignUp = () => {
   ];
   const { isLoggedIn } = useAppSelector((s) => s.pizza);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -58,8 +60,11 @@ const SignUp = () => {
     else
       signup(signUpValues)
         .then((res) => {
-          if (res && "message" in res) navigate("/login");
-          else setError(getErrorMessage(res));
+          if (res && "message" in res) {
+            navigate("/login");
+            dispatch(setNotification({ text: res.message, type: "success" }));
+          } else setError(getErrorMessage(res));
+          setTimeout(() => dispatch(closeNotification()), 2000);
         })
         .catch((err) => {
           console.log(err);

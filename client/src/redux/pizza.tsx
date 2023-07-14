@@ -16,7 +16,7 @@ export interface PizzaPicked {
 interface Notification {
   text: string;
   show: boolean;
-  type: "error" | "success" | null;
+  type: "error" | "success" | undefined;
 }
 type PizzasPickedAction =
   | {
@@ -43,7 +43,7 @@ const initialState: InitialState = {
   pizzasPicked: [],
   isLoggedIn: null,
   username: null,
-  notification: { text: "", show: false, type: null },
+  notification: { text: "", show: false, type: undefined },
 };
 
 export const pizzaSlice = createSlice({
@@ -93,7 +93,10 @@ export const pizzaSlice = createSlice({
       state.notification = { show: true, ...action.payload };
     },
     closeNotification: (state) => {
-      state.notification = { text: "", show: false, type: null };
+      state.notification = {
+        ...state.notification,
+        show: false,
+      };
     },
   },
 });

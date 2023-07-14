@@ -6,7 +6,7 @@ import {
   checkLoggedIn,
   signout,
   saveOrder,
-  getOrderHistory,
+  fetchOrderHistory,
   changePassword,
   deleteProfile,
 } from "./controllers.js";
@@ -19,7 +19,7 @@ router
   .post("/api/login", login)
   .get("/api/signout", signout)
   .post("/api/order", authenticate, saveOrder)
-  .get("/api/order-history", authenticate, getOrderHistory)
+  .get("/api/order-history", authenticate, fetchOrderHistory)
   .patch("/api/change-password", authenticate, getUser, changePassword)
   .delete("/api/delete-profile", authenticate, deleteProfile);
 

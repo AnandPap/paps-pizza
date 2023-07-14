@@ -52,7 +52,7 @@ const Login = () => {
               })
             );
           } else setError(getErrorMessage(res));
-          setTimeout(() => dispatch(closeNotification()), 1500);
+          setTimeout(() => dispatch(closeNotification()), 2000);
         })
         .catch((err) => {
           console.log(err);

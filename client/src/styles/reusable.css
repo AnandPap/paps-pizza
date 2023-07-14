@@ -91,19 +91,34 @@
 
 .notification-box {
   position: fixed;
-  top: -100px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 300px;
-  background-color: white;
-  padding: 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-  transition: top 0.5s;
+  right: min(0, calc(50vw - 250px));
+  bottom: -100px;
+  min-width: fit-content;
+  width: 250px;
   max-width: 90%;
-  z-index: 1;
+  background-color: white;
+  text-align: center;
+  padding: 15px 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  transition: bottom 0.5s;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: calc(var(--fs-medium) * 1.25);
 }
 .notification-box.show {
-  top: 30px;
+  bottom: 30px;
+}
+.notification-box.success {
+  color: green;
+}
+.notification-box.error {
+  color: rgb(175, 0, 32);
+}
+.notification-box > img {
+  width: 30px;
 }
 
 .loading-wrapper {
@@ -155,6 +170,14 @@
   color: var(--dot-color);
   animation: dot-flashing var(--dot-speed) infinite alternate;
   animation-delay: var(--dot-speed);
+}
+
+@media only screen and (max-width: 600px) {
+  .notification-box {
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+  }
 }
 
 @keyframes dot-flashing {

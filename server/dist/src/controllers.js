@@ -12,7 +12,7 @@ const signup = async (req, res) => {
     const user = new User(req.body);
     try {
         await user.save();
-        res.status(201).json({ message: "Successfully created a new user" });
+        res.status(201).json({ message: "Successfully signed up" });
     }
     catch (err) {
         res.status(500).json({ error: getSaveErrorMessage(err, "user") });
@@ -61,7 +61,7 @@ const saveOrder = async (req, res) => {
         res.status(500).json({ error: getSaveErrorMessage(err, "order") });
     }
 };
-const getOrderHistory = async (req, res) => {
+const fetchOrderHistory = async (req, res) => {
     try {
         const orders = await Order.find({ userId: req.userId });
         res.status(200).json(orders);
@@ -71,14 +71,23 @@ const getOrderHistory = async (req, res) => {
     }
 };
 const changePassword = async (req, res) => {
-    const user = req.user;
-    user.password = req.body.newPassword;
-    try {
-        await user.save();
-        res.status(200).json({ message: "Password changed" });
-    }
-    catch (err) {
-        res.status(500).json({ error: "Internal server error" });
+    if (req.body.newPassword.length < 6)
+        res.status(400).json({ error: "Password must be 6 characters long" });
+    else {
+        const user = req.user;
+        if (await user.checkPassword(req.body.newPassword)) {
+            res.status(400).json({ error: "Password must be new" });
+        }
+        else {
+            user.password = req.body.newPassword;
+            try {
+                await user.save();
+                res.status(200).json({ message: "Password changed" });
+            }
+            catch (err) {
+                res.status(500).json({ error: "Internal server error" });
+            }
+        }
     }
 };
 const deleteProfile = async (req, res) => {
@@ -94,4 +103,4 @@ const deleteProfile = async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 };
-export { signup, login, checkLoggedIn, signout, saveOrder, getOrderHistory, changePassword, deleteProfile, };
+export { signup, login, checkLoggedIn, signout, saveOrder, fetchOrderHistory, changePassword, deleteProfile, };

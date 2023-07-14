@@ -39,7 +39,7 @@ const DeleteProfile: FC<DeleteProfileProps> = ({
           setNotification({ text: getErrorMessage(res), type: "error" })
         );
       }
-      setTimeout(() => dispatch(closeNotification()), 1500);
+      setTimeout(() => dispatch(closeNotification()), 2000);
     } catch (err) {
       console.log(err);
     }

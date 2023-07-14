@@ -77,20 +77,20 @@ export const fetchOrderHistory = async () => {
   }
 };
 
-export const deleteProfile = async () => {
+export const changePassword = async (newPassword: string) => {
   try {
-    const res = await axios.delete<AxiosMessage>("/api/delete-profile");
+    const res = await axios.patch<AxiosMessage>("/api/change-password", {
+      newPassword: newPassword,
+    });
     return res.data;
   } catch (err) {
     return getAxiosErrorObject(err);
   }
 };
 
-export const changePassword = async (newPassword: string) => {
+export const deleteProfile = async () => {
   try {
-    const res = await axios.patch<AxiosMessage>("/api/change-password", {
-      newPassword: newPassword,
-    });
+    const res = await axios.delete<AxiosMessage>("/api/delete-profile");
     return res.data;
   } catch (err) {
     return getAxiosErrorObject(err);
