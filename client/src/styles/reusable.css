@@ -78,6 +78,41 @@
   margin: 30px;
   white-space: pre-line;
 }
+.page-not-found {
+  max-width: 350px;
+  margin: auto;
+  text-align: center;
+}
+
+.go-back-btn {
+  border-radius: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.75);
+  background-color: white;
+  font-size: inherit;
+  padding: 0.5rem 1rem;
+  margin: auto;
+  margin-block-start: 1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.go-back-btn:hover {
+  background-color: hsl(0, 0%, 95%);
+}
+.go-back-btn:active {
+  transform: scale(0.985);
+}
+.back-button-arrow {
+  border: solid black;
+  border-width: 0 2px 2px 0;
+  padding: 3px;
+  position: relative;
+  bottom: 0px;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(135deg);
+  margin-right: 5px;
+}
 
 .spinner-wrapper {
   display: flex;

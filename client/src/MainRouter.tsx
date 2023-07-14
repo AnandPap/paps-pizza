@@ -6,11 +6,11 @@ import Login from "./header/Login";
 import Home from "./home/Home";
 import Order from "./order/Order";
 import OrderHistory from "./order/OrderHistory";
-import ErrorMessage from "./reusable/ErrorMessage";
 import { setIsLoggedIn, setUsername } from "./redux/pizza";
 import { useAppDispatch } from "./redux/hooks";
 import { checkLoggedIn } from "./helpers/fetch-functions";
 import UserProfile from "./profile/UserProfile";
+import PageNotFound from "./reusable/PageNotFound";
 
 const MainRouter = () => {
   const dispatch = useAppDispatch();
@@ -44,12 +44,7 @@ const MainRouter = () => {
         <Route path="/order" element={<Order />} />
         <Route path="/order-history" element={<OrderHistory />} />
         <Route path="/user-profile/:profileName" element={<UserProfile />} />
-        <Route
-          path="*"
-          element={
-            <ErrorMessage className="not-found" text="Page not found." />
-          }
-        />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>
   );

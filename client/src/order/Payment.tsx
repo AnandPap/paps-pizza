@@ -8,6 +8,7 @@ import { Address } from "./DeliveryAddress";
 import ErrorMessage from "../reusable/ErrorMessage";
 import { saveOrder } from "../helpers/fetch-functions";
 import useTotalPrice from "../hooks/useTotalPrice";
+import BackButton from "../reusable/BackButton";
 
 interface PaymentProps {
   addressSelected: Address;
@@ -60,9 +61,7 @@ const Payment: FC<PaymentProps> = ({ addressSelected }) => {
         ) : (
           <div className="no-pizza">
             <ErrorMessage className="not-found" text="No pizza selected" />
-            <button className="go-back-btn" onClick={() => navigate("/")}>
-              Go back
-            </button>
+            <BackButton onClick={() => navigate("/")} />
           </div>
         )}
       </div>
