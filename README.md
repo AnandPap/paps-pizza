@@ -10,23 +10,29 @@
 
 ### Technologies used in this project:
 
-1.  **React** with **Typescript** and following packages:
+1. **React** with **Typescript** and following packages:
 
-- _vite_ for bootstrapping project
-- _react-router_ for routing purposes
-- _react-redux_ with _@reduxjs/toolkit_ for state management
-- _axios_ for making easier HTTP requests to server and response handling
+   - _vite_ for bootstrapping project
 
-2.  **Node.js** with **Typescript** and following packages:
+   - _react-router_ for routing purposes
 
-- **_Express_** as Node.js web application framework
-- _mongoose_ as MongoDB object modeling tool
-- _bcrypt_ for password hashing
-- _jsonwebtoken_ for jwt creation and verification
+   - _react-redux_ with _@reduxjs/toolkit_ for state management
 
-3.  **MongoDB**, using _MongoDB Compass_ GUI as a tool for analyzing _MongoDB_ data
+   - _axios_ for making easier HTTP requests to server and response handling
 
-4.  **Postman** for testing backend routes
+2. **Node.js** with **Typescript** and following packages:
+
+   - **_Express_** as Node.js web application framework
+
+   - _mongoose_ as MongoDB object modeling tool
+
+   - _bcrypt_ for password hashing
+
+   - _jsonwebtoken_ for jwt creation and verification
+
+3. **MongoDB**, using _MongoDB Compass_ GUI as a tool for analyzing _MongoDB_ data
+
+4. **Postman** for testing backend routes
 
 ### This is an example of full MERN app deployed on vercel.com:
 
