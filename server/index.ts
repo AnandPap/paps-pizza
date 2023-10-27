@@ -1,4 +1,4 @@
-import express, { Express, Request, Response } from "express";
+import express, { Express, NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
 import helmet from "helmet";
 import compress from "compression";
@@ -8,6 +8,10 @@ import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 import config from "./src/config.js";
 import userRoutes from "./src/routes.js";
+
+interface CustomError extends Error {
+  status?: number;
+}
 
 const app: Express = express();
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -36,7 +40,11 @@ app.get("/*", (req: Request, res: Response) => {
   res.sendFile(join(__dirname, "../../client/dist/index.html"));
 });
 
-app.use((err: Error, req: Request, res: Response) => {
+app.use((err: CustomError, req: Request, res: Response, next: NextFunction) => {
   console.log(err);
-  res.sendStatus(404);
+  if (err.status === 504) res.status(504).json({ error: "Gateway Timeout" });
+  else
+    res
+      .status(err.status || 500)
+      .json({ error: err.message || "Internal Server Error" });
 });

@@ -12,6 +12,8 @@
 
 3.  Review history of previous orders
 
+4.  App is responsive
+
 ### Technologies used in this project:
 
 1. **React** with **Typescript** and following packages:
