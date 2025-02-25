@@ -2,7 +2,7 @@
 
 ## This is an example of full MERN app deployed on vercel.com:
 
-- "master" branch deployed live version: https://paps-pizza-vercel-full.vercel.app/
+- "master" branch deployed live version: https://paps-pizza.vercel.app/
 
 ### Basic featuers of this pizza ordering app are:
 
